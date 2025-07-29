@@ -14,16 +14,21 @@ import { cta } from "./modules/cta";
 import { hero } from "./modules/hero";
 import { contentBlocks } from "./modules/contentBlocks";
 import { intro } from "./modules/intro";
+import project from "./documents/project";
+import logoList from "./modules/logoList";
+import logo from "./documents/logo";
 
 const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     // Documents
+    logo,
     homepage,
     page,
     blogPost,
     site,
     navigation,
     footer,
+    project,
 
     // Modules
     contentBlocks,
@@ -33,6 +38,7 @@ const schema: { types: SchemaTypeDefinition[] } = {
     cta,
     hero,
     intro,
+    logoList,
 
     // objects
     link,

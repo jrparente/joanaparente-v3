@@ -23,7 +23,7 @@ const allPlugins = [
 
   documentInternationalization({
     supportedLanguages: i18n.languages,
-    schemaTypes: ["homepage", "page", "site"],
+    schemaTypes: ["homepage", "page", "site", "navigation"],
   }),
 ];
 

@@ -27,7 +27,10 @@ export default async function Home(props: {
     <main className="flex flex-col items-center justify-start px-4 pb-16 pt-8 md:pt-12">
       <div className="w-full max-w-7xl">
         {hasBlocks ? (
-          <ContentBlocks contentBlock={page.contentBlocks} />
+          <ContentBlocks
+            contentBlock={page.contentBlocks}
+            language={language}
+          />
         ) : (
           <div className="flex h-96 items-center justify-center rounded-md border border-dashed bg-muted">
             <p className="text-muted-foreground">No content available yet.</p>

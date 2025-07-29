@@ -1,3 +1,4 @@
+import { i18n } from "@/i18n.config";
 import {
   HomeIcon,
   CogIcon,
@@ -8,6 +9,7 @@ import {
   ComposeIcon,
   PackageIcon,
 } from "@sanity/icons";
+import { FileText, FolderCode, Layers, PenBox, StickyNote } from "lucide-react";
 
 export const structure = (S: any) =>
   S.list()
@@ -19,24 +21,156 @@ export const structure = (S: any) =>
         .child(S.document().schemaType("homepage").documentId("homepage")),
 
       S.listItem()
-        .title("Pages")
-        .icon(DocumentsIcon)
+        .title("Website Pages")
+        .icon(Layers)
         .child(
-          S.documentTypeList("page")
-            .title("Pages")
-            .filter('_type == "page"')
-            .initialValueTemplates([S.initialValueTemplateItem("page")])
+          S.list()
+            .title("Page Versions")
+            .items([
+              ...i18n.languages.map((language: any) =>
+                S.listItem()
+                  .title(`Pages (${language.id.toLocaleUpperCase()})`)
+                  .schemaType("page")
+                  .icon(StickyNote)
+                  .child(
+                    S.documentList()
+                      .apiVersion("v2023-12-18")
+                      .id(language.id)
+                      .title(`${language.title} Pages`)
+                      .schemaType("page")
+                      .filter('_type == "page" && language == $language')
+                      .params({ type: "page", language: language.id })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("page", {
+                          _type: "page",
+                          language: language.id,
+                        }),
+                      ])
+                      .canHandleIntent((intentName: any, params: any) => {
+                        // TODO: Handle **existing** documents (like search results when clicked)
+                        // to return `true` on the correct language list!
+                        if (intentName === "edit") {
+                          // return params?.language === language.id
+                          return false;
+                        }
+
+                        // Not an initial value template
+                        if (!params.template) {
+                          return true;
+                        }
+
+                        // Template name structure example: "lesson-en"
+                        const languageValue = params?.template
+                          ?.split(`-`)
+                          .pop();
+
+                        return languageValue === language.id;
+                      })
+                  )
+              ),
+            ])
         ),
 
       S.listItem()
-        .title("Stories")
-        .icon(ComposeIcon)
+        .title("Blog Posts")
+        .icon(PenBox)
         .child(
-          S.documentTypeList("blogPost")
-            .title("Stories")
-            .filter('_type == "blogPost"')
-            .initialValueTemplates([S.initialValueTemplateItem("blogPost")])
-            .defaultOrdering([{ field: "publishedAt", direction: "desc" }])
+          S.list()
+            .title("Blog Post Versions")
+            .items([
+              ...i18n.languages.map((language: any) =>
+                S.listItem()
+                  .title(`Blog Posts (${language.id.toLocaleUpperCase()})`)
+                  .schemaType("blogPost")
+                  .icon(FileText)
+                  .child(
+                    S.documentList()
+                      .apiVersion("v2023-12-18")
+                      .id(language.id)
+                      .title(`${language.title} Blog Posts`)
+                      .schemaType("blogPost")
+                      .filter('_type == "blogPost" && language == $language')
+                      .params({ type: "blogPost", language: language.id })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("blogPost", {
+                          _type: "blogPost",
+                          language: language.id,
+                        }),
+                      ])
+                      .canHandleIntent((intentName: any, params: any) => {
+                        // TODO: Handle **existing** documents (like search results when clicked)
+                        // to return `true` on the correct language list!
+                        if (intentName === "edit") {
+                          // return params?.language === language.id
+                          return false;
+                        }
+
+                        // Not an initial value template
+                        if (!params.template) {
+                          return true;
+                        }
+
+                        // Template name structure example: "lesson-en"
+                        const languageValue = params?.template
+                          ?.split(`-`)
+                          .pop();
+
+                        return languageValue === language.id;
+                      })
+                  )
+              ),
+            ])
+        ),
+
+      S.listItem()
+        .title("Projects")
+        .icon(FolderCode)
+        .child(
+          S.list()
+            .title("Project Versions")
+            .items([
+              ...i18n.languages.map((language: any) =>
+                S.listItem()
+                  .title(`Projects (${language.id.toLocaleUpperCase()})`)
+                  .schemaType("project")
+                  .icon(StickyNote)
+                  .child(
+                    S.documentList()
+                      .apiVersion("v2023-12-18")
+                      .id(language.id)
+                      .title(`${language.title} Projects`)
+                      .schemaType("project")
+                      .filter('_type == "project" && language == $language')
+                      .params({ type: "project", language: language.id })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("project", {
+                          _type: "project",
+                          language: language.id,
+                        }),
+                      ])
+                      .canHandleIntent((intentName: any, params: any) => {
+                        // TODO: Handle **existing** documents (like search results when clicked)
+                        // to return `true` on the correct language list!
+                        if (intentName === "edit") {
+                          // return params?.language === language.id
+                          return false;
+                        }
+
+                        // Not an initial value template
+                        if (!params.template) {
+                          return true;
+                        }
+
+                        // Template name structure example: "lesson-en"
+                        const languageValue = params?.template
+                          ?.split(`-`)
+                          .pop();
+
+                        return languageValue === language.id;
+                      })
+                  )
+              ),
+            ])
         ),
 
       S.divider(),

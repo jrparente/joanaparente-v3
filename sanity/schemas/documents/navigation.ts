@@ -17,6 +17,12 @@ export default defineType({
       type: "array",
       of: [{ type: "link" }],
     }),
+    defineField({
+      name: "language",
+      title: "Language",
+      type: "string",
+      readOnly: true,
+    }),
   ],
   preview: {
     select: {

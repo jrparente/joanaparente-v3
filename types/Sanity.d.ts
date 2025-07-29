@@ -33,7 +33,7 @@ export type InternalLink = {
   };
 };
 
-export type Link = {
+export type LinkType = {
   label?: string;
   type: "internal" | "external";
   internal?: InternalLink;
@@ -50,11 +50,22 @@ export type HeroBlock = {
   subtitle: string;
   description?: RichText;
   image?: SanityImage;
-  buttonLink: Link;
+  buttonLink: LinkType;
+};
+
+export type IntroBlock = {
+  _type: "intro";
+  _id: string;
+  _key?: string;
+  heading: string;
+  anchor: string;
+  subheading?: string;
+  content: { content: PortableTextBlock[] };
+  image?: SanityImage;
 };
 
 // Extend this union as you add new block types
-export type ContentBlock = HeroBlock;
+export type ContentBlock = HeroBlock | IntroBlock;
 
 export type Homepage = {
   _id: string;
@@ -89,4 +100,10 @@ export type SiteSettingsType = {
   domain: string;
   logo: SanityImage;
   metadata: MetadataType;
+};
+
+export type NavigationType = {
+  _id: string;
+  _type: "navigation";
+  items: LinkType[];
 };

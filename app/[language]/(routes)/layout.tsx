@@ -4,7 +4,7 @@ import "../../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getSiteSettings } from "@/lib/sanity/queries";
+import { getNavigation, getSiteSettings } from "@/lib/sanity/queries";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,8 +23,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { language } = await params;
   const siteSettings = await getSiteSettings(language);
-
-  console.log("Site Settings:", siteSettings);
 
   if (!siteSettings || !siteSettings.metadata) {
     return {
@@ -62,13 +60,16 @@ export default async function RootLayout({
   params: Promise<{ language: string }>;
 }>) {
   const { language } = await params;
+
+  const navigation = await getNavigation(language);
+
   return (
     <html lang={language} suppressHydrationWarning>
       <body
         className={`grid h-full min-h-[100dvh] auto-rows-[auto_1fr_auto] ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
+          <Header navigation={navigation} language={language} />
           {children}
           <Footer />
         </ThemeProvider>

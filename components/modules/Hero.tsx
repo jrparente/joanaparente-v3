@@ -8,15 +8,16 @@ import { RichText } from "../portabletext/RichText";
 
 type Props = {
   block: HeroBlock;
+  language?: string;
 };
 
-const Hero = ({ block }: Props) => {
+const Hero = ({ block, language }: Props) => {
   const { subheading, title, subtitle, image, buttonLink, description } = block;
 
-  const href = buttonLink ? resolveLink(buttonLink) : "#";
+  const href = buttonLink ? resolveLink(buttonLink, language) : "#";
 
   return (
-    <section className="w-full bg-background py-16 md:py-24">
+    <section className="w-full bg-background py-16 md:py-24 min-h-screen">
       <div className="max-w-5xl mx-auto flex flex-col-reverse items-center gap-12 px-4 md:flex-row md:justify-between">
         {/* Text content */}
         <div className="text-center md:text-left md:max-w-xl">
@@ -33,7 +34,7 @@ const Hero = ({ block }: Props) => {
           )}
 
           {subtitle && (
-            <p className="mt-4 text-lg text-muted-foreground md:text-xl">
+            <p className="mt-4 text-xl text-muted-foreground md:text-2xl">
               {subtitle}
             </p>
           )}

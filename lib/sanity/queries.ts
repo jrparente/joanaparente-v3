@@ -1,6 +1,11 @@
 import { groq } from "next-sanity";
 import { fetchSanity } from "./fetch";
-import { FooterType, Homepage, SiteSettingsType } from "@/types/Sanity";
+import {
+  FooterType,
+  Homepage,
+  NavigationType,
+  SiteSettingsType,
+} from "@/types/Sanity";
 
 type Params = {
   language: string;
@@ -11,6 +16,7 @@ export const contentBlocksProjection = `
   contentBlocks[] {
     ...,
     _type == "hero" => {
+      ...,
       _type,
       _key,
       subheading,
@@ -45,6 +51,26 @@ export const contentBlocksProjection = `
         },
         external
       }
+    },
+    _type == "intro" => {
+      ...,
+      _type,
+      _key,
+      heading,
+      subheading,
+      anchor,
+      content{
+        content[]{
+          ...,
+          _type == "image" => {
+            asset->{
+              _id,
+              url
+            },
+            alt
+          }
+        }
+      },
     }
   }
 `;
@@ -70,6 +96,32 @@ export async function getSiteSettings(language: string) {
     }
   `;
   return fetchSanity<SiteSettingsType>({ query, params: { language } });
+}
+
+export async function getNavigation(language: string) {
+  const query = groq`
+    *[_type == "navigation" && language == $language][0] {
+      title,
+      items[] {
+        label,
+        type,
+        params,
+        internal->{
+          _type,
+          _id,
+          title,
+          metadata {
+            slug {
+              current
+            }
+          }
+        },
+        external
+      }
+    }
+  `;
+
+  return fetchSanity<NavigationType>({ query, params: { language } });
 }
 
 export async function getHomepage({ language }: Params) {

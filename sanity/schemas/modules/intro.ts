@@ -14,6 +14,14 @@ export const intro = defineType({
       validation: (Rule) => Rule.required().min(1).max(100),
     }),
     defineField({
+      name: "anchor",
+      title: "Anchor ID (slug)",
+      type: "string",
+      description:
+        "Used for anchor navigation (e.g., #about-me). Must be unique on the page.",
+      validation: (Rule) => Rule.required().min(1).max(100),
+    }),
+    defineField({
       name: "subheading",
       title: "Subheading",
       type: "string",

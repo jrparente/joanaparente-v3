@@ -58,7 +58,9 @@ export const RichText = ({ value }: { value: any }) => {
       ),
     },
     list: {
-      bullet: ({ children }) => <ul className="list-disc pl-6">{children}</ul>,
+      bullet: ({ children }) => (
+        <ul className="list-disc pl-6 text-muted-foreground">{children}</ul>
+      ),
     },
     types: {
       image: ({ value }) => {
