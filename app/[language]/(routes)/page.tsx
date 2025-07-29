@@ -1,16 +1,11 @@
 import ContentBlocks from "@/components/ContentBlocks";
-import { RichText } from "@/components/portabletext/RichText";
 import { getHomepage } from "@/lib/sanity/queries";
 import { notFound } from "next/navigation";
 
-type Props = {
-  params: {
-    language: string;
-  };
-};
-
-export default async function Home({ params }: Props) {
-  const { language } = await params;
+export default async function Home(props: {
+  params: Promise<{ language: string }>;
+}) {
+  const { language } = await props.params;
 
   if (!language) return notFound();
 
