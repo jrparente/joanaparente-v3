@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Joana Parente – Portfolio Website (v3)
 
-## Getting Started
+This is the source code of my personal portfolio website. Built with **Next.js 15**, **TypeScript**, **Tailwind CSS v4**, and **Sanity CMS**, it reflects my design sensibility and approach to clean, performant, and scalable web development.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🧰 Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Framework**: [Next.js 15](https://nextjs.org/)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **CMS**: Sanity v4 (with internationalization support)
+- **UI Components**: Shadcn/ui
+- **Theming**: Dark/light mode via `next-themes`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔐 Notes
 
-## Learn More
+This repository is public for transparency and learning purposes but **not intended to be reused or cloned** as a template. Please respect the originality of the work.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is licensed under the MIT License. Please do not reuse without permission.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👩‍💻 About Me
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+I’m Joana Parente, a full-stack web developer and digital strategist based in Portugal. I help small businesses and creators stand out online with thoughtful design, clean code, and scalable architecture.
+
+📫 [joana@joanaparente.com](mailto:joana@joanaparente.com)  
+🌐 [joanaparente.com](https://joanaparente.com)  
+🔗 [LinkedIn](https://www.linkedin.com/in/joanaparente) | [GitHub](https://github.com/joanaparente)
