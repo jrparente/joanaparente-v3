@@ -34,7 +34,7 @@ export default function BioPage({ block }: { block: BioPageProps }) {
     textColor = "#333",
   } = block;
   return (
-    <main className="w-full max-w-md mx-auto flex flex-col items-center justify-center gap-6 my-12 px-3">
+    <main className="w-full max-w-80 mx-auto flex flex-col items-center justify-center gap-6 my-12 px-3">
       <div className="flex flex-col items-center justify-center gap-3">
         {profileImage && (
           <Image
