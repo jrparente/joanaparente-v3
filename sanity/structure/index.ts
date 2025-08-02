@@ -68,6 +68,18 @@ export const structure = (S: any) =>
                       })
                   )
               ),
+              S.listItem()
+                .title("Pages (No Language)")
+                .schemaType("page")
+                .icon(StickyNote)
+                .child(
+                  S.documentList()
+                    .title("Pages (No Language)")
+                    .schemaType("page")
+                    .filter(
+                      '_type == "page" && (!defined(language) || language == null)'
+                    )
+                ),
             ])
         ),
 

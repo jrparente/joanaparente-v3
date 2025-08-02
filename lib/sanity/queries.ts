@@ -4,11 +4,12 @@ import {
   FooterType,
   Homepage,
   NavigationType,
+  PageType,
   SiteSettingsType,
 } from "@/types/Sanity";
 
 type Params = {
-  language: string;
+  language: string | null;
 };
 
 // Define as a regular string (not groq template)
@@ -124,6 +125,17 @@ export async function getNavigation(language: string) {
   return fetchSanity<NavigationType>({ query, params: { language } });
 }
 
+export async function getFooter() {
+  const query = groq`
+    *[_type == "footer"][0] {
+      message,
+      email,
+      socialLinks
+    }
+  `;
+  return fetchSanity<FooterType>({ query });
+}
+
 export async function getHomepage({ language }: Params) {
   if (!language) {
     throw new Error("Language parameter is required");
@@ -141,13 +153,47 @@ export async function getHomepage({ language }: Params) {
   return data;
 }
 
-export async function getFooter() {
-  const query = groq`
-    *[_type == "footer"][0] {
-      message,
-      email,
-      socialLinks
-    }
-  `;
-  return fetchSanity<FooterType>({ query });
+export async function getPageBySlug({
+  language,
+  slug,
+}: {
+  slug: string;
+  language?: string | null;
+}) {
+  if (!slug) {
+    throw new Error("Slug parameter is required");
+  }
+
+  let query: string;
+  let params: Record<string, any>;
+
+  if (language) {
+    query = groq`
+      *[_type == "page" &&
+        (
+          (defined(language) && language == $language) ||
+          !defined(language)
+        ) &&
+        slug.current == $slug
+      ][0] {
+        ...,
+        title,
+        ${contentBlocksProjection}
+      }
+    `;
+    params = { slug, language };
+  } else {
+    query = groq`
+      *[_type == "page" &&
+        slug.current == $slug
+      ][0] {
+        ...,
+        title,
+        ${contentBlocksProjection}
+      }
+    `;
+    params = { slug };
+  }
+
+  return fetchSanity<PageType>({ query, params });
 }

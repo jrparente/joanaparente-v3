@@ -4,7 +4,7 @@ export const metadata = {
     "Admin dashboard for managing Joana Parente's portfolio content.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;

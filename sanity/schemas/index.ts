@@ -17,6 +17,7 @@ import { intro } from "./modules/intro";
 import project from "./documents/project";
 import logoList from "./modules/logoList";
 import logo from "./documents/logo";
+import bioPage from "./modules/bioPage";
 
 const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -29,6 +30,7 @@ const schema: { types: SchemaTypeDefinition[] } = {
     navigation,
     footer,
     project,
+    bioPage,
 
     // Modules
     contentBlocks,

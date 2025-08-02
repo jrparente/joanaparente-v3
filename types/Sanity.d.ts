@@ -107,3 +107,25 @@ export type NavigationType = {
   _type: "navigation";
   items: LinkType[];
 };
+
+export type PageType = {
+  _id: string;
+  _type: "page";
+  title: string;
+  slug: { current: string };
+  metadata: MetadataType;
+  contentBlocks: ContentBlock[];
+};
+
+export type BioPageProps = {
+  profileImage?: SanityImage;
+  name: string;
+  bio?: string;
+  links?: {
+    label: string;
+    url: string;
+    icon?: string; // e.g., 'github', 'linkedin'
+  }[];
+  backgroundColor?: string; // Hex color, e.g., '#fefaf7'
+  textColor?: string; // Hex color, e.g., '#1a1a1a'
+};
