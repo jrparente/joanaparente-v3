@@ -11,15 +11,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    esmExternals: "loose",
-  },
-  webpack: (config) => {
-    // Fix refractor import issues
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "refractor/core": "refractor/core.js",
-      "refractor/core.js": "refractor/core.js",
-    };
-  },
 };
+
+export default nextConfig;
