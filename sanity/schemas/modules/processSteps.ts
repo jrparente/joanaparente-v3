@@ -1,0 +1,69 @@
+import { NumberIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
+
+export const processSteps = defineType({
+  name: "processSteps",
+  title: "Process Steps",
+  icon: NumberIcon,
+  type: "object",
+  fields: [
+    defineField({
+      name: "heading",
+      title: "Heading",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "steps",
+      title: "Steps",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({
+              name: "icon",
+              title: "Icon",
+              type: "string",
+              description:
+                "Lucide icon name (e.g. 'MessageSquare', 'FileSearch', 'Handshake')",
+            }),
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 2,
+            }),
+          ],
+          preview: {
+            select: { title: "title", icon: "icon" },
+            prepare({ title, icon }) {
+              return {
+                title: title || "Step",
+                subtitle: icon ? `Icon: ${icon}` : undefined,
+              };
+            },
+          },
+        },
+      ],
+    }),
+  ],
+  preview: {
+    select: {
+      title: "heading",
+      steps: "steps",
+    },
+    prepare({ title, steps }) {
+      return {
+        title: title || "Process Steps",
+        subtitle: `${steps?.length || 0} steps`,
+      };
+    },
+  },
+});

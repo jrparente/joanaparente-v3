@@ -1,10 +1,17 @@
 import { LinkType } from "@/types/Sanity";
+import { pathTranslations } from "@/i18n.config";
 import { clsx, type ClassValue } from "clsx";
 import { stegaClean } from "next-sanity";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function localizedPath(path: string, language: string): string {
+  const map = pathTranslations[language];
+  if (!map) return path;
+  return map[path] ?? path;
 }
 
 export function resolveLink(link: LinkType, locale?: string): string {

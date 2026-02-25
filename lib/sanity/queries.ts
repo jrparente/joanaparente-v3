@@ -1,16 +1,36 @@
 import { groq } from "next-sanity";
 import { fetchSanity } from "./fetch";
+import { client } from "./client";
 import {
   FooterType,
   Homepage,
   NavigationType,
   PageType,
+  ProjectCardType,
+  ProjectType,
   SiteSettingsType,
 } from "@/types/Sanity";
 
 type Params = {
   language: string | null;
 };
+
+const linkProjection = `{
+  label,
+  type,
+  params,
+  internal->{
+    _type,
+    _id,
+    title,
+    metadata {
+      slug {
+        current
+      }
+    }
+  },
+  external
+}`;
 
 // Define as a regular string (not groq template)
 export const contentBlocksProjection = `
@@ -36,22 +56,7 @@ export const contentBlocksProjection = `
         }
       },
       image,
-      buttonLink {
-        label,
-        type,
-        params,
-        internal->{
-          _type,
-          _id,
-          title,
-          metadata {
-            slug {
-              current
-            }
-          }
-        },
-        external
-      }
+      buttonLink ${linkProjection}
     },
     _type == "intro" => {
       ...,
@@ -72,6 +77,62 @@ export const contentBlocksProjection = `
           }
         }
       },
+    },
+    _type == "cta" => {
+      ...,
+      _type,
+      _key,
+      title,
+      description,
+      buttonLink ${linkProjection},
+      buttonLink2 ${linkProjection}
+    },
+    _type == "richText" => {
+      ...,
+      _type,
+      _key,
+      content[]{
+        ...,
+        _type == "image" => {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      }
+    },
+    _type == "projectList" => {
+      ...,
+      _type,
+      _key,
+      title,
+      description,
+      headingLevel,
+      maxProjects,
+      showViewAll,
+      viewAllLabel,
+      emptyStateText
+    },
+    _type == "contactSection" => {
+      ...,
+      _type,
+      _key,
+      eyebrow,
+      heading,
+      intro,
+      emailLabel,
+      linkedinLabel,
+      location,
+      microcopy,
+      backLabel
+    },
+    _type == "processSteps" => {
+      ...,
+      _type,
+      _key,
+      heading,
+      steps[]{ icon, title, description }
     }
   }
 `;
@@ -103,22 +164,7 @@ export async function getNavigation(language: string) {
   const query = groq`
     *[_type == "navigation" && language == $language][0] {
       title,
-      items[] {
-        label,
-        type,
-        params,
-        internal->{
-          _type,
-          _id,
-          title,
-          metadata {
-            slug {
-              current
-            }
-          }
-        },
-        external
-      }
+      items[] ${linkProjection}
     }
   `;
 
@@ -196,4 +242,155 @@ export async function getPageBySlug({
   }
 
   return fetchSanity<PageType>({ query, params });
+}
+
+// Uses client directly to avoid draftMode() call in generateStaticParams
+export async function getPageSlugs() {
+  const query = groq`
+    *[_type == "page" && defined(slug.current) && defined(language)] {
+      "slug": slug.current,
+      language
+    }
+  `;
+
+  return client.fetch<{ slug: string; language: string }[]>(query);
+}
+
+// ─── Project Queries ───────────────────────────────────────────────
+
+export async function getProjects({ language }: Params) {
+  const query = language
+    ? groq`
+        *[_type == "project" && language == $language] | order(date desc) {
+          _id,
+          title,
+          slug,
+          tagline,
+          subtitle,
+          image,
+          projectCategory,
+          projectType,
+          clientIndustry,
+          techStack {
+            title,
+            logos[]-> {
+              _id,
+              name,
+              image
+            }
+          }
+        }
+      `
+    : groq`
+        *[_type == "project"] | order(date desc) {
+          _id,
+          title,
+          slug,
+          tagline,
+          subtitle,
+          image,
+          projectCategory,
+          projectType,
+          clientIndustry,
+          techStack {
+            title,
+            logos[]-> {
+              _id,
+              name,
+              image
+            }
+          }
+        }
+      `;
+
+  return fetchSanity<ProjectCardType[]>({
+    query,
+    params: language ? { language } : {},
+  });
+}
+
+export async function getProject({
+  slug,
+  language,
+}: {
+  slug: string;
+  language: string;
+}) {
+  const query = groq`
+    *[_type == "project" && slug.current == $slug && language == $language][0] {
+      _id,
+      _type,
+      title,
+      slug,
+      tagline,
+      subtitle,
+      description,
+      objective,
+      clientIndustry,
+      businessMetrics,
+      transformationStatement,
+      productBridge,
+      liveUrl,
+      sourceCodeUrl,
+      date,
+      duration,
+      image,
+      featuredScreenshot {
+        ...,
+        asset->{
+          _id,
+          url
+        }
+      },
+      photoGallery[] {
+        ...,
+        asset->{
+          _id,
+          url
+        }
+      },
+      keyFeatures,
+      projectCategory,
+      projectType,
+      techStack {
+        title,
+        logos[]-> {
+          _id,
+          name,
+          image
+        }
+      },
+      role,
+      projectScope,
+      challenges,
+      impact,
+      seo {
+        title,
+        metaDescription,
+        keywords,
+        defaultOgImage {
+          asset->{ url }
+        },
+        noIndex
+      },
+      language
+    }
+  `;
+
+  return fetchSanity<ProjectType>({
+    query,
+    params: { slug, language },
+  });
+}
+
+// Uses client directly to avoid draftMode() call in generateStaticParams
+export async function getProjectSlugs() {
+  const query = groq`
+    *[_type == "project" && defined(slug.current)] {
+      "slug": slug.current,
+      language
+    }
+  `;
+
+  return client.fetch<{ slug: string; language: string }[]>(query);
 }

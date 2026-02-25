@@ -4,10 +4,10 @@ import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 
 const locales = ["en", "pt"];
-const defaultLocale = "en";
+const defaultLocale = "pt";
 
 function getLocale(request: NextRequest) {
-  const acceptedLanguage = request.headers.get("accept-language") ?? undefined;
+  const acceptedLanguage = request.headers.get("accept-language") ?? "pt";
   const headers = { "accept-language": acceptedLanguage };
   const languages = new Negotiator({ headers }).languages();
 
@@ -48,6 +48,15 @@ export function middleware(request: NextRequest) {
 
     // Always redirect to the URL with the locale included
     return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
+  }
+
+  // Rewrite /pt/projetos(/*) → /pt/projects(/*) so the projects/ directory resolves
+  const projectsRewrite = pathname.match(/^\/(pt)\/projetos(\/.*)?$/);
+  if (projectsRewrite) {
+    const rest = projectsRewrite[2] || "";
+    return NextResponse.rewrite(
+      new URL(`/pt/projects${rest}`, request.url)
+    );
   }
 
   // If the locale is already in the pathname, proceed as normal

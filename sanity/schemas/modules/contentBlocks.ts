@@ -12,5 +12,8 @@ export const contentBlocks = defineType({
     { type: "hero" },
     { type: "intro" },
     { type: "bioPage" },
+    { type: "projectList" },
+    { type: "contactSection" },
+    { type: "processSteps" },
   ],
 });

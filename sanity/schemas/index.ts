@@ -18,6 +18,9 @@ import project from "./documents/project";
 import logoList from "./modules/logoList";
 import logo from "./documents/logo";
 import bioPage from "./modules/bioPage";
+import { projectList } from "./modules/projectList";
+import { contactSection } from "./modules/contactSection";
+import { processSteps } from "./modules/processSteps";
 
 const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -41,6 +44,9 @@ const schema: { types: SchemaTypeDefinition[] } = {
     hero,
     intro,
     logoList,
+    projectList,
+    contactSection,
+    processSteps,
 
     // objects
     link,

@@ -11,6 +11,9 @@ export async function generateMetadata() {
   return {
     title: page.metadata.title,
     description: page.metadata.metaDescription,
+    alternates: {
+      canonical: "https://www.joanaparente.com/bio",
+    },
   };
 }
 

@@ -54,6 +54,11 @@ export default defineType({
       type: "datetime",
       description: "The date and time when the blog post was published.",
     }),
+    defineField({
+      name: "language",
+      type: "string",
+      readOnly: true,
+    }),
   ],
 
   preview: {

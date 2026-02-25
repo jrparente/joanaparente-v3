@@ -1,10 +1,13 @@
+"use client";
+
 import { urlFor } from "@/lib/sanity/image";
 import { HeroBlock } from "@/types/Sanity";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { resolveLink } from "@/lib/utils";
+import { cn, resolveLink } from "@/lib/utils";
 import { RichText } from "../portabletext/RichText";
+import { trackContactCtaClick } from "@/lib/analytics";
 
 type Props = {
   block: HeroBlock;
@@ -13,16 +16,23 @@ type Props = {
 
 const Hero = ({ block, language }: Props) => {
   const { subheading, title, subtitle, image, buttonLink, description } = block;
-
+  const hasImage = Boolean(image?.asset);
   const href = buttonLink ? resolveLink(buttonLink, language) : "#";
 
   return (
     <section className="w-full bg-background py-16 md:py-24 min-h-screen">
-      <div className="max-w-5xl mx-auto flex flex-col-reverse items-center gap-12 px-4 md:flex-row md:justify-between">
+      <div
+        className={cn(
+          "max-w-5xl mx-auto px-4 w-full",
+          hasImage
+            ? "flex flex-col-reverse items-center gap-12 md:flex-row md:justify-between"
+            : "flex flex-col items-center text-center",
+        )}
+      >
         {/* Text content */}
         <div className="text-center md:text-left md:max-w-xl">
           {subheading && (
-            <p className="text-muted-foreground mb-2 text-sm font-mono uppercase tracking-wide">
+            <p className="text-[var(--color-brand)] mb-2 text-sm font-sans font-semibold uppercase tracking-widest">
               {subheading}
             </p>
           )}
@@ -48,7 +58,14 @@ const Hero = ({ block, language }: Props) => {
           {buttonLink && (
             <div className="mt-8">
               <Button asChild>
-                <Link href={href}>{buttonLink.label || "Learn More"}</Link>
+                <Link
+                  href={href}
+                  onClick={() =>
+                    trackContactCtaClick("hero", language || "en")
+                  }
+                >
+                  {buttonLink.label || "Learn More"}
+                </Link>
               </Button>
             </div>
           )}

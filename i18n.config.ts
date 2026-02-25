@@ -1,6 +1,6 @@
 const languages = [
-  { id: "en", title: "English", locale: "en", isDefault: true },
-  { id: "pt", title: "Português", locale: "pt" },
+  { id: "pt", title: "Português", locale: "pt", isDefault: true },
+  { id: "en", title: "English", locale: "en" },
 ];
 
 const defaultLanguage = languages.find((item) => item.isDefault);
@@ -15,4 +15,15 @@ const googleTranslateLanguages = languages.map(({ id, title }) => ({
   title,
 }));
 
-export { languages, defaultLanguage, i18n, googleTranslateLanguages };
+const pathTranslations: Record<string, Record<string, string>> = {
+  pt: { projects: "projetos", contact: "contacto" },
+  en: { projects: "projects", contact: "contact" },
+};
+
+export {
+  languages,
+  defaultLanguage,
+  i18n,
+  googleTranslateLanguages,
+  pathTranslations,
+};
