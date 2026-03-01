@@ -26,11 +26,7 @@ export type InternalLink = {
   _ref: string;
   _typeOf?: string;
   title?: string;
-  metadata?: {
-    slug: {
-      current: string;
-    };
-  };
+  slug?: string;
 };
 
 export type LinkType = {

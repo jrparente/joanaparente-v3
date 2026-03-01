@@ -24,7 +24,7 @@ export function getTranslatedSlug(
 export function resolveLink(link: LinkType, locale?: string): string {
   if (link.type === "external") return link.external ?? "#";
 
-  const rawSlug = link.internal?.metadata?.slug?.current || "";
+  const rawSlug = link.internal?.slug || "";
   const slug = stegaClean(rawSlug).trim().toLowerCase();
   const base = slug === "index" ? "" : `/${slug}`;
   const params = link.params ? stegaClean(link.params) : "";

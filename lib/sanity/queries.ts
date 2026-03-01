@@ -23,11 +23,7 @@ const linkProjection = `{
     _type,
     _id,
     title,
-    metadata {
-      slug {
-        current
-      }
-    }
+    "slug": slug.current
   },
   external
 }`;
