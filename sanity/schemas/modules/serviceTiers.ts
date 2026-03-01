@@ -10,6 +10,12 @@ export const serviceTiers = defineType({
   fields: [
     visibleField,
     defineField({
+      name: "eyebrow",
+      title: "Eyebrow",
+      type: "string",
+      description: 'e.g. "Services" or "Serviços"',
+    }),
+    defineField({
       name: "heading",
       title: "Section Heading",
       type: "string",
@@ -68,6 +74,43 @@ export const serviceTiers = defineType({
               description: 'e.g. "4–6 weeks from kickoff"',
             }),
             defineField({
+              name: "badgeLabel",
+              title: "Badge Label",
+              type: "string",
+              description:
+                'Shown above highlighted tiers. e.g. "Most popular" or "Mais popular"',
+            }),
+            defineField({
+              name: "proofLabel",
+              title: "Proof Label",
+              type: "string",
+              description:
+                'e.g. "See it in action:" or "Vê em ação:"',
+            }),
+            defineField({
+              name: "proofLink",
+              title: "Proof Link",
+              type: "object",
+              description: "Case study link shown below features",
+              fields: [
+                defineField({
+                  name: "label",
+                  title: "Label",
+                  type: "string",
+                }),
+                defineField({
+                  name: "href",
+                  title: "URL",
+                  type: "url",
+                  validation: (rule) =>
+                    rule.uri({
+                      allowRelative: true,
+                      scheme: ["http", "https"],
+                    }),
+                }),
+              ],
+            }),
+            defineField({
               name: "ctaLabel",
               title: "CTA Button Label",
               type: "string",
@@ -87,6 +130,13 @@ export const serviceTiers = defineType({
         },
       ],
       validation: (rule) => rule.required().min(1).max(4),
+    }),
+    defineField({
+      name: "footnote",
+      title: "Footnote",
+      type: "string",
+      description:
+        'Text below tier cards. Supports a markdown-style link: [label](url). e.g. "Not sure? [Tell me what you need](/contact)."',
     }),
   ],
   preview: {

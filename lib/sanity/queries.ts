@@ -65,6 +65,7 @@ export const contentBlocksProjection = `
       heading,
       subheading,
       anchor,
+      byline,
       content{
         content[]{
           ...,
@@ -91,6 +92,9 @@ export const contentBlocksProjection = `
       ...,
       _type,
       _key,
+      eyebrow,
+      heading,
+      variant,
       content[]{
         ...,
         _type == "image" => {
@@ -167,7 +171,9 @@ export const contentBlocksProjection = `
       ...,
       _type,
       _key,
+      eyebrow,
       heading,
+      footnote,
       tiers[] {
         name,
         subtitle,
@@ -175,6 +181,9 @@ export const contentBlocksProjection = `
         features[],
         highlighted,
         timeline,
+        badgeLabel,
+        proofLabel,
+        proofLink,
         ctaLabel,
         ctaLink ${linkProjection}
       }
@@ -183,6 +192,7 @@ export const contentBlocksProjection = `
       ...,
       _type,
       _key,
+      eyebrow,
       heading,
       items[] {
         quote,
@@ -199,12 +209,23 @@ export const contentBlocksProjection = `
       ...,
       _type,
       _key,
+      eyebrow,
       heading,
       items[] {
         question,
         answer
       },
       generateJsonLd
+    },
+    _type == "connectStrip" => {
+      ...,
+      _type,
+      _key,
+      label,
+      links[] {
+        label,
+        url
+      }
     },
     _type == "metricBar" => {
       ...,

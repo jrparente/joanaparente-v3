@@ -13,7 +13,7 @@ export const cta = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (Rule) => Rule.required().min(1).max(100),
+      validation: (Rule) => Rule.required().min(1).max(200),
     }),
     defineField({
       name: "description",

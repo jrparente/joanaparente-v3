@@ -10,6 +10,12 @@ export const faqAccordion = defineType({
   fields: [
     visibleField,
     defineField({
+      name: "eyebrow",
+      title: "Eyebrow",
+      type: "string",
+      description: 'e.g. "Questions"',
+    }),
+    defineField({
       name: "heading",
       title: "Section Heading",
       type: "string",

@@ -306,3 +306,19 @@
 .animate-fade-up {
   animation: fade-up 0.6s ease-out both;
 }
+
+/* ─────────────────────────────────────────────
+   STORY DROP CAP — About page intro story mode
+   ───────────────────────────────────────────── */
+
+.story-prose > p:first-child::first-letter {
+  float: left;
+  font-family: var(--font-heading);
+  font-size: 3.5em;
+  line-height: 0.8;
+  color: var(--color-brand);
+  font-weight: 600;
+  padding-right: 0.1em;
+  padding-top: 0.08em;
+  font-variation-settings: 'WONK' 0;
+}

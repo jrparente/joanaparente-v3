@@ -10,6 +10,10 @@ import ProcessSteps from "./modules/ProcessSteps";
 import HeroHome from "./modules/HeroHome";
 import MetricBar from "./modules/MetricBar";
 import ServiceTierPreview from "./modules/ServiceTierPreview";
+import ServiceTiers from "./modules/ServiceTiers";
+import FaqAccordion from "./modules/FaqAccordion";
+import Testimonials from "./modules/Testimonials";
+import ConnectStrip from "./modules/ConnectStrip";
 
 type Props = {
   contentBlock: any[];
@@ -83,6 +87,26 @@ const ContentBlocks = ({ contentBlock, language }: Props) => {
             return <MetricBar key={index} block={block} />;
           case "processSteps":
             return <ProcessSteps key={index} block={block} />;
+          case "serviceTiers":
+            return (
+              <ServiceTiers
+                key={index}
+                block={block}
+                language={language ?? (defaultLanguage?.id || undefined)}
+              />
+            );
+          case "faqAccordion":
+            return <FaqAccordion key={index} block={block} />;
+          case "testimonials":
+            return (
+              <Testimonials
+                key={index}
+                block={block}
+                language={language ?? (defaultLanguage?.id || undefined)}
+              />
+            );
+          case "connectStrip":
+            return <ConnectStrip key={index} block={block} />;
           case "bioPage":
             return <BioPage key={index} block={block} />;
           default:

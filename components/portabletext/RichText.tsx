@@ -28,6 +28,13 @@ export const RichText = ({ value }: { value: any }) => {
       h2: ({ children }) => (
         <h2 className="mt-6 text-xl font-semibold">{children}</h2>
       ),
+      blockquote: ({ children }) => (
+        <blockquote className="my-12 border-l-4 border-[var(--color-brand)] py-6 pl-7">
+          <p className="font-heading text-2xl italic font-normal leading-snug text-[var(--color-brand)]">
+            {children}
+          </p>
+        </blockquote>
+      ),
     },
     marks: {
       link: ({ value, children }) => {
@@ -56,6 +63,11 @@ export const RichText = ({ value }: { value: any }) => {
       underline: ({ children }) => (
         <span className="underline">{children}</span>
       ),
+      highlight: ({ children }) => (
+        <mark className="rounded-sm bg-[var(--color-brand-light)] px-1.5 py-0.5 font-inherit text-inherit">
+          {children}
+        </mark>
+      ),
     },
     list: {
       bullet: ({ children }) => (
@@ -63,6 +75,11 @@ export const RichText = ({ value }: { value: any }) => {
       ),
     },
     types: {
+      break: () => (
+        <div className="my-12 flex items-center justify-center">
+          <div className="h-0.5 w-10 rounded-[1px] bg-[var(--color-brand)]" />
+        </div>
+      ),
       image: ({ value }) => {
         const imageUrl = value?.asset?.url;
         const alt = value?.alt || "";

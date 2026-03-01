@@ -13,7 +13,7 @@ export const intro = defineType({
       name: "heading",
       title: "Heading",
       type: "string",
-      validation: (Rule) => Rule.required().min(1).max(100),
+      validation: (Rule) => Rule.max(100),
     }),
     defineField({
       name: "anchor",
@@ -21,7 +21,6 @@ export const intro = defineType({
       type: "string",
       description:
         "Used for anchor navigation (e.g., #about-me). Must be unique on the page.",
-      validation: (Rule) => Rule.required().min(1).max(100),
     }),
     defineField({
       name: "subheading",
@@ -40,6 +39,13 @@ export const intro = defineType({
       options: {
         hotspot: true,
       },
+    }),
+    defineField({
+      name: "byline",
+      title: "Byline",
+      type: "string",
+      description:
+        'Displayed after the content. e.g. "Joana Ramos Parente · Faro, Portugal"',
     }),
   ],
 

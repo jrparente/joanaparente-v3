@@ -59,11 +59,12 @@ export type IntroBlock = {
   _id: string;
   _key?: string;
   visible?: boolean;
-  heading: string;
+  heading?: string;
   anchor: string;
   subheading?: string;
   content: { content: PortableTextBlock[] };
   image?: SanityImage;
+  byline?: string;
 };
 
 export type CtaBlock = {
@@ -80,6 +81,9 @@ export type RichTextBlockType = {
   _type: "richText";
   _key?: string;
   visible?: boolean;
+  eyebrow?: string;
+  heading?: string;
+  variant?: "default" | "elevated";
   content: PortableTextBlock[];
 };
 
@@ -157,7 +161,9 @@ export type ServiceTiersBlock = {
   _type: "serviceTiers";
   _key?: string;
   visible?: boolean;
+  eyebrow?: string;
   heading: string;
+  footnote?: string;
   tiers: {
     name: string;
     subtitle?: string;
@@ -165,6 +171,9 @@ export type ServiceTiersBlock = {
     features?: string[];
     highlighted?: boolean;
     timeline?: string;
+    badgeLabel?: string;
+    proofLabel?: string;
+    proofLink?: { label: string; href: string };
     ctaLabel: string;
     ctaLink: LinkType;
   }[];
@@ -174,6 +183,7 @@ export type TestimonialsBlock = {
   _type: "testimonials";
   _key?: string;
   visible?: boolean;
+  eyebrow?: string;
   heading?: string;
   items: {
     quote: string;
@@ -191,12 +201,24 @@ export type FaqAccordionBlock = {
   _type: "faqAccordion";
   _key?: string;
   visible?: boolean;
+  eyebrow?: string;
   heading: string;
   items: {
     question: string;
     answer: PortableTextBlock[];
   }[];
   generateJsonLd?: boolean;
+};
+
+export type ConnectStripBlock = {
+  _type: "connectStrip";
+  _key?: string;
+  visible?: boolean;
+  label: string;
+  links: {
+    label: string;
+    url: string;
+  }[];
 };
 
 export type MetricBarBlock = {
@@ -363,7 +385,8 @@ export type ContentBlock =
   | FaqAccordionBlock
   | MetricBarBlock
   | CaseStudySpotlightBlock
-  | ContactFormBlock;
+  | ContactFormBlock
+  | ConnectStripBlock;
 
 export type Homepage = {
   _id: string;

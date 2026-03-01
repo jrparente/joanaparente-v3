@@ -19,13 +19,15 @@ const Cta = ({ block, language }: Props) => {
     <section className="relative z-[1] w-full bg-[var(--color-brand)] dark:bg-[var(--color-brand-light)] py-20">
       <div className="mx-auto max-w-[1200px] px-8 text-center">
         {title && (
-          <h2 className="font-heading text-3xl font-semibold text-white dark:text-[var(--color-text)]">
+          <h2 className="font-heading text-balance text-3xl font-semibold text-white dark:text-[var(--color-text)]">
             {title}
           </h2>
         )}
 
         {description && (
-          <p className="mt-4 text-lg text-white/85 dark:text-[var(--color-text-muted)]">{description}</p>
+          <p className="mt-4 text-lg text-white/85 dark:text-[var(--color-text-muted)] text-balance">
+            {description}
+          </p>
         )}
 
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">

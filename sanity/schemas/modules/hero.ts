@@ -44,7 +44,6 @@ export const hero = defineType({
       name: "buttonLink",
       title: "Button Link",
       type: "link",
-      validation: (Rule) => Rule.required(),
     }),
   ],
 

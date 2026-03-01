@@ -10,6 +10,12 @@ export const testimonials = defineType({
   fields: [
     visibleField,
     defineField({
+      name: "eyebrow",
+      title: "Eyebrow",
+      type: "string",
+      description: 'e.g. "Clients"',
+    }),
+    defineField({
       name: "heading",
       title: "Section Heading (optional)",
       type: "string",
@@ -65,7 +71,7 @@ export const testimonials = defineType({
           },
         },
       ],
-      validation: (rule) => rule.min(1),
+      validation: (rule) => rule.min(0),
     }),
   ],
   preview: {

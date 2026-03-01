@@ -23,5 +23,6 @@ export const contentBlocks = defineType({
     { type: "metricBar" },
     { type: "caseStudySpotlight" },
     { type: "contactForm" },
+    { type: "connectStrip" },
   ],
 });

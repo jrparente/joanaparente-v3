@@ -29,6 +29,7 @@ import { faqAccordion } from "./modules/faqAccordion";
 import { metricBar } from "./modules/metricBar";
 import { caseStudySpotlight } from "./modules/caseStudySpotlight";
 import { contactForm } from "./modules/contactForm";
+import { connectStrip } from "./modules/connectStrip";
 
 const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -63,6 +64,7 @@ const schema: { types: SchemaTypeDefinition[] } = {
     metricBar,
     caseStudySpotlight,
     contactForm,
+    connectStrip,
 
     // objects
     link,
