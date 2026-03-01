@@ -1,5 +1,6 @@
 import { DocumentsIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { visibleField } from "../fragments/visibleField";
 
 export const blogPostList = defineType({
   name: "blogPostList",
@@ -7,6 +8,7 @@ export const blogPostList = defineType({
   icon: DocumentsIcon,
   type: "object",
   fields: [
+    visibleField,
     defineField({
       name: "maxPosts",
       title: "Maximum Posts",
@@ -22,9 +24,12 @@ export const blogPostList = defineType({
     // }),
   ],
   preview: {
-    prepare() {
+    select: {
+      visible: "visible",
+    },
+    prepare({ visible }) {
       return {
-        title: "Blog Post List",
+        title: `${visible === false ? "[Hidden] " : ""}Blog Post List`,
         subtitle: "Displays all blog posts automatically",
       };
     },

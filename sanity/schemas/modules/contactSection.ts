@@ -1,5 +1,6 @@
 import { EnvelopeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { visibleField } from "../fragments/visibleField";
 
 export const contactSection = defineType({
   name: "contactSection",
@@ -7,6 +8,7 @@ export const contactSection = defineType({
   icon: EnvelopeIcon,
   type: "object",
   fields: [
+    visibleField,
     defineField({
       name: "eyebrow",
       title: "Eyebrow",
@@ -57,10 +59,11 @@ export const contactSection = defineType({
   preview: {
     select: {
       title: "heading",
+      visible: "visible",
     },
-    prepare({ title }) {
+    prepare({ title, visible }) {
       return {
-        title: title || "Contact Section",
+        title: `${visible === false ? "[Hidden] " : ""}${title || "Contact Section"}`,
         subtitle: "Contact information and CTA",
       };
     },

@@ -1,62 +1,63 @@
-import {
-  MessageSquare,
-  FileSearch,
-  Handshake,
-  type LucideIcon,
-} from "lucide-react";
 import { ProcessStepsBlock } from "@/types/Sanity";
-
-const iconMap: Record<string, LucideIcon> = {
-  MessageSquare,
-  FileSearch,
-  Handshake,
-};
 
 type Props = {
   block: ProcessStepsBlock;
 };
 
 const ProcessSteps = ({ block }: Props) => {
-  const { heading, steps } = block;
+  const { eyebrow, heading, steps } = block;
 
   if (!steps || steps.length === 0) return null;
 
   return (
-    <section className="w-full">
-      <div className="max-w-2xl mx-auto px-4">
-        <hr className="my-12 border-border" />
-
-        {heading && (
-          <h2 className="text-2xl font-bold tracking-tight">{heading}</h2>
+    <section className="relative z-[1] w-full py-16 md:py-24">
+      <div className="mx-auto max-w-[1200px] px-8">
+        {eyebrow && (
+          <div className="section-eyebrow mb-4">{eyebrow}</div>
         )}
 
-        <ol className="mt-8 space-y-8">
-          {steps.map((step, i) => {
-            const Icon = step.icon ? iconMap[step.icon] : undefined;
+        {heading && (
+          <h2 className="mb-12 text-[var(--color-text)]">{heading}</h2>
+        )}
 
-            return (
-              <li key={i} className="flex gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-light)] text-[var(--color-brand-dark)]">
-                  {Icon ? (
-                    <Icon className="h-5 w-5" />
-                  ) : (
-                    <span className="text-sm font-semibold">{i + 1}</span>
-                  )}
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold tracking-tight">
-                    {step.title}
-                  </h3>
-                  {step.description && (
-                    <p className="mt-1 text-muted-foreground leading-relaxed">
-                      {step.description}
-                    </p>
-                  )}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+        {/* Grid with connecting line */}
+        <div className="relative grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          {/* Connecting line — desktop only */}
+          <div
+            className="pointer-events-none absolute left-[calc(2rem+2px)] right-[calc(2rem+2px)] top-8 hidden h-0.5 lg:block"
+            style={{
+              background:
+                "linear-gradient(to right, var(--color-brand-light), var(--color-brand-light))",
+            }}
+            aria-hidden="true"
+          />
+
+          {steps.map((step, i) => (
+            <div
+              key={i}
+              className="group flex flex-col items-center text-center"
+            >
+              {/* Numbered circle */}
+              <div className="relative z-[1] flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--color-brand-light)] bg-[var(--color-surface-elevated)] transition-all duration-200 group-hover:border-[var(--color-brand)] group-hover:bg-[var(--color-brand-light)]">
+                <span className="font-heading text-xl text-[var(--color-brand)]">
+                  {i + 1}
+                </span>
+              </div>
+
+              {/* Step title */}
+              <h3 className="mt-5 font-heading text-lg font-semibold text-[var(--color-text)]">
+                {step.title}
+              </h3>
+
+              {/* Step description */}
+              {step.description && (
+                <p className="mt-2 max-w-[240px] font-sans text-sm leading-relaxed text-[var(--color-text-muted)]">
+                  {step.description}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

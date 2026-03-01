@@ -1,5 +1,6 @@
 import { defineType, defineField } from "sanity";
 import { UserIcon } from "@sanity/icons";
+import { visibleField } from "../fragments/visibleField";
 
 export default defineType({
   name: "bioPage",
@@ -7,6 +8,7 @@ export default defineType({
   type: "object",
   icon: UserIcon,
   fields: [
+    visibleField,
     defineField({
       name: "profileImage",
       title: "Profile Image",
@@ -87,4 +89,17 @@ export default defineType({
       description: "Prevent search engines from indexing this page.",
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      visible: "visible",
+    },
+    prepare({ title, visible }) {
+      return {
+        title: `${visible === false ? "[Hidden] " : ""}Bio Page`,
+        subtitle: title,
+        media: UserIcon,
+      };
+    },
+  },
 });

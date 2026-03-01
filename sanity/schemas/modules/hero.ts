@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { StarIcon } from "@sanity/icons";
+import { visibleField } from "../fragments/visibleField";
 
 export const hero = defineType({
   name: "hero",
@@ -7,6 +8,7 @@ export const hero = defineType({
   icon: StarIcon,
   type: "object",
   fields: [
+    visibleField,
     defineField({
       name: "subheading",
       title: "Subheading",
@@ -50,10 +52,11 @@ export const hero = defineType({
     select: {
       title: "title",
       subtitle: "subtitle",
+      visible: "visible",
     },
-    prepare({ title, subtitle }) {
+    prepare({ title, subtitle, visible }) {
       return {
-        title: "Hero Section",
+        title: `${visible === false ? "[Hidden] " : ""}Hero Section`,
         subtitle: `${title} - ${subtitle}`,
         media: StarIcon,
       };

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { resolveLink } from "@/lib/utils";
 import { CtaBlock } from "@/types/Sanity";
 import { trackContactCtaClick } from "@/lib/analytics";
@@ -17,38 +16,54 @@ const Cta = ({ block, language }: Props) => {
   const href2 = buttonLink2 ? resolveLink(buttonLink2, language) : null;
 
   return (
-    <section className="w-full bg-primary py-16 md:py-24">
-      <div className="max-w-3xl mx-auto px-4 text-center">
+    <section className="relative z-[1] w-full bg-[var(--color-brand)] py-20">
+      <div className="mx-auto max-w-[1200px] px-8 text-center">
         {title && (
-          <h2 className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl">
+          <h2 className="font-heading text-3xl font-semibold text-white">
             {title}
           </h2>
         )}
 
         {description && (
-          <p className="mt-4 text-lg text-primary-foreground/80">
-            {description}
-          </p>
+          <p className="mt-4 text-lg text-white/85">{description}</p>
         )}
 
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
           {buttonLink && (
-            <Button asChild variant="secondary" size="lg">
-              <Link
-                href={href}
-                onClick={() =>
-                  trackContactCtaClick("cta_block", language || "en")
-                }
+            <Link
+              href={href}
+              onClick={() =>
+                trackContactCtaClick("cta_block", language || "en")
+              }
+              className="inline-flex items-center gap-2 rounded-md bg-white px-8 py-3 font-semibold text-[var(--color-brand)] transition-colors hover:bg-[var(--color-surface)]"
+            >
+              {buttonLink.label || "Learn More"}
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
               >
-                {buttonLink.label || "Learn More"}
-              </Link>
-            </Button>
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
           )}
 
           {buttonLink2 && href2 && (
-            <Button asChild variant="outline" size="lg" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-              <Link href={href2}>{buttonLink2.label || "Learn More"}</Link>
-            </Button>
+            <Link
+              href={href2}
+              className="inline-flex items-center gap-1 font-medium text-white/80 transition-colors hover:text-white"
+            >
+              {buttonLink2.label || "Learn More"}
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
           )}
         </div>
       </div>

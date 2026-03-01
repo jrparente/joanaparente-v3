@@ -80,3 +80,41 @@ export function trackEmailCaptured(
     page_language: pageLanguage,
   });
 }
+
+// ─── Phase 1 Block Events ──────────────────────────────────────────
+
+export function trackContactFormSubmit(
+  projectType: string,
+  budgetRange: string,
+  pageLanguage: string
+) {
+  sendGAEvent("event", "contact_form_submit", {
+    project_type: projectType,
+    budget_range: budgetRange,
+    page_language: pageLanguage,
+  });
+}
+
+export function trackServiceTierClick(tierName: string, pagePath: string) {
+  sendGAEvent("event", "service_tier_click", {
+    tier_name: tierName,
+    page_path: pagePath,
+  });
+}
+
+export function trackFaqExpand(questionText: string, pagePath: string) {
+  sendGAEvent("event", "faq_expand", {
+    question_text: questionText,
+    page_path: pagePath,
+  });
+}
+
+export function trackCaseStudySpotlightClick(
+  projectSlug: string,
+  sourcePage: string
+) {
+  sendGAEvent("event", "case_study_spotlight_click", {
+    project_slug: projectSlug,
+    source_page: sourcePage,
+  });
+}

@@ -21,6 +21,14 @@ import bioPage from "./modules/bioPage";
 import { projectList } from "./modules/projectList";
 import { contactSection } from "./modules/contactSection";
 import { processSteps } from "./modules/processSteps";
+import { heroHome } from "./modules/heroHome";
+import { serviceTierPreview } from "./modules/serviceTierPreview";
+import { serviceTiers } from "./modules/serviceTiers";
+import { testimonials } from "./modules/testimonials";
+import { faqAccordion } from "./modules/faqAccordion";
+import { metricBar } from "./modules/metricBar";
+import { caseStudySpotlight } from "./modules/caseStudySpotlight";
+import { contactForm } from "./modules/contactForm";
 
 const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -47,6 +55,14 @@ const schema: { types: SchemaTypeDefinition[] } = {
     projectList,
     contactSection,
     processSteps,
+    heroHome,
+    serviceTierPreview,
+    serviceTiers,
+    testimonials,
+    faqAccordion,
+    metricBar,
+    caseStudySpotlight,
+    contactForm,
 
     // objects
     link,

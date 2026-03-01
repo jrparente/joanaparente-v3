@@ -14,6 +14,13 @@ export function localizedPath(path: string, language: string): string {
   return map[path] ?? path;
 }
 
+export function getTranslatedSlug(
+  translations: Array<{ slug: string; language: string }> | undefined,
+  targetLanguage: string
+): string | null {
+  return translations?.find((t) => t.language === targetLanguage)?.slug ?? null;
+}
+
 export function resolveLink(link: LinkType, locale?: string): string {
   if (link.type === "external") return link.external ?? "#";
 

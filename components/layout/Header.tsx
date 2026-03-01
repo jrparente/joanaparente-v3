@@ -16,11 +16,11 @@ export const Header = ({ navigation, language }: Props) => {
         {/* Logo or Site Name */}
         <Link
           href={`/${language}`}
-          className="text-xl font-semibold tracking-tight hover:opacity-80 transition flex items-center uppercase"
+          className="text-2xl font-heading tracking-tighter hover:opacity-80 transition flex items-center uppercase"
           aria-label="Link to home page"
         >
-          <span className="font-light">Joana</span>
-          <span>Parente</span>
+          <span className="font-light">J</span>
+          <span className="font-semibold">P</span>
         </Link>
 
         {/* Right-side actions */}
@@ -43,10 +43,7 @@ export const Header = ({ navigation, language }: Props) => {
           {/* Theme toggle */}
           <ThemeToggle />
           {/* Mobile menu */}
-          <MobileMenu
-            items={navigation?.items || []}
-            language={language}
-          />
+          <MobileMenu items={navigation?.items || []} language={language} />
         </div>
       </div>
     </header>

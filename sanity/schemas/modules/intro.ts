@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { ComposeIcon } from "@sanity/icons";
+import { visibleField } from "../fragments/visibleField";
 
 export const intro = defineType({
   name: "intro",
@@ -7,6 +8,7 @@ export const intro = defineType({
   icon: ComposeIcon,
   type: "object",
   fields: [
+    visibleField,
     defineField({
       name: "heading",
       title: "Heading",
@@ -45,10 +47,11 @@ export const intro = defineType({
     select: {
       title: "heading",
       subtitle: "subheading",
+      visible: "visible",
     },
-    prepare({ title, subtitle }) {
+    prepare({ title, subtitle, visible }) {
       return {
-        title: "Intro Section",
+        title: `${visible === false ? "[Hidden] " : ""}Intro Section`,
         subtitle: `${title} - ${subtitle}`,
         media: ComposeIcon,
       };

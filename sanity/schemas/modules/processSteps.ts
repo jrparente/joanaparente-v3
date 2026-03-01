@@ -1,5 +1,6 @@
 import { NumberIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { visibleField } from "../fragments/visibleField";
 
 export const processSteps = defineType({
   name: "processSteps",
@@ -7,6 +8,13 @@ export const processSteps = defineType({
   icon: NumberIcon,
   type: "object",
   fields: [
+    visibleField,
+    defineField({
+      name: "eyebrow",
+      title: "Eyebrow",
+      type: "string",
+      description: 'Section eyebrow label. e.g. "Process" / "Processo"',
+    }),
     defineField({
       name: "heading",
       title: "Heading",
@@ -58,10 +66,11 @@ export const processSteps = defineType({
     select: {
       title: "heading",
       steps: "steps",
+      visible: "visible",
     },
-    prepare({ title, steps }) {
+    prepare({ title, steps, visible }) {
       return {
-        title: title || "Process Steps",
+        title: `${visible === false ? "[Hidden] " : ""}${title || "Process Steps"}`,
         subtitle: `${steps?.length || 0} steps`,
       };
     },

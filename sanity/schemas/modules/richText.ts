@@ -6,6 +6,7 @@ import {
 } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { TextAlign } from "../fragments/TextAlign";
+import { visibleField } from "../fragments/visibleField";
 
 export const richText = defineType({
   name: "richText",
@@ -13,6 +14,7 @@ export const richText = defineType({
   icon: BlockContentIcon,
   type: "object",
   fields: [
+    visibleField,
     defineField({
       name: "content",
       title: "Content",
@@ -71,9 +73,12 @@ export const richText = defineType({
     }),
   ],
   preview: {
-    prepare() {
+    select: {
+      visible: "visible",
+    },
+    prepare({ visible }) {
       return {
-        title: "Rich Text",
+        title: `${visible === false ? "[Hidden] " : ""}Rich Text`,
         subtitle: "A flexible rich text editor for content blocks",
       };
     },

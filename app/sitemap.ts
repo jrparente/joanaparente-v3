@@ -1,13 +1,20 @@
 import type { MetadataRoute } from "next";
-import { getProjectSlugs } from "@/lib/sanity/queries";
-import { localizedPath } from "@/lib/utils";
+import {
+  getProjectSlugs,
+  getPagesWithTranslations,
+} from "@/lib/sanity/queries";
+import { localizedPath, getTranslatedSlug } from "@/lib/utils";
 
 const BASE_URL = "https://www.joanaparente.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const projectSlugs = await getProjectSlugs();
+  const [projectSlugs, cmsPages] = await Promise.all([
+    getProjectSlugs(),
+    getPagesWithTranslations(),
+  ]);
 
   const staticPages: MetadataRoute.Sitemap = [
+    // Homepage (both languages)
     {
       url: `${BASE_URL}/pt`,
       changeFrequency: "weekly",
@@ -30,6 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       },
     },
+    // Project listing (filesystem route — uses localizedPath)
     {
       url: `${BASE_URL}/pt/${localizedPath("projects", "pt")}`,
       changeFrequency: "weekly",
@@ -52,34 +60,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       },
     },
-    {
-      url: `${BASE_URL}/pt/${localizedPath("contact", "pt")}`,
-      changeFrequency: "monthly",
-      priority: 0.7,
-      alternates: {
-        languages: {
-          pt: `${BASE_URL}/pt/${localizedPath("contact", "pt")}`,
-          en: `${BASE_URL}/en/${localizedPath("contact", "en")}`,
-        },
-      },
-    },
-    {
-      url: `${BASE_URL}/en/${localizedPath("contact", "en")}`,
-      changeFrequency: "monthly",
-      priority: 0.7,
-      alternates: {
-        languages: {
-          pt: `${BASE_URL}/pt/${localizedPath("contact", "pt")}`,
-          en: `${BASE_URL}/en/${localizedPath("contact", "en")}`,
-        },
-      },
-    },
+    // Bio (no i18n)
     {
       url: `${BASE_URL}/bio`,
       changeFrequency: "monthly",
       priority: 0.5,
     },
   ];
+
+  // Dynamic CMS pages (contact, about, services, etc.) with translation-aware alternates
+  const cmsPageEntries: MetadataRoute.Sitemap = cmsPages.map(
+    ({ slug, language, _translations }) => {
+      const ptSlug = getTranslatedSlug(_translations, "pt") ?? slug;
+      const enSlug = getTranslatedSlug(_translations, "en") ?? slug;
+      const hasTranslation = _translations?.length > 1;
+
+      return {
+        url: `${BASE_URL}/${language}/${slug}`,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+        ...(hasTranslation && {
+          alternates: {
+            languages: {
+              pt: `${BASE_URL}/pt/${ptSlug}`,
+              en: `${BASE_URL}/en/${enSlug}`,
+            },
+          },
+        }),
+      };
+    }
+  );
 
   // Group project slugs by slug to pair pt/en versions
   const slugsByName = new Map<string, string[]>();
@@ -113,5 +123,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   );
 
-  return [...staticPages, ...projectPages];
+  return [...staticPages, ...cmsPageEntries, ...projectPages];
 }

@@ -41,7 +41,7 @@ const ProjectCard = ({ project, language, position }: Props) => {
       className="group block"
       onClick={() => trackPortfolioCardClick(slug.current, position ?? 0)}
     >
-      <article className="overflow-hidden rounded-lg border border-border bg-card transition-all hover:shadow-lg hover:border-primary/20">
+      <article className="overflow-hidden rounded-lg border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-primary/20">
         {/* Image */}
         {image?.asset && (
           <div className="relative aspect-[16/10] overflow-hidden">
@@ -52,6 +52,12 @@ const ProjectCard = ({ project, language, position }: Props) => {
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
             />
+            {/* Metric badge */}
+            {project.businessMetrics?.[0] && (
+              <span className="absolute right-3 top-3 rounded-full bg-[var(--color-brand)] px-3 py-1 text-xs font-semibold text-white">
+                {project.businessMetrics[0].value}
+              </span>
+            )}
           </div>
         )}
 

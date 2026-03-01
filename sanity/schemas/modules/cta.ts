@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { RocketIcon } from "@sanity/icons";
+import { visibleField } from "../fragments/visibleField";
 
 export const cta = defineType({
   name: "cta",
@@ -7,6 +8,7 @@ export const cta = defineType({
   type: "object",
   icon: RocketIcon,
   fields: [
+    visibleField,
     defineField({
       name: "title",
       title: "Title",
@@ -31,4 +33,17 @@ export const cta = defineType({
       type: "link",
     }),
   ],
+  preview: {
+    select: {
+      title: "title",
+      visible: "visible",
+    },
+    prepare({ title, visible }) {
+      return {
+        title: `${visible === false ? "[Hidden] " : ""}Call to Action`,
+        subtitle: title,
+        media: RocketIcon,
+      };
+    },
+  },
 });

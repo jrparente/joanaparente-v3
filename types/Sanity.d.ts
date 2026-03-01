@@ -45,6 +45,7 @@ export type HeroBlock = {
   _type: "hero";
   _id: string;
   _key?: string;
+  visible?: boolean;
   subheading: string;
   title: string;
   subtitle: string;
@@ -57,6 +58,7 @@ export type IntroBlock = {
   _type: "intro";
   _id: string;
   _key?: string;
+  visible?: boolean;
   heading: string;
   anchor: string;
   subheading?: string;
@@ -67,6 +69,7 @@ export type IntroBlock = {
 export type CtaBlock = {
   _type: "cta";
   _key?: string;
+  visible?: boolean;
   title: string;
   description: string;
   buttonLink: LinkType;
@@ -76,12 +79,15 @@ export type CtaBlock = {
 export type RichTextBlockType = {
   _type: "richText";
   _key?: string;
+  visible?: boolean;
   content: PortableTextBlock[];
 };
 
 export type ProjectListBlock = {
   _type: "projectList";
   _key?: string;
+  visible?: boolean;
+  eyebrow?: string;
   title?: string;
   description?: string;
   headingLevel?: "h1" | "h2";
@@ -94,6 +100,7 @@ export type ProjectListBlock = {
 export type ContactSectionBlock = {
   _type: "contactSection";
   _key?: string;
+  visible?: boolean;
   eyebrow?: string;
   heading: string;
   intro?: string;
@@ -107,12 +114,148 @@ export type ContactSectionBlock = {
 export type ProcessStepsBlock = {
   _type: "processSteps";
   _key?: string;
+  visible?: boolean;
+  eyebrow?: string;
   heading: string;
   steps?: {
     icon?: string;
     title: string;
     description?: string;
   }[];
+};
+
+export type HeroHomeBlock = {
+  _type: "heroHome";
+  _key?: string;
+  visible?: boolean;
+  eyebrow?: string;
+  heading: string;
+  subheading: string;
+  description?: PortableTextBlock[];
+  ctaPrimary: LinkType;
+  ctaSecondary?: LinkType;
+  proofStrip?: Array<{ value: string; label: string }>;
+};
+
+export type ServiceTierPreviewBlock = {
+  _type: "serviceTierPreview";
+  _key?: string;
+  visible?: boolean;
+  eyebrow?: string;
+  heading: string;
+  tiers: {
+    name: string;
+    tagline?: string;
+    startingPrice: string;
+    highlights?: string[];
+    highlighted?: boolean;
+  }[];
+  ctaLink: LinkType;
+};
+
+export type ServiceTiersBlock = {
+  _type: "serviceTiers";
+  _key?: string;
+  visible?: boolean;
+  heading: string;
+  tiers: {
+    name: string;
+    subtitle?: string;
+    priceRange: string;
+    features?: string[];
+    highlighted?: boolean;
+    timeline?: string;
+    ctaLabel: string;
+    ctaLink: LinkType;
+  }[];
+};
+
+export type TestimonialsBlock = {
+  _type: "testimonials";
+  _key?: string;
+  visible?: boolean;
+  heading?: string;
+  items: {
+    quote: string;
+    authorName: string;
+    authorRole?: string;
+    authorCompany?: string;
+    authorImage?: {
+      asset: { _id: string; url: string; metadata?: { lqip?: string } };
+      alt?: string;
+    };
+  }[];
+};
+
+export type FaqAccordionBlock = {
+  _type: "faqAccordion";
+  _key?: string;
+  visible?: boolean;
+  heading: string;
+  items: {
+    question: string;
+    answer: PortableTextBlock[];
+  }[];
+  generateJsonLd?: boolean;
+};
+
+export type MetricBarBlock = {
+  _type: "metricBar";
+  _key?: string;
+  visible?: boolean;
+  items: {
+    value: string;
+    label: string;
+  }[];
+};
+
+export type CaseStudySpotlightBlock = {
+  _type: "caseStudySpotlight";
+  _key?: string;
+  visible?: boolean;
+  heading?: string;
+  project: {
+    title: string;
+    slug: string;
+    transformationStatement?: string;
+    businessMetrics?: {
+      label: string;
+      value: string;
+      context?: string;
+    }[];
+    image?: {
+      asset: { _id: string; url: string; metadata?: { lqip?: string } };
+      alt?: string;
+    };
+  };
+  highlightMetrics?: boolean;
+  ctaLabel?: string;
+};
+
+export type ContactFormBlock = {
+  _type: "contactForm";
+  _key?: string;
+  visible?: boolean;
+  heading: string;
+  subheading?: string;
+  submitLabel: string;
+  successMessage: PortableTextBlock[];
+  nameFieldLabel?: string;
+  emailFieldLabel?: string;
+  companyFieldLabel?: string;
+  projectTypeFieldLabel?: string;
+  projectTypeOptions?: string[];
+  budgetRangeFieldLabel?: string;
+  budgetRangeOptions?: string[];
+  messageFieldLabel?: string;
+  messageFieldPlaceholder?: string;
+  languagePreferenceLabel?: string;
+  validationMessages?: {
+    required?: string;
+    minLength?: string;
+    invalidEmail?: string;
+    submitError?: string;
+  };
 };
 
 export type LogoType = {
@@ -152,6 +295,11 @@ export type ProjectCardType = {
     title: string;
     logos: LogoType[];
   };
+  businessMetrics?: Array<{
+    label: string;
+    value: string;
+    context?: string;
+  }>;
 };
 
 export type ProjectType = {
@@ -196,6 +344,7 @@ export type ProjectType = {
   impact?: PortableTextBlock[];
   seo?: MetadataType;
   language?: string;
+  _translations?: Array<{ slug: string; language: string }>;
 };
 
 // Extend this union as you add new block types
@@ -206,7 +355,15 @@ export type ContentBlock =
   | RichTextBlockType
   | ProjectListBlock
   | ContactSectionBlock
-  | ProcessStepsBlock;
+  | ProcessStepsBlock
+  | HeroHomeBlock
+  | ServiceTierPreviewBlock
+  | ServiceTiersBlock
+  | TestimonialsBlock
+  | FaqAccordionBlock
+  | MetricBarBlock
+  | CaseStudySpotlightBlock
+  | ContactFormBlock;
 
 export type Homepage = {
   _id: string;
@@ -214,6 +371,7 @@ export type Homepage = {
   title: string;
   language: string;
   contentBlocks: ContentBlock[];
+  _translations?: Array<{ slug: string; language: string }>;
 };
 
 export type FooterType = {
@@ -256,6 +414,7 @@ export type PageType = {
   slug: { current: string };
   metadata: MetadataType;
   contentBlocks: ContentBlock[];
+  _translations?: Array<{ slug: string; language: string }>;
 };
 
 export type BioPageProps = {

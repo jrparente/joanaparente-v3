@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPageBySlug, getPageSlugs } from "@/lib/sanity/queries";
 import ContentBlocks from "@/components/ContentBlocks";
-import { localizedPath } from "@/lib/utils";
+import { getTranslatedSlug } from "@/lib/utils";
 
 const BASE_URL = "https://www.joanaparente.com";
 
@@ -26,9 +26,9 @@ export async function generateMetadata({
   const title = page.metadata?.title || `${page.title} | Joana Parente`;
   const description = page.metadata?.metaDescription || "";
 
-  // Build translated alternates
-  const ptSlug = localizedPath(slug, "pt") || slug;
-  const enSlug = localizedPath(slug, "en") || slug;
+  // Build translated alternates from CMS translation metadata
+  const ptSlug = getTranslatedSlug(page._translations, "pt") ?? slug;
+  const enSlug = getTranslatedSlug(page._translations, "en") ?? slug;
 
   return {
     title,

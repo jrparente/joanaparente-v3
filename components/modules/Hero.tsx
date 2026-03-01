@@ -30,7 +30,12 @@ const Hero = ({ block, language }: Props) => {
         )}
       >
         {/* Text content */}
-        <div className="text-center md:text-left md:max-w-xl">
+        <div
+          className={cn(
+            "text-center md:max-w-xl",
+            hasImage ? " md:text-left" : "",
+          )}
+        >
           {subheading && (
             <p className="text-[var(--color-brand)] mb-2 text-sm font-sans font-semibold uppercase tracking-widest">
               {subheading}
@@ -60,9 +65,7 @@ const Hero = ({ block, language }: Props) => {
               <Button asChild>
                 <Link
                   href={href}
-                  onClick={() =>
-                    trackContactCtaClick("hero", language || "en")
-                  }
+                  onClick={() => trackContactCtaClick("hero", language || "en")}
                 >
                   {buttonLink.label || "Learn More"}
                 </Link>

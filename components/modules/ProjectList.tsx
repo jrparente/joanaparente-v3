@@ -11,6 +11,7 @@ type Props = {
 
 const ProjectList = async ({ block, language }: Props) => {
   const {
+    eyebrow,
     title,
     description,
     headingLevel,
@@ -36,19 +37,24 @@ const ProjectList = async ({ block, language }: Props) => {
 
   if (!projects || projects.length === 0) {
     return (
-      <section className="w-full bg-background py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4">
+      <section className="relative z-[1] w-full border-t border-b border-[var(--color-border)] bg-[var(--color-surface-elevated)] py-16 md:py-24">
+        <div className="mx-auto max-w-[1200px] px-8">
+          {eyebrow && (
+            <div className="section-eyebrow mb-4">{eyebrow}</div>
+          )}
           {title && (
             <Heading className={`${headingClass} mb-8`}>{title}</Heading>
           )}
           {description && (
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mb-8">
+            <p className="mt-4 mb-8 max-w-2xl text-lg text-[var(--color-text-muted)]">
               {description}
             </p>
           )}
           {emptyStateText && (
-            <div className="flex h-64 items-center justify-center rounded-md border border-dashed bg-muted">
-              <p className="text-muted-foreground">{emptyStateText}</p>
+            <div className="flex h-64 items-center justify-center rounded-md border border-dashed bg-[var(--color-surface-sunken)]">
+              <p className="text-[var(--color-text-muted)]">
+                {emptyStateText}
+              </p>
             </div>
           )}
         </div>
@@ -57,13 +63,16 @@ const ProjectList = async ({ block, language }: Props) => {
   }
 
   return (
-    <section className="w-full bg-background py-16 md:py-24">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="relative z-[1] w-full border-t border-b border-[var(--color-border)] bg-[var(--color-surface-elevated)] py-16 md:py-24">
+      <div className="mx-auto max-w-[1200px] px-8">
+        {eyebrow && (
+          <div className="section-eyebrow mb-4">{eyebrow}</div>
+        )}
         {title && (
           <Heading className={`${headingClass} mb-4`}>{title}</Heading>
         )}
         {description && (
-          <p className="text-lg text-muted-foreground max-w-2xl mb-8">
+          <p className="mb-8 max-w-2xl text-lg text-[var(--color-text-muted)]">
             {description}
           </p>
         )}
@@ -74,9 +83,9 @@ const ProjectList = async ({ block, language }: Props) => {
           <div className="mt-8 text-center">
             <Link
               href={projectsHref}
-              className="text-sm font-sans font-medium uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-sans font-medium uppercase tracking-widest text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
             >
-              {viewAllLabel} →
+              {viewAllLabel} &rarr;
             </Link>
           </div>
         )}

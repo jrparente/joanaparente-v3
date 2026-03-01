@@ -34,7 +34,7 @@ const linkProjection = `{
 
 // Define as a regular string (not groq template)
 export const contentBlocksProjection = `
-  contentBlocks[] {
+  contentBlocks[visible != false] {
     ...,
     _type == "hero" => {
       ...,
@@ -106,6 +106,7 @@ export const contentBlocksProjection = `
       ...,
       _type,
       _key,
+      eyebrow,
       title,
       description,
       headingLevel,
@@ -131,8 +132,135 @@ export const contentBlocksProjection = `
       ...,
       _type,
       _key,
+      eyebrow,
       heading,
       steps[]{ icon, title, description }
+    },
+    _type == "heroHome" => {
+      ...,
+      _type,
+      _key,
+      eyebrow,
+      heading,
+      subheading,
+      description,
+      ctaPrimary ${linkProjection},
+      ctaSecondary ${linkProjection},
+      proofStrip[] { value, label }
+    },
+    _type == "serviceTierPreview" => {
+      ...,
+      _type,
+      _key,
+      eyebrow,
+      heading,
+      tiers[] {
+        name,
+        tagline,
+        startingPrice,
+        highlights[],
+        highlighted
+      },
+      ctaLink ${linkProjection}
+    },
+    _type == "serviceTiers" => {
+      ...,
+      _type,
+      _key,
+      heading,
+      tiers[] {
+        name,
+        subtitle,
+        priceRange,
+        features[],
+        highlighted,
+        timeline,
+        ctaLabel,
+        ctaLink ${linkProjection}
+      }
+    },
+    _type == "testimonials" => {
+      ...,
+      _type,
+      _key,
+      heading,
+      items[] {
+        quote,
+        authorName,
+        authorRole,
+        authorCompany,
+        authorImage {
+          asset->{ _id, url, metadata { lqip } },
+          alt
+        }
+      }
+    },
+    _type == "faqAccordion" => {
+      ...,
+      _type,
+      _key,
+      heading,
+      items[] {
+        question,
+        answer
+      },
+      generateJsonLd
+    },
+    _type == "metricBar" => {
+      ...,
+      _type,
+      _key,
+      items[] {
+        value,
+        label
+      }
+    },
+    _type == "caseStudySpotlight" => {
+      ...,
+      _type,
+      _key,
+      heading,
+      project-> {
+        title,
+        "slug": slug.current,
+        transformationStatement,
+        businessMetrics[] {
+          label,
+          value,
+          context
+        },
+        image {
+          asset->{ _id, url, metadata { lqip } },
+          alt
+        }
+      },
+      highlightMetrics,
+      ctaLabel
+    },
+    _type == "contactForm" => {
+      ...,
+      _type,
+      _key,
+      heading,
+      subheading,
+      submitLabel,
+      successMessage,
+      nameFieldLabel,
+      emailFieldLabel,
+      companyFieldLabel,
+      projectTypeFieldLabel,
+      projectTypeOptions,
+      budgetRangeFieldLabel,
+      budgetRangeOptions,
+      messageFieldLabel,
+      messageFieldPlaceholder,
+      languagePreferenceLabel,
+      validationMessages {
+        required,
+        minLength,
+        invalidEmail,
+        submitError
+      }
     }
   }
 `;
@@ -190,7 +318,11 @@ export async function getHomepage({ language }: Params) {
     *[_type == "homepage" && language == $language][0] {
       ...,
       title,
-      ${contentBlocksProjection}
+      ${contentBlocksProjection},
+      "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+        "slug": slug.current,
+        language
+      }
     }
   `;
 
@@ -224,7 +356,11 @@ export async function getPageBySlug({
       ][0] {
         ...,
         title,
-        ${contentBlocksProjection}
+        ${contentBlocksProjection},
+        "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+          "slug": slug.current,
+          language
+        }
       }
     `;
     params = { slug, language };
@@ -235,7 +371,11 @@ export async function getPageBySlug({
       ][0] {
         ...,
         title,
-        ${contentBlocksProjection}
+        ${contentBlocksProjection},
+        "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+          "slug": slug.current,
+          language
+        }
       }
     `;
     params = { slug };
@@ -254,6 +394,27 @@ export async function getPageSlugs() {
   `;
 
   return client.fetch<{ slug: string; language: string }[]>(query);
+}
+
+// Uses client directly to avoid draftMode() call in sitemap generation
+export async function getPagesWithTranslations() {
+  const query = groq`
+    *[_type == "page" && defined(slug.current) && defined(language)] {
+      "slug": slug.current,
+      language,
+      "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+        "slug": slug.current,
+        language
+      }
+    }
+  `;
+  return client.fetch<
+    Array<{
+      slug: string;
+      language: string;
+      _translations: Array<{ slug: string; language: string }>;
+    }>
+  >(query);
 }
 
 // ─── Project Queries ───────────────────────────────────────────────
@@ -278,6 +439,11 @@ export async function getProjects({ language }: Params) {
               name,
               image
             }
+          },
+          businessMetrics[] {
+            label,
+            value,
+            context
           }
         }
       `
@@ -299,6 +465,11 @@ export async function getProjects({ language }: Params) {
               name,
               image
             }
+          },
+          businessMetrics[] {
+            label,
+            value,
+            context
           }
         }
       `;
@@ -373,7 +544,11 @@ export async function getProject({
         },
         noIndex
       },
-      language
+      language,
+      "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+        "slug": slug.current,
+        language
+      }
     }
   `;
 

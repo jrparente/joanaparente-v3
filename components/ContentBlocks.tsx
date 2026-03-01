@@ -7,6 +7,9 @@ import RichTextBlock from "./modules/RichTextBlock";
 import ProjectList from "./modules/ProjectList";
 import ContactSection from "./modules/ContactSection";
 import ProcessSteps from "./modules/ProcessSteps";
+import HeroHome from "./modules/HeroHome";
+import MetricBar from "./modules/MetricBar";
+import ServiceTierPreview from "./modules/ServiceTierPreview";
 
 type Props = {
   contentBlock: any[];
@@ -18,6 +21,14 @@ const ContentBlocks = ({ contentBlock, language }: Props) => {
     <>
       {contentBlock.map((block, index) => {
         switch (block._type) {
+          case "heroHome":
+            return (
+              <HeroHome
+                key={index}
+                block={block}
+                language={language ?? (defaultLanguage?.id || undefined)}
+              />
+            );
           case "hero":
             return (
               <Hero
@@ -60,6 +71,16 @@ const ContentBlocks = ({ contentBlock, language }: Props) => {
                 language={language ?? (defaultLanguage?.id || undefined)}
               />
             );
+          case "serviceTierPreview":
+            return (
+              <ServiceTierPreview
+                key={index}
+                block={block}
+                language={language ?? (defaultLanguage?.id || undefined)}
+              />
+            );
+          case "metricBar":
+            return <MetricBar key={index} block={block} />;
           case "processSteps":
             return <ProcessSteps key={index} block={block} />;
           case "bioPage":

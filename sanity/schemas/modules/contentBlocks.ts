@@ -15,5 +15,13 @@ export const contentBlocks = defineType({
     { type: "projectList" },
     { type: "contactSection" },
     { type: "processSteps" },
+    { type: "heroHome" },
+    { type: "serviceTierPreview" },
+    { type: "serviceTiers" },
+    { type: "testimonials" },
+    { type: "faqAccordion" },
+    { type: "metricBar" },
+    { type: "caseStudySpotlight" },
+    { type: "contactForm" },
   ],
 });

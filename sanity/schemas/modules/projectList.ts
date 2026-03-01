@@ -1,5 +1,6 @@
 import { BlockElementIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { visibleField } from "../fragments/visibleField";
 
 export const projectList = defineType({
   name: "projectList",
@@ -7,6 +8,13 @@ export const projectList = defineType({
   icon: BlockElementIcon,
   type: "object",
   fields: [
+    visibleField,
+    defineField({
+      name: "eyebrow",
+      title: "Eyebrow",
+      type: "string",
+      description: 'Section eyebrow label. e.g. "Portfolio" / "Portfólio"',
+    }),
     defineField({
       name: "title",
       title: "Section Title",
@@ -60,10 +68,11 @@ export const projectList = defineType({
   preview: {
     select: {
       title: "title",
+      visible: "visible",
     },
-    prepare({ title }) {
+    prepare({ title, visible }) {
       return {
-        title: title || "Project List",
+        title: `${visible === false ? "[Hidden] " : ""}${title || "Project List"}`,
         subtitle: "Displays projects in a grid",
       };
     },

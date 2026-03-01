@@ -1,5 +1,6 @@
 import { ImagesIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { visibleField } from "../fragments/visibleField";
 
 export const imageGallery = defineType({
   name: "imageGallery",
@@ -7,6 +8,7 @@ export const imageGallery = defineType({
   icon: ImagesIcon,
   type: "object",
   fields: [
+    visibleField,
     defineField({
       name: "images",
       title: "Images",
@@ -22,10 +24,11 @@ export const imageGallery = defineType({
   preview: {
     select: {
       images: "images",
+      visible: "visible",
     },
-    prepare({ images }) {
+    prepare({ images, visible }) {
       return {
-        title: "Image Gallery",
+        title: `${visible === false ? "[Hidden] " : ""}Image Gallery`,
         subtitle: `Displays a gallery of ${images?.length ?? 0} images`,
       };
     },

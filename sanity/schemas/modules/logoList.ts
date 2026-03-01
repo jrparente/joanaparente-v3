@@ -1,10 +1,12 @@
 import { defineField, defineType } from "sanity";
+import { visibleField } from "../fragments/visibleField";
 
 export default defineType({
   title: "Logo List",
   name: "logoList",
   type: "object",
   fields: [
+    visibleField,
     defineField({
       name: "title",
       type: "string",
@@ -22,11 +24,12 @@ export default defineType({
   preview: {
     select: {
       title: "title",
+      visible: "visible",
     },
     prepare(selection: any) {
-      const { title } = selection;
+      const { title, visible } = selection;
       return {
-        title: title,
+        title: `${visible === false ? "[Hidden] " : ""}${title}`,
         subtitle: "Logo List",
       };
     },
