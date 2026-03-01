@@ -269,6 +269,8 @@ export const contentBlocksProjection = `
       projectTypeOptions,
       budgetRangeFieldLabel,
       budgetRangeOptions,
+      timelineFieldLabel,
+      timelineOptions,
       messageFieldLabel,
       messageFieldPlaceholder,
       languagePreferenceLabel,

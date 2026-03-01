@@ -85,6 +85,19 @@ export const contactForm = defineType({
       description: "Dropdown options for budget. Order matters.",
     }),
     defineField({
+      name: "timelineFieldLabel",
+      title: "Timeline field label",
+      type: "string",
+      initialValue: "Timeline (optional)",
+    }),
+    defineField({
+      name: "timelineOptions",
+      title: "Timeline options",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Dropdown options for timeline. Order matters.",
+    }),
+    defineField({
       name: "messageFieldLabel",
       title: "Message field label",
       type: "string",

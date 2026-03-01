@@ -16,6 +16,7 @@ export async function submitContactForm(
   const company = formData.get("company") as string | null;
   const projectType = formData.get("projectType") as string;
   const budgetRange = formData.get("budgetRange") as string;
+  const timeline = formData.get("timeline") as string | null;
   const message = formData.get("message") as string;
   const languagePreference = formData.get("languagePreference") as string | null;
 
@@ -42,6 +43,7 @@ export async function submitContactForm(
     ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ""}
     <p><strong>Project Type:</strong> ${escapeHtml(projectType)}</p>
     <p><strong>Budget Range:</strong> ${escapeHtml(budgetRange)}</p>
+    ${timeline ? `<p><strong>Timeline:</strong> ${escapeHtml(timeline)}</p>` : ""}
     ${languagePreference ? `<p><strong>Language Preference:</strong> ${escapeHtml(languagePreference)}</p>` : ""}
     <hr />
     <p><strong>Message:</strong></p>

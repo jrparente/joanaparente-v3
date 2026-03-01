@@ -14,6 +14,7 @@ import ServiceTiers from "./modules/ServiceTiers";
 import FaqAccordion from "./modules/FaqAccordion";
 import Testimonials from "./modules/Testimonials";
 import ConnectStrip from "./modules/ConnectStrip";
+import ContactForm from "./modules/ContactForm";
 
 type Props = {
   contentBlock: any[];
@@ -100,6 +101,14 @@ const ContentBlocks = ({ contentBlock, language }: Props) => {
           case "testimonials":
             return (
               <Testimonials
+                key={index}
+                block={block}
+                language={language ?? (defaultLanguage?.id || undefined)}
+              />
+            );
+          case "contactForm":
+            return (
+              <ContactForm
                 key={index}
                 block={block}
                 language={language ?? (defaultLanguage?.id || undefined)}

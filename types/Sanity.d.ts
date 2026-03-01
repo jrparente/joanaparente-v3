@@ -265,6 +265,8 @@ export type ContactFormBlock = {
   projectTypeOptions?: string[];
   budgetRangeFieldLabel?: string;
   budgetRangeOptions?: string[];
+  timelineFieldLabel?: string;
+  timelineOptions?: string[];
   messageFieldLabel?: string;
   messageFieldPlaceholder?: string;
   languagePreferenceLabel?: string;

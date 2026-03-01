@@ -45,6 +45,22 @@ export async function generateMetadata({
         "x-default": `${BASE_URL}/pt`,
       },
     },
+    icons: {
+      icon: [
+        {
+          url: "/favicons/favicon-32x32.png",
+          sizes: "32x32",
+          type: "image/png",
+        },
+        {
+          url: "/favicons/favicon-dark-32x32.png",
+          sizes: "32x32",
+          type: "image/png",
+          media: "(prefers-color-scheme: dark)",
+        },
+      ],
+      apple: [{ url: "/favicons/apple-touch-icon.png", sizes: "180x180" }],
+    },
   };
 
   if (!siteSettings || !siteSettings.metadata) {
