@@ -16,16 +16,16 @@ const Cta = ({ block, language }: Props) => {
   const href2 = buttonLink2 ? resolveLink(buttonLink2, language) : null;
 
   return (
-    <section className="relative z-[1] w-full bg-[var(--color-brand)] py-20">
+    <section className="relative z-[1] w-full bg-[var(--color-brand)] dark:bg-[var(--color-brand-light)] py-20">
       <div className="mx-auto max-w-[1200px] px-8 text-center">
         {title && (
-          <h2 className="font-heading text-3xl font-semibold text-white">
+          <h2 className="font-heading text-3xl font-semibold text-white dark:text-[var(--color-text)]">
             {title}
           </h2>
         )}
 
         {description && (
-          <p className="mt-4 text-lg text-white/85">{description}</p>
+          <p className="mt-4 text-lg text-white/85 dark:text-[var(--color-text-muted)]">{description}</p>
         )}
 
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -35,7 +35,7 @@ const Cta = ({ block, language }: Props) => {
               onClick={() =>
                 trackContactCtaClick("cta_block", language || "en")
               }
-              className="inline-flex items-center gap-2 rounded-md bg-white px-8 py-3 font-semibold text-[var(--color-brand)] transition-colors hover:bg-[var(--color-surface)]"
+              className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-[var(--color-brand)] px-8 py-3 font-semibold text-[var(--color-brand)] dark:text-[var(--color-surface)] transition-colors hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-brand-dark)]"
             >
               {buttonLink.label || "Learn More"}
               <svg
@@ -59,7 +59,7 @@ const Cta = ({ block, language }: Props) => {
           {buttonLink2 && href2 && (
             <Link
               href={href2}
-              className="inline-flex items-center gap-1 font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex items-center gap-1 font-medium text-white/80 dark:text-[var(--color-text-muted)] transition-colors hover:text-white dark:hover:text-[var(--color-text)]"
             >
               {buttonLink2.label || "Learn More"}
               <span aria-hidden="true">&rarr;</span>

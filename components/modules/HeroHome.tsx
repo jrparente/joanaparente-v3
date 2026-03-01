@@ -78,7 +78,7 @@ const HeroHome = ({ block, language }: Props) => {
             {ctaPrimary && (
               <Link
                 href={primaryHref}
-                className="inline-flex items-center gap-2 rounded-md bg-[var(--color-brand)] px-8 py-3 font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)]"
+                className="inline-flex items-center gap-2 rounded-md bg-[var(--color-brand)] px-8 py-3 font-semibold text-white dark:text-[var(--color-surface)] transition-colors hover:bg-[var(--color-brand-dark)]"
               >
                 {ctaPrimary.label || "Learn More"}
                 <svg

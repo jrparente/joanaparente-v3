@@ -54,7 +54,7 @@ const ProjectCard = ({ project, language, position }: Props) => {
             />
             {/* Metric badge */}
             {project.businessMetrics?.[0] && (
-              <span className="absolute right-3 top-3 rounded-full bg-[var(--color-brand)] px-3 py-1 text-xs font-semibold text-white">
+              <span className="absolute right-3 top-3 rounded-full bg-[var(--color-brand)] px-3 py-1 text-xs font-semibold text-white dark:text-[var(--color-surface)]">
                 {project.businessMetrics[0].value}
               </span>
             )}

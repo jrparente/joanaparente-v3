@@ -37,7 +37,7 @@ const ServiceTierPreview = ({ block, language }: Props) => {
             >
               {/* "Most popular" badge */}
               {tier.highlighted && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--color-brand)] px-4 py-1 text-xs font-semibold text-white">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--color-brand)] px-4 py-1 text-xs font-semibold text-white dark:text-[var(--color-surface)]">
                   {language === "pt" ? "Mais popular" : "Most popular"}
                 </span>
               )}
