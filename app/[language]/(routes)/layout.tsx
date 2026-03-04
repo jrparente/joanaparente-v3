@@ -33,6 +33,52 @@ export async function generateMetadata({
   const { language } = await params;
   const siteSettings = await getSiteSettings(language);
 
+  const icons: Metadata["icons"] = {
+    icon: [
+      {
+        url: "/favicons/favicon-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        url: "/favicons/favicon-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        url: "/favicons/favicon-48x48.png",
+        sizes: "48x48",
+        type: "image/png",
+      },
+      {
+        url: "/favicons/favicon-dark-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/favicons/favicon-dark-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/favicons/favicon-dark-48x48.png",
+        sizes: "48x48",
+        type: "image/png",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    apple: [
+      { url: "/favicons/apple-touch-icon.png", sizes: "180x180" },
+      {
+        url: "/favicons/apple-touch-icon-dark.png",
+        sizes: "180x180",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+  };
+
   const fallback: Metadata = {
     title: "Joana Parente | Web Developer",
     description:
@@ -45,22 +91,7 @@ export async function generateMetadata({
         "x-default": `${BASE_URL}/pt`,
       },
     },
-    icons: {
-      icon: [
-        {
-          url: "/favicons/favicon-32x32.png",
-          sizes: "32x32",
-          type: "image/png",
-        },
-        {
-          url: "/favicons/favicon-dark-32x32.png",
-          sizes: "32x32",
-          type: "image/png",
-          media: "(prefers-color-scheme: dark)",
-        },
-      ],
-      apple: [{ url: "/favicons/apple-touch-icon.png", sizes: "180x180" }],
-    },
+    icons,
   };
 
   if (!siteSettings || !siteSettings.metadata) {
@@ -87,6 +118,7 @@ export async function generateMetadata({
     title: resolvedTitle,
     description: resolvedDescription,
     keywords: keywords?.length ? keywords.join(", ") : undefined,
+    icons,
     alternates: {
       canonical: `${BASE_URL}/${language}`,
       languages: {
