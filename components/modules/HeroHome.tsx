@@ -23,14 +23,8 @@ function renderAccentHeading(text: string): ReactNode[] {
 }
 
 const HeroHome = ({ block, language }: Props) => {
-  const {
-    heading,
-    subheading,
-    ctaPrimary,
-    ctaSecondary,
-    eyebrow,
-    proofStrip,
-  } = block;
+  const { heading, subheading, ctaPrimary, ctaSecondary, eyebrow, proofStrip } =
+    block;
   const primaryHref = ctaPrimary ? resolveLink(ctaPrimary, language) : "#";
   const secondaryHref = ctaSecondary
     ? resolveLink(ctaSecondary, language)
@@ -53,7 +47,7 @@ const HeroHome = ({ block, language }: Props) => {
           {/* Heading */}
           {heading && (
             <h1
-              className="font-heading text-5xl font-semibold tracking-tight animate-fade-up"
+              className="font-heading text-5xl font-semibold tracking-tight animate-fade-up text-balance"
               style={{ animationDelay: "0.2s" }}
             >
               {renderAccentHeading(heading)}
@@ -63,7 +57,7 @@ const HeroHome = ({ block, language }: Props) => {
           {/* Subheading */}
           {subheading && (
             <p
-              className="mt-6 max-w-[580px] text-xl text-[var(--color-text-muted)] animate-fade-up"
+              className="mt-6 max-w-[580px] text-xl text-[var(--color-text-muted)] animate-fade-up text-balance"
               style={{ animationDelay: "0.35s" }}
             >
               {subheading}
