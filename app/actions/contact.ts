@@ -1,6 +1,7 @@
 "use server";
 
 import { sendTransactionalEmail } from "@/lib/email";
+import { escapeHtml } from "./escapeHtml";
 
 export interface ContactFormState {
   success: boolean;
@@ -66,19 +67,11 @@ export async function submitContactForm(
     }
 
     return { success: true };
-  } catch {
+  } catch (error) {
+    console.error("Contact form error:", error);
     return {
       success: false,
       error: "Something went wrong. Please try again or email hello@joanaparente.com directly.",
     };
   }
-}
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }

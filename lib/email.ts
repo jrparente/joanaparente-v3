@@ -47,7 +47,7 @@ export async function sendTransactionalEmail({
     });
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error("Resend error:", JSON.stringify(error));
       return { success: false, error: error.message };
     }
 

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joana Parente — Logo Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1E1713;
+      --terra: #C4603A;
+      --sand: #F9F6F2;
+      --linen: #F1EBE3;
+      --stone: #E8DDD3;
+      --border: #D5C9BC;
+      --muted: #756054;
+      --white: #FFFFFF;
+    }
+
+    body {
+      background: var(--sand);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .page-header {
+      background: var(--ink);
+      padding: 48px 64px;
+      border-bottom: 3px solid var(--terra);
+    }
+    .page-header h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .page-header .meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+    }
+    .page-header .meta span {
+      color: var(--border);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+
+    /* Swatch grid */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .swatch-grid.mono { grid-template-columns: repeat(2, 1fr); }
+    .swatch-grid.wm { grid-template-columns: repeat(2, 1fr); }
+
+    .swatch {
+      border-radius: 8px;
+      padding: 48px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      min-height: 200px;
+    }
+    .swatch img {
+      max-height: 120px;
+      width: auto;
+    }
+    .swatch.sm img { max-height: 80px; }
+    .swatch-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+    .swatch-label.light { color: var(--white); }
+    .swatch-label.dark { color: var(--ink); }
+
+    /* Backgrounds */
+    .bg-ink { background: var(--ink); }
+    .bg-terra { background: var(--terra); }
+    .bg-sand { background: var(--sand); border: 1px solid var(--border); }
+    .bg-white { background: var(--white); border: 1px solid var(--border); }
+    .bg-linen { background: var(--linen); border: 1px solid var(--border); }
+
+    /* Wordmarks */
+    .wm-swatch {
+      border-radius: 8px;
+      padding: 40px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      min-height: 160px;
+    }
+    .wm-swatch img { max-height: 64px; width: auto; }
+    .wm-swatch.stacked img { max-height: 106px; }
+
+    /* Size test */
+    .size-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 32px;
+      padding: 48px;
+      background: var(--linen);
+      border-radius: 8px;
+      flex-wrap: wrap;
+    }
+    .size-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .size-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* Mockups */
+    .mockups { display: flex; flex-direction: column; gap: 24px; }
+
+    .mockup-nav {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mockup-nav img { height: 32px; width: auto; }
+    .mockup-nav-links {
+      display: flex;
+      gap: 32px;
+    }
+    .mockup-nav-links span {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .mockup-nav-links .active {
+      color: var(--terra);
+      font-weight: 500;
+    }
+
+    .mockup-email {
+      background: var(--linen);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .mockup-email img { height: 48px; width: auto; }
+    .mockup-email-text { flex: 1; }
+    .mockup-email-name { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+    .mockup-email-role { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .mockup-email-link { font-size: 12px; color: var(--terra); }
+    .mockup-email-sep {
+      width: 1px;
+      height: 48px;
+      background: var(--terra);
+      opacity: 0.4;
+    }
+
+    .mockup-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--terra);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .mockup-avatar img { width: 60%; height: 60%; object-fit: contain; }
+
+    .mockup-row { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+    .mockup-caption { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: center; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* File inventory */
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .file-card {
+      background: var(--linen);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+    }
+    .file-card .fname {
+      font-family: 'Plus Jakarta Sans', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--terra);
+      margin-bottom: 4px;
+    }
+    .file-card .fdesc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Joana Parente — Logo System</h1>
+    <p>Complete brand mark deliverables. viewBox="470 175 468 419" · Paths from Gemini-generated JP monogram</p>
+    <div class="meta">
+      <span>6 icon/mono variants</span>
+      <span>4 wordmark variants</span>
+      <span>Terracotta #C4603A · Deep Ink #1E1713 · Fraunces serif</span>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+
+  <!-- Section 1: Icon Variants -->
+  <section>
+    <p class="section-label">01 — Icons</p>
+    <h2>Icon Variants</h2>
+    <div class="swatch-grid">
+
+      <div>
+        <div class="swatch bg-ink">
+          <img src="logo-icon-light.svg" alt="Icon light on deep ink">
+          <span class="swatch-label light">icon-light · on Deep Ink #1E1713</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="swatch bg-terra">
+          <img src="logo-monochrome-white.svg" alt="Monochrome white on terracotta">
+          <span class="swatch-label light">monochrome-white · on Terracotta #C4603A</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="swatch bg-sand">
+          <img src="logo-icon-dark.svg" alt="Icon dark on warm sand">
+          <span class="swatch-label dark">icon-dark · on Warm Sand #F9F6F2</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="swatch bg-white">
+          <img src="logo-icon-dark.svg" alt="Icon dark on white">
+          <span class="swatch-label dark">icon-dark · on White #FFFFFF</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 2: Monochrome -->
+  <section>
+    <p class="section-label">02 — Monochrome</p>
+    <h2>Monochrome Variants</h2>
+    <div class="swatch-grid mono">
+
+      <div>
+        <div class="swatch bg-linen">
+          <img src="logo-monochrome-black.svg" alt="Monochrome black">
+          <span class="swatch-label dark">monochrome-black · on Warm Linen #F1EBE3</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="swatch bg-ink">
+          <img src="logo-monochrome-white.svg" alt="Monochrome white">
+          <span class="swatch-label light">monochrome-white · on Deep Ink #1E1713</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 3: Wordmarks -->
+  <section>
+    <p class="section-label">03 — Wordmarks</p>
+    <h2>Wordmark Variants</h2>
+    <div class="swatch-grid wm">
+
+      <div>
+        <div class="wm-swatch bg-sand">
+          <img src="logo-wordmark-dark.svg" alt="Wordmark dark">
+          <span class="swatch-label dark">wordmark-dark · horizontal · on Sand</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="wm-swatch bg-ink">
+          <img src="logo-wordmark-light.svg" alt="Wordmark light">
+          <span class="swatch-label light">wordmark-light · horizontal · on Ink</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="wm-swatch bg-sand stacked">
+          <img src="logo-wordmark-dark-stacked.svg" alt="Wordmark dark stacked">
+          <span class="swatch-label dark">wordmark-dark-stacked · on Sand</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="wm-swatch bg-ink stacked">
+          <img src="logo-wordmark-light-stacked.svg" alt="Wordmark light stacked">
+          <span class="swatch-label light">wordmark-light-stacked · on Ink</span>
+        </div>
+      </div>
+
+    </div>
+    <p style="margin-top:16px; font-size:12px; color:var(--muted);">
+      Note: Wordmark text uses Fraunces serif. For print or portable SVG (exported as PNG), outline the text in Figma or Inkscape first.
+    </p>
+  </section>
+
+  <!-- Section 4: Minimum Size Test -->
+  <section>
+    <p class="section-label">04 — Size Legibility</p>
+    <h2>Minimum Size Test</h2>
+    <div class="size-row">
+
+      <div class="size-item">
+        <img src="logo-icon-dark.svg" width="256" height="229" alt="256px">
+        <span class="size-label">256px</span>
+      </div>
+
+      <div class="size-item">
+        <img src="logo-icon-dark.svg" width="128" height="115" alt="128px">
+        <span class="size-label">128px</span>
+      </div>
+
+      <div class="size-item">
+        <img src="logo-icon-dark.svg" width="64" height="57" alt="64px">
+        <span class="size-label">64px</span>
+      </div>
+
+      <div class="size-item">
+        <img src="logo-icon-dark.svg" width="48" height="43" alt="48px">
+        <span class="size-label">48px</span>
+      </div>
+
+      <div class="size-item">
+        <img src="logo-icon-dark.svg" width="32" height="29" alt="32px">
+        <span class="size-label">32px</span>
+      </div>
+
+      <div class="size-item">
+        <img src="logo-icon-dark.svg" width="24" height="22" alt="24px">
+        <span class="size-label">24px <em style="color:var(--terra)">min</em></span>
+      </div>
+
+      <div class="size-item">
+        <img src="logo-icon-dark.svg" width="16" height="14" alt="16px">
+        <span class="size-label">16px</span>
+      </div>
+
+    </div>
+    <p style="margin-top:12px; font-size:12px; color:var(--muted);">
+      Minimum recommended size: 24px wide (web), 12mm (print). At 16px the letterforms start to blur — use only for favicons.
+    </p>
+  </section>
+
+  <!-- Section 5: In-Use Mockups -->
+  <section>
+    <p class="section-label">05 — In Use</p>
+    <h2>Application Mockups</h2>
+    <div class="mockups">
+
+      <!-- Website nav -->
+      <div>
+        <div class="mockup-nav">
+          <img src="logo-wordmark-dark.svg" alt="Logo in nav">
+          <div class="mockup-nav-links">
+            <span class="active">Work</span>
+            <span>Services</span>
+            <span>About</span>
+            <span>Contact</span>
+          </div>
+        </div>
+        <p class="mockup-caption">Website navigation bar</p>
+      </div>
+
+      <!-- Email signature strip -->
+      <div>
+        <div class="mockup-email">
+          <img src="logo-icon-dark.svg" alt="Logo in email sig" style="height:48px">
+          <div class="mockup-email-sep"></div>
+          <div class="mockup-email-text">
+            <div class="mockup-email-name">Joana Parente</div>
+            <div class="mockup-email-role">Full-Stack Developer &amp; Digital Strategist</div>
+            <div class="mockup-email-link">joanaparente.com</div>
+          </div>
+        </div>
+        <p class="mockup-caption">Email signature</p>
+      </div>
+
+      <!-- Social avatar + mockup row -->
+      <div>
+        <div class="mockup-row">
+          <div>
+            <div class="mockup-avatar">
+              <img src="logo-monochrome-white.svg" alt="Avatar crop">
+            </div>
+            <p class="mockup-caption">Avatar (circle)</p>
+          </div>
+          <div>
+            <div class="mockup-avatar" style="background:var(--sand); border: 2px solid var(--border);">
+              <img src="logo-monochrome-black.svg" alt="Avatar sand">
+            </div>
+            <p class="mockup-caption">Avatar (sand)</p>
+          </div>
+          <div style="background:var(--ink); border-radius:8px; padding:24px; display:flex; align-items:center; gap:16px;">
+            <img src="logo-wordmark-light.svg" alt="Dark bg wordmark" style="height:32px">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 6: File Inventory -->
+  <section>
+    <p class="section-label">06 — Files</p>
+    <h2>Deliverables Inventory</h2>
+    <div class="file-grid">
+      <div class="file-card">
+        <div class="fname">logo-icon-light.svg</div>
+        <div class="fdesc">White JP + terracotta overlay. For dark/terracotta backgrounds. ~5KB ✓</div>
+      </div>
+      <div class="file-card">
+        <div class="fname">logo-icon-dark.svg</div>
+        <div class="fdesc">Terracotta JP + ink overlay. For sand/white backgrounds. ~5KB ✓</div>
+      </div>
+      <div class="file-card">
+        <div class="fname">logo-monochrome-black.svg</div>
+        <div class="fdesc">All paths in Deep Ink #1E1713. Print, B&amp;W.</div>
+      </div>
+      <div class="file-card">
+        <div class="fname">logo-monochrome-white.svg</div>
+        <div class="fdesc">All paths in White #FFFFFF. Reversed print.</div>
+      </div>
+      <div class="file-card">
+        <div class="fname">logo-wordmark-dark.svg</div>
+        <div class="fdesc">Horizontal wordmark for light backgrounds. 280×64.</div>
+      </div>
+      <div class="file-card">
+        <div class="fname">logo-wordmark-light.svg</div>
+        <div class="fdesc">Horizontal wordmark for dark backgrounds. 280×64.</div>
+      </div>
+      <div class="file-card">
+        <div class="fname">logo-wordmark-dark-stacked.svg</div>
+        <div class="fdesc">Stacked wordmark for light backgrounds. 100×106.</div>
+      </div>
+      <div class="file-card">
+        <div class="fname">logo-wordmark-light-stacked.svg</div>
+        <div class="fdesc">Stacked wordmark for dark backgrounds. 100×106.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
