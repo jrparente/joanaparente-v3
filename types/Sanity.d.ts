@@ -224,6 +224,7 @@ export type MetricBarBlock = {
   items: {
     value: string;
     label: string;
+    source?: string;
   }[];
 };
 

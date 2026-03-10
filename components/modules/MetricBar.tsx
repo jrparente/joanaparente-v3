@@ -31,6 +31,11 @@ const MetricBar = ({ block }: Props) => {
               <p className="mt-1 font-sans text-sm text-[var(--color-text-muted)]">
                 {item.label}
               </p>
+              {item.source && (
+                <p className="mt-0.5 font-sans text-xs text-[var(--color-text-subtle)]">
+                  {item.source}
+                </p>
+              )}
             </div>
           ))}
         </div>

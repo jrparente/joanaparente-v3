@@ -229,7 +229,8 @@ export const contentBlocksProjection = `
       _key,
       items[] {
         value,
-        label
+        label,
+        source
       }
     },
     _type == "caseStudySpotlight" => {

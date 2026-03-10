@@ -15,6 +15,7 @@ import FaqAccordion from "./modules/FaqAccordion";
 import Testimonials from "./modules/Testimonials";
 import ConnectStrip from "./modules/ConnectStrip";
 import ContactForm from "./modules/ContactForm";
+import CaseStudySpotlight from "./modules/CaseStudySpotlight";
 
 type Props = {
   contentBlock: any[];
@@ -109,6 +110,14 @@ const ContentBlocks = ({ contentBlock, language }: Props) => {
           case "contactForm":
             return (
               <ContactForm
+                key={index}
+                block={block}
+                language={language ?? (defaultLanguage?.id || undefined)}
+              />
+            );
+          case "caseStudySpotlight":
+            return (
+              <CaseStudySpotlight
                 key={index}
                 block={block}
                 language={language ?? (defaultLanguage?.id || undefined)}

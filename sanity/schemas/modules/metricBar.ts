@@ -34,9 +34,26 @@ export const metricBar = defineType({
                 'e.g. "at Booking.com" or "projects delivered"',
               validation: (rule) => rule.required(),
             }),
+            defineField({
+              name: "source",
+              title: "Source",
+              type: "string",
+              description:
+                'Attribution for the stat, e.g. "Google" or "Phocuswright"',
+            }),
           ],
           preview: {
-            select: { title: "value", subtitle: "label" },
+            select: {
+              value: "value",
+              label: "label",
+              source: "source",
+            },
+            prepare({ value, label, source }) {
+              return {
+                title: `${value} — ${label}`,
+                subtitle: source || "",
+              };
+            },
           },
         },
       ],
