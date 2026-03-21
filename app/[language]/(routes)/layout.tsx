@@ -240,7 +240,7 @@ export default async function RootLayout({
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header navigation={navigation} language={language} />
-          {children}
+          <div id="main-content">{children}</div>
           <Footer />
         </ThemeProvider>
         <Analytics />

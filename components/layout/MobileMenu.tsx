@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { LinkType } from "@/types/Sanity";
 import { resolveLink } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 type Props = {
   items: LinkType[];
@@ -13,36 +21,45 @@ type Props = {
 
 export const MobileMenu = ({ items, language }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Close sheet on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <div className="md:hidden">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="p-2 text-foreground"
-        aria-label={isOpen ? "Close menu" : "Open menu"}
-      >
-        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-      </button>
-
-      {isOpen && (
-        <nav className="absolute top-full left-0 right-0 bg-background border-b border-border shadow-lg z-50">
-          <div className="flex flex-col px-4 py-4 gap-1">
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild>
+          <button
+            className="inline-flex items-center justify-center size-11 text-foreground rounded-md"
+            aria-label="Open menu"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </SheetTrigger>
+        <SheetContent side="right" className="w-4/5 sm:max-w-sm">
+          <VisuallyHidden>
+            <SheetTitle>Navigation menu</SheetTitle>
+          </VisuallyHidden>
+          <nav aria-label="Mobile navigation" className="flex flex-col gap-1 mt-8">
             {items?.map((item) => {
-              const href = resolveLink(item as LinkType, language);
+              const href = resolveLink(item, language);
               return (
                 <Link
                   key={item.label}
                   href={href}
                   onClick={() => setIsOpen(false)}
-                  className="hover:bg-muted font-medium font-sans py-3 px-3 uppercase text-sm tracking-wide rounded-md transition-colors"
+                  className="hover:bg-muted font-medium font-sans py-3 px-3 uppercase text-sm tracking-wide rounded-md motion-safe:transition-colors"
                 >
                   {item.label}
                 </Link>
               );
             })}
-          </div>
-        </nav>
-      )}
+          </nav>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
