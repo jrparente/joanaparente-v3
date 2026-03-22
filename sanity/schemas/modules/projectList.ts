@@ -13,7 +13,7 @@ export const projectList = defineType({
       name: "eyebrow",
       title: "Eyebrow",
       type: "string",
-      description: 'Section eyebrow label. e.g. "Portfolio" / "Portfólio"',
+      description: 'Section eyebrow label. e.g. "Portfolio"',
     }),
     defineField({
       name: "title",

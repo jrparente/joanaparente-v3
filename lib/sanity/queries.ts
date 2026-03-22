@@ -555,6 +555,47 @@ export async function getProject({
       projectScope,
       challenges,
       impact,
+      takeaway,
+      clientTestimonial {
+        quote,
+        authorName,
+        authorRole,
+        authorCompany
+      },
+      ctaHeading,
+      ctaSubheading,
+      ctaButtonLabel,
+      eyebrowLabel,
+      backLabel,
+      sectionLabels {
+        objectiveEyebrow,
+        objectiveHeading,
+        challengesEyebrow,
+        challengesHeading,
+        impactEyebrow,
+        impactHeading,
+        takeawayEyebrow,
+        takeawayHeading,
+        techStackEyebrow,
+        techStackHeading,
+        relatedEyebrow,
+        relatedHeading,
+        visitSiteLabel
+      },
+      relatedProjects[]-> {
+        _id,
+        title,
+        "slug": slug.current,
+        tagline,
+        subtitle,
+        image {
+          asset->{ _id, url, metadata { lqip } },
+          alt
+        },
+        projectCategory,
+        clientIndustry,
+        language
+      },
       seo {
         title,
         metaDescription,

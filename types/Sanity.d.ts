@@ -363,6 +363,47 @@ export type ProjectType = {
   targetPersona?: string;
   challenges?: PortableTextBlock[];
   impact?: PortableTextBlock[];
+  takeaway?: PortableTextBlock[];
+  clientTestimonial?: {
+    quote: string;
+    authorName: string;
+    authorRole?: string;
+    authorCompany?: string;
+  };
+  ctaHeading?: string;
+  ctaSubheading?: string;
+  ctaButtonLabel?: string;
+  eyebrowLabel?: string;
+  backLabel?: string;
+  sectionLabels?: {
+    objectiveEyebrow?: string;
+    objectiveHeading?: string;
+    challengesEyebrow?: string;
+    challengesHeading?: string;
+    impactEyebrow?: string;
+    impactHeading?: string;
+    takeawayEyebrow?: string;
+    takeawayHeading?: string;
+    techStackEyebrow?: string;
+    techStackHeading?: string;
+    relatedEyebrow?: string;
+    relatedHeading?: string;
+    visitSiteLabel?: string;
+  };
+  relatedProjects?: {
+    _id: string;
+    title: string;
+    slug: string;
+    tagline: string;
+    subtitle: string;
+    image?: {
+      asset: { _id: string; url: string; metadata?: { lqip?: string } };
+      alt?: string;
+    };
+    projectCategory: "client" | "personal";
+    clientIndustry?: string;
+    language?: string;
+  }[];
   seo?: MetadataType;
   language?: string;
   _translations?: Array<{ slug: string; language: string }>;

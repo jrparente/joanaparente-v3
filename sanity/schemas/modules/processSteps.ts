@@ -13,7 +13,7 @@ export const processSteps = defineType({
       name: "eyebrow",
       title: "Eyebrow",
       type: "string",
-      description: 'Section eyebrow label. e.g. "Process" / "Processo"',
+      description: 'Section eyebrow label. e.g. "Process"',
     }),
     defineField({
       name: "heading",

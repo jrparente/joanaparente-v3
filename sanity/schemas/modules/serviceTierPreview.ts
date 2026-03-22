@@ -13,7 +13,7 @@ export const serviceTierPreview = defineType({
       name: "eyebrow",
       title: "Eyebrow",
       type: "string",
-      description: 'Section eyebrow label. e.g. "Services" / "Serviços"',
+      description: 'Section eyebrow label. e.g. "Services"',
     }),
     defineField({
       name: "heading",
