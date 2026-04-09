@@ -16,6 +16,11 @@ import Testimonials from "./modules/Testimonials";
 import ConnectStrip from "./modules/ConnectStrip";
 import ContactForm from "./modules/ContactForm";
 import CaseStudySpotlight from "./modules/CaseStudySpotlight";
+import CaseStudyTakeaway from "./modules/CaseStudyTakeaway";
+import CaseStudyTransformation from "./modules/CaseStudyTransformation";
+import CaseStudyScreenshot from "./modules/CaseStudyScreenshot";
+import TechStackBlock from "./modules/TechStackBlock";
+import RelatedProjectsBlock from "./modules/RelatedProjectsBlock";
 
 type Props = {
   contentBlock: any[];
@@ -125,6 +130,22 @@ const ContentBlocks = ({ contentBlock, language }: Props) => {
             );
           case "connectStrip":
             return <ConnectStrip key={index} block={block} />;
+          case "caseStudyTakeaway":
+            return <CaseStudyTakeaway key={index} block={block} />;
+          case "caseStudyTransformation":
+            return <CaseStudyTransformation key={index} block={block} />;
+          case "caseStudyScreenshot":
+            return <CaseStudyScreenshot key={index} block={block} />;
+          case "techStackBlock":
+            return <TechStackBlock key={index} block={block} />;
+          case "relatedProjectsBlock":
+            return (
+              <RelatedProjectsBlock
+                key={index}
+                block={block}
+                language={language ?? (defaultLanguage?.id || undefined)}
+              />
+            );
           case "bioPage":
             return <BioPage key={index} block={block} />;
           default:

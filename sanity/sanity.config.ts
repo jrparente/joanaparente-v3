@@ -8,7 +8,7 @@ import { apiVersion, dataset, projectId } from "./lib/env";
 
 import { FaviconIcon } from "./FaviconIcon";
 import { documentInternationalization } from "@sanity/document-internationalization";
-import { i18n } from "@/i18n.config";
+import { i18n } from "../i18n.config";
 
 export const BASE_URL = isDev
   ? "http://localhost:3000"

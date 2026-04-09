@@ -1,5 +1,6 @@
 import { RichTextBlockType } from "@/types/Sanity";
 import { RichText } from "../portabletext/RichText";
+import { stegaClean } from "@sanity/client/stega";
 
 type Props = {
   block: RichTextBlockType;
@@ -10,7 +11,7 @@ const RichTextBlock = ({ block }: Props) => {
 
   if (!content) return null;
 
-  const isElevated = variant === "elevated";
+  const isElevated = stegaClean(variant) === "elevated";
 
   return (
     <section
@@ -33,7 +34,7 @@ const RichTextBlock = ({ block }: Props) => {
             )}
           </div>
         )}
-        <div className="prose prose-neutral dark:prose-invert prose-lg">
+        <div className="case-study-prose prose prose-neutral dark:prose-invert prose-lg">
           <RichText value={content} />
         </div>
       </div>

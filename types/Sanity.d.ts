@@ -330,83 +330,83 @@ export type ProjectType = {
   slug: { current: string };
   tagline: string;
   subtitle: string;
-  description?: PortableTextBlock[];
-  objective?: PortableTextBlock[];
   clientIndustry?: string;
   businessMetrics?: BusinessMetric[];
   transformationStatement?: string;
-  productBridge?: ProductBridge;
   liveUrl?: string;
-  sourceCodeUrl?: string;
   date?: string;
-  duration?: string;
   image: SanityImage;
   featuredScreenshot?: SanityImage & { caption?: string };
-  photoGallery?: (SanityImage & {
-    title?: string;
-    description?: string;
-  })[];
-  keyFeatures?: {
-    _key?: string;
-    title: string;
-    description: string;
-  }[];
   projectCategory: "client" | "personal";
   projectType: "website" | "webapp" | "e-commerce";
   techStack?: {
     title: string;
     logos: LogoType[];
   };
-  role: string;
-  projectScope?: string;
-  hoursInvested?: number;
-  targetPersona?: string;
-  challenges?: PortableTextBlock[];
-  impact?: PortableTextBlock[];
-  takeaway?: PortableTextBlock[];
-  clientTestimonial?: {
-    quote: string;
-    authorName: string;
-    authorRole?: string;
-    authorCompany?: string;
-  };
-  ctaHeading?: string;
-  ctaSubheading?: string;
-  ctaButtonLabel?: string;
   eyebrowLabel?: string;
   backLabel?: string;
-  sectionLabels?: {
-    objectiveEyebrow?: string;
-    objectiveHeading?: string;
-    challengesEyebrow?: string;
-    challengesHeading?: string;
-    impactEyebrow?: string;
-    impactHeading?: string;
-    takeawayEyebrow?: string;
-    takeawayHeading?: string;
-    techStackEyebrow?: string;
-    techStackHeading?: string;
-    relatedEyebrow?: string;
-    relatedHeading?: string;
-    visitSiteLabel?: string;
+  caseStudyBlocks?: ContentBlock[];
+  seo?: MetadataType;
+  language?: string;
+  _translations?: Array<{ slug: string; language: string }>;
+};
+
+export type CaseStudyTakeawayBlock = {
+  _type: "caseStudyTakeaway";
+  _key?: string;
+  visible?: boolean;
+  eyebrow?: string;
+  heading?: string;
+  content: PortableTextBlock[];
+};
+
+export type CaseStudyTransformationBlock = {
+  _type: "caseStudyTransformation";
+  _key?: string;
+  visible?: boolean;
+  text: string;
+};
+
+export type CaseStudyScreenshotBlock = {
+  _type: "caseStudyScreenshot";
+  _key?: string;
+  visible?: boolean;
+  image: SanityImage;
+  liveUrl?: string;
+  frameStyle?: "browser" | "phone" | "none";
+  caption?: string;
+};
+
+export type TechStackBlockType = {
+  _type: "techStackBlock";
+  _key?: string;
+  visible?: boolean;
+  eyebrow?: string;
+  heading?: string;
+  techStack?: {
+    title: string;
+    logos: LogoType[];
   };
-  relatedProjects?: {
+};
+
+export type RelatedProjectsBlockType = {
+  _type: "relatedProjectsBlock";
+  _key?: string;
+  visible?: boolean;
+  eyebrow?: string;
+  heading?: string;
+  projects?: {
     _id: string;
     title: string;
     slug: string;
     tagline: string;
     subtitle: string;
-    image?: {
-      asset: { _id: string; url: string; metadata?: { lqip?: string } };
-      alt?: string;
-    };
+    image?: SanityImage;
     projectCategory: "client" | "personal";
     clientIndustry?: string;
     language?: string;
   }[];
-  seo?: MetadataType;
-  language?: string;
-  _translations?: Array<{ slug: string; language: string }>;
+  ctaLabel?: string;
 };
 
 // Extend this union as you add new block types
@@ -426,7 +426,12 @@ export type ContentBlock =
   | MetricBarBlock
   | CaseStudySpotlightBlock
   | ContactFormBlock
-  | ConnectStripBlock;
+  | ConnectStripBlock
+  | CaseStudyTakeawayBlock
+  | CaseStudyTransformationBlock
+  | CaseStudyScreenshotBlock
+  | TechStackBlockType
+  | RelatedProjectsBlockType;
 
 export type Homepage = {
   _id: string;

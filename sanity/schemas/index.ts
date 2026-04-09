@@ -30,6 +30,12 @@ import { metricBar } from "./modules/metricBar";
 import { caseStudySpotlight } from "./modules/caseStudySpotlight";
 import { contactForm } from "./modules/contactForm";
 import { connectStrip } from "./modules/connectStrip";
+import { caseStudyTakeaway } from "./modules/caseStudyTakeaway";
+import { caseStudyTransformation } from "./modules/caseStudyTransformation";
+import { caseStudyScreenshot } from "./modules/caseStudyScreenshot";
+import { techStackBlock } from "./modules/techStackBlock";
+import { relatedProjectsBlock } from "./modules/relatedProjectsBlock";
+import { caseStudyBlocks } from "./modules/caseStudyBlocks";
 
 const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -65,6 +71,12 @@ const schema: { types: SchemaTypeDefinition[] } = {
     caseStudySpotlight,
     contactForm,
     connectStrip,
+    caseStudyBlocks,
+    caseStudyTakeaway,
+    caseStudyTransformation,
+    caseStudyScreenshot,
+    techStackBlock,
+    relatedProjectsBlock,
 
     // objects
     link,

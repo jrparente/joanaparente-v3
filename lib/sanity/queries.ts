@@ -437,6 +437,135 @@ export async function getPagesWithTranslations() {
   >(query);
 }
 
+// ─── Case Study Blocks Projection ─────────────────────────────────
+
+export const caseStudyBlocksProjection = `
+  ...,
+  _type == "richText" => {
+    ...,
+    _type,
+    _key,
+    eyebrow,
+    heading,
+    variant,
+    content[]{
+      ...,
+      _type == "image" => {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    }
+  },
+  _type == "metricBar" => {
+    ...,
+    _type,
+    _key,
+    items[] {
+      value,
+      label,
+      source
+    }
+  },
+  _type == "testimonials" => {
+    ...,
+    _type,
+    _key,
+    eyebrow,
+    heading,
+    items[] {
+      quote,
+      authorName,
+      authorRole,
+      authorCompany,
+      authorImage {
+        asset->{ _id, url, metadata { lqip } },
+        alt
+      }
+    }
+  },
+  _type == "cta" => {
+    ...,
+    _type,
+    _key,
+    title,
+    description,
+    buttonLink ${linkProjection},
+    buttonLink2 ${linkProjection}
+  },
+  _type == "caseStudyTakeaway" => {
+    ...,
+    _type,
+    _key,
+    content[]{
+      ...,
+      _type == "image" => {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    }
+  },
+  _type == "caseStudyTransformation" => {
+    ...,
+    _type,
+    _key,
+    text
+  },
+  _type == "caseStudyScreenshot" => {
+    ...,
+    _type,
+    _key,
+    image {
+      asset->{
+        _id,
+        url
+      },
+      alt
+    },
+    liveUrl,
+    frameStyle,
+    caption
+  },
+  _type == "techStackBlock" => {
+    ...,
+    _type,
+    _key,
+    techStack {
+      title,
+      logos[]-> {
+        _id,
+        name,
+        image
+      }
+    }
+  },
+  _type == "relatedProjectsBlock" => {
+    ...,
+    _type,
+    _key,
+    projects[]-> {
+      _id,
+      title,
+      "slug": slug.current,
+      tagline,
+      subtitle,
+      image {
+        asset->{ _id, url, metadata { lqip } },
+        alt
+      },
+      projectCategory,
+      clientIndustry,
+      language
+    },
+    ctaLabel
+  }
+`;
+
 // ─── Project Queries ───────────────────────────────────────────────
 
 export async function getProjects({ language }: Params) {
@@ -515,34 +644,13 @@ export async function getProject({
       slug,
       tagline,
       subtitle,
-      description,
-      objective,
       clientIndustry,
-      businessMetrics,
+      businessMetrics[] {
+        label,
+        value,
+        context
+      },
       transformationStatement,
-      productBridge,
-      liveUrl,
-      sourceCodeUrl,
-      date,
-      duration,
-      image,
-      featuredScreenshot {
-        ...,
-        asset->{
-          _id,
-          url
-        }
-      },
-      photoGallery[] {
-        ...,
-        asset->{
-          _id,
-          url
-        }
-      },
-      keyFeatures,
-      projectCategory,
-      projectType,
       techStack {
         title,
         logos[]-> {
@@ -551,51 +659,21 @@ export async function getProject({
           image
         }
       },
-      role,
-      projectScope,
-      challenges,
-      impact,
-      takeaway,
-      clientTestimonial {
-        quote,
-        authorName,
-        authorRole,
-        authorCompany
+      liveUrl,
+      date,
+      image,
+      featuredScreenshot {
+        ...,
+        asset->{
+          _id,
+          url
+        }
       },
-      ctaHeading,
-      ctaSubheading,
-      ctaButtonLabel,
+      projectCategory,
+      projectType,
       eyebrowLabel,
       backLabel,
-      sectionLabels {
-        objectiveEyebrow,
-        objectiveHeading,
-        challengesEyebrow,
-        challengesHeading,
-        impactEyebrow,
-        impactHeading,
-        takeawayEyebrow,
-        takeawayHeading,
-        techStackEyebrow,
-        techStackHeading,
-        relatedEyebrow,
-        relatedHeading,
-        visitSiteLabel
-      },
-      relatedProjects[]-> {
-        _id,
-        title,
-        "slug": slug.current,
-        tagline,
-        subtitle,
-        image {
-          asset->{ _id, url, metadata { lqip } },
-          alt
-        },
-        projectCategory,
-        clientIndustry,
-        language
-      },
+      "caseStudyBlocks": caseStudyBlocks[visible != false]{ ${caseStudyBlocksProjection} },
       seo {
         title,
         metaDescription,
