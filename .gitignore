@@ -45,3 +45,8 @@ next-env.d.ts
 CLAUDE.md
 .claude/
 .claudeignore
+
+# Dev/QA artifacts
+.playwright-cli/
+screenshots/
+research/

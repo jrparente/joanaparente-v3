@@ -225,7 +225,7 @@ export default async function RootLayout({
       className={`${headingFont.variable} ${bodyFont.variable}`}
       suppressHydrationWarning
     >
-      <body className="grid h-full min-h-[100dvh] auto-rows-[auto_1fr_auto]">
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -239,9 +239,11 @@ export default async function RootLayout({
           }}
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header navigation={navigation} language={language} />
-          <div id="main-content">{children}</div>
-          <Footer />
+          <div className="flex min-h-[100dvh] flex-col">
+            <Header navigation={navigation} language={language} />
+            <div id="main-content" className="flex-1">{children}</div>
+            <Footer />
+          </div>
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
