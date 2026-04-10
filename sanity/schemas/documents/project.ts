@@ -40,6 +40,26 @@ export default defineType({
         "The slug is the part of a URL which identifies a particular page on a website in an easy-to-read form. Use 'index' for the homepage.",
       options: {
         source: "title",
+        isUnique: (slug, context) => {
+          const { document, getClient } = context;
+          if (!document) return true;
+          const client = getClient({ apiVersion: "2024-01-01" });
+          const id = document._id.replace(/^drafts\./, "");
+          return client.fetch(
+            `!defined(*[
+              !(_id in [$draft, $published]) &&
+              _type == "project" &&
+              slug.current == $slug &&
+              language == $language
+            ][0]._id)`,
+            {
+              draft: `drafts.${id}`,
+              published: id,
+              slug,
+              language: document.language,
+            }
+          );
+        },
       },
       validation: (Rule) => Rule.required(),
     }),

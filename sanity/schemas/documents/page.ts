@@ -21,6 +21,26 @@ export default defineType({
       options: {
         source: "title",
         maxLength: 96,
+        isUnique: (slug, context) => {
+          const { document, getClient } = context;
+          if (!document) return true;
+          const client = getClient({ apiVersion: "2024-01-01" });
+          const id = document._id.replace(/^drafts\./, "");
+          return client.fetch(
+            `!defined(*[
+              !(_id in [$draft, $published]) &&
+              _type == "page" &&
+              slug.current == $slug &&
+              language == $language
+            ][0]._id)`,
+            {
+              draft: `drafts.${id}`,
+              published: id,
+              slug,
+              language: document.language,
+            }
+          );
+        },
       },
       validation: (Rule) => Rule.required(),
     }),
