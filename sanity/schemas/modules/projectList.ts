@@ -59,6 +59,12 @@ export const projectList = defineType({
       description: "Text for the 'View all projects' link",
     }),
     defineField({
+      name: "readMoreLabel",
+      title: "Read More Label",
+      type: "string",
+      description: 'CTA text shown on each project card, e.g. "Read the case study"',
+    }),
+    defineField({
       name: "emptyStateText",
       title: "Empty State Text",
       type: "string",

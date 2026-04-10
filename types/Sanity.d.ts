@@ -94,6 +94,7 @@ export type ProjectListBlock = {
   maxProjects?: number;
   showViewAll?: boolean;
   viewAllLabel?: string;
+  readMoreLabel?: string;
   emptyStateText?: string;
 };
 

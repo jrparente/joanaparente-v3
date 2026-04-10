@@ -18,6 +18,7 @@ const ProjectList = async ({ block, language }: Props) => {
     maxProjects,
     showViewAll,
     viewAllLabel,
+    readMoreLabel,
     emptyStateText,
   } = block;
 
@@ -77,7 +78,7 @@ const ProjectList = async ({ block, language }: Props) => {
           </p>
         )}
 
-        <ProjectGrid projects={projects} language={language} />
+        <ProjectGrid projects={projects} language={language} readMoreLabel={readMoreLabel} />
 
         {(showViewAll ?? true) && viewAllLabel && (
           <div className="mt-8 text-center">

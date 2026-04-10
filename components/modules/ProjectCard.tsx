@@ -11,6 +11,7 @@ type Props = {
   project: ProjectCardType;
   language?: string;
   position?: number;
+  readMoreLabel?: string;
 };
 
 const projectTypeLabels: Record<string, string> = {
@@ -28,12 +29,15 @@ const industryLabels: Record<string, string> = {
   other: "Other",
 };
 
-const ProjectCard = ({ project, language, position }: Props) => {
-  const { title, slug, tagline, image, projectType, clientIndustry, techStack } =
-    project;
+const ProjectCard = ({ project, language, position, readMoreLabel }: Props) => {
+  const { title, slug, subtitle, image, projectType, clientIndustry } = project;
   const href = language
     ? `/${language}/${localizedPath("projects", language)}/${slug.current}`
     : `/projects/${slug.current}`;
+
+  const industryLabel = clientIndustry ? industryLabels[clientIndustry] : null;
+  const typeLabel = projectType ? projectTypeLabels[projectType] : null;
+  const typeDisplay = [industryLabel, typeLabel].filter(Boolean).join(" · ");
 
   return (
     <Link
@@ -41,7 +45,7 @@ const ProjectCard = ({ project, language, position }: Props) => {
       className="group block"
       onClick={() => trackPortfolioCardClick(slug.current, position ?? 0)}
     >
-      <article className="overflow-hidden rounded-lg border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-primary/20">
+      <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-primary/20">
         {/* Image */}
         {image?.asset && (
           <div className="relative aspect-[16/10] overflow-hidden">
@@ -50,7 +54,7 @@ const ProjectCard = ({ project, language, position }: Props) => {
               alt={image.alt ?? title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              sizes="(min-width: 768px) 50vw, 100vw"
             />
             {/* Metric badge */}
             {project.businessMetrics?.[0] && (
@@ -62,42 +66,30 @@ const ProjectCard = ({ project, language, position }: Props) => {
         )}
 
         {/* Content */}
-        <div className="p-5">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            {projectType && (
-              <span className="text-xs font-sans font-semibold uppercase tracking-widest text-[var(--color-brand)]">
-                {projectTypeLabels[projectType] || projectType}
-              </span>
-            )}
-            {clientIndustry && (
-              <span className="rounded-full bg-[var(--color-accent-light)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-accent-dark)]">
-                {industryLabels[clientIndustry] || clientIndustry}
-              </span>
-            )}
-          </div>
-
-          <h3 className="text-lg font-semibold tracking-tight group-hover:text-primary transition-colors">
-            {title}
-          </h3>
-
-          {tagline && (
-            <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
-              {tagline}
+        <div className="flex flex-col flex-1 p-6">
+          {typeDisplay && (
+            <p className="mb-1 text-xs text-[var(--color-text-subtle)]">
+              {typeDisplay}
             </p>
           )}
 
-          {/* Tech stack pills */}
-          {techStack?.logos && techStack.logos.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {techStack.logos.map((logo) => (
-                <span
-                  key={logo._id}
-                  className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground"
-                >
-                  {logo.name}
-                </span>
-              ))}
-            </div>
+          <h3 className="font-serif text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+            {title}
+          </h3>
+
+          {subtitle && (
+            <p className="mt-2 text-sm text-muted-foreground line-clamp-3 flex-1">
+              {subtitle}
+            </p>
+          )}
+
+          {readMoreLabel && (
+            <p className="mt-4 text-sm font-semibold text-[var(--color-brand)] group-hover:text-[var(--color-brand-dark)] transition-colors">
+              {readMoreLabel}{" "}
+              <span className="inline-block transition-transform duration-200 group-hover:translate-x-[3px]">
+                →
+              </span>
+            </p>
           )}
         </div>
       </article>

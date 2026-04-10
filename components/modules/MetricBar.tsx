@@ -23,7 +23,7 @@ const MetricBar = ({ block }: Props) => {
               }`}
             >
               <p
-                className="font-heading text-2xl font-semibold text-[var(--color-text)]"
+                className="font-heading text-xl font-semibold text-[var(--color-text)]"
                 style={{ fontVariantNumeric: "tabular-nums" }}
               >
                 {item.value}
