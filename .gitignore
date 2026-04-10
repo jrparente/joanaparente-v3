@@ -50,3 +50,9 @@ CLAUDE.md
 .playwright-cli/
 screenshots/
 research/
+
+# Superpowers plugin cache
+.superpowers/
+
+# Sanity build output
+sanity/dist/
