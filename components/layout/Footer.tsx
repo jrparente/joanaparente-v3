@@ -141,7 +141,7 @@ export default async function Footer({ language }: FooterProps) {
               <Link
                 href={`mailto:${email}`}
                 aria-label={`Send email to ${email}`}
-                className="md:hidden text-sm text-muted-foreground border-b border-border hover:text-foreground hover:border-muted-foreground transition-colors duration-200 min-h-[44px] inline-flex items-center"
+                className="md:hidden text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 min-h-[44px] inline-flex items-center"
               >
                 {email}
               </Link>
