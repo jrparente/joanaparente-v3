@@ -79,11 +79,11 @@ export const Header = ({ navigation, language }: Props) => {
                   href={href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "font-sans text-[0.82rem] font-medium",
+                    "nav-link font-sans text-[0.82rem] font-medium",
                     "transition-colors duration-200",
                     "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded-sm",
                     isActive
-                      ? "text-foreground pb-[3px] border-b-[1.5px] border-primary"
+                      ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
