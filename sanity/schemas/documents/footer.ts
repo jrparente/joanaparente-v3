@@ -12,7 +12,16 @@ export default defineType({
       title: "Show Logo",
       type: "boolean",
       initialValue: true,
-      description: "Toggle the logo in the footer",
+      description:
+        "Show the logo in the footer. When off, Brand Text is shown instead (if set).",
+    }),
+    defineField({
+      name: "brandText",
+      title: "Brand Text",
+      type: "string",
+      description:
+        'Shown when logo is hidden. e.g. "Joana Parente". Leave empty to show nothing.',
+      hidden: ({ parent }) => parent?.showLogo !== false,
     }),
     defineField({
       name: "location",
@@ -57,62 +66,15 @@ export default defineType({
       name: "navLinks",
       title: "Navigation Links",
       type: "array",
-      description:
-        "Footer navigation items. Path should be the English slug (e.g. /about, /services). Localized paths are resolved automatically.",
-      of: [
-        defineField({
-          name: "navLink",
-          type: "object",
-          fields: [
-            defineField({
-              name: "label",
-              type: "string",
-              title: "Label",
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: "path",
-              type: "string",
-              title: "Path",
-              description: 'Relative path, e.g. "/about", "/services"',
-              validation: (Rule) => Rule.required(),
-            }),
-          ],
-          preview: {
-            select: { title: "label", subtitle: "path" },
-          },
-        }),
-      ],
+      description: "Footer navigation items.",
+      of: [{ type: "link" }],
     }),
     defineField({
       name: "legalLinks",
       title: "Legal Links",
       type: "array",
       description: "Privacy Policy, Terms, etc.",
-      of: [
-        defineField({
-          name: "legalLink",
-          type: "object",
-          fields: [
-            defineField({
-              name: "label",
-              type: "string",
-              title: "Label",
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: "path",
-              type: "string",
-              title: "Path",
-              description: 'Relative path, e.g. "/privacy"',
-              validation: (Rule) => Rule.required(),
-            }),
-          ],
-          preview: {
-            select: { title: "label", subtitle: "path" },
-          },
-        }),
-      ],
+      of: [{ type: "link" }],
     }),
     defineField({
       name: "copyrightText",

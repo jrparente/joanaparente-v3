@@ -447,20 +447,15 @@ export type FooterType = {
   _id: string;
   _type: "footer";
   showLogo?: boolean;
+  brandText?: string;
   location?: string;
   email?: string;
   socialLinks?: {
     platform: string;
     url: string;
   }[];
-  navLinks?: {
-    label: string;
-    path: string;
-  }[];
-  legalLinks?: {
-    label: string;
-    path: string;
-  }[];
+  navLinks?: LinkType[];
+  legalLinks?: LinkType[];
   copyrightText?: string;
 };
 

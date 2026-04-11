@@ -325,11 +325,12 @@ export async function getFooter() {
   const query = groq`
     *[_type == "footer"][0] {
       showLogo,
+      brandText,
       location,
       email,
       socialLinks,
-      navLinks,
-      legalLinks,
+      navLinks[] ${linkProjection},
+      legalLinks[] ${linkProjection},
       copyrightText
     }
   `;

@@ -1,15 +1,11 @@
 import Link from "next/link";
-import {
-  MailIcon,
-  GithubIcon,
-  LinkedinIcon,
-  InstagramIcon,
-} from "lucide-react";
+import { GithubIcon, LinkedinIcon, InstagramIcon } from "lucide-react";
 import { getFooter } from "@/lib/sanity/queries";
-import { localizedPath } from "@/lib/utils";
+import { resolveLink } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { LogoIcon } from "./LogoIcon";
 import { LogoWordmark } from "./LogoWordmark";
+import type { LinkType } from "@/types/Sanity";
 
 const iconMap: Record<string, React.ReactNode> = {
   GitHub: <GithubIcon className="h-4 w-4" />,
@@ -21,11 +17,29 @@ type FooterProps = {
   language: string;
 };
 
-function resolveFooterPath(path: string, language: string): string {
-  // Strip leading slash, translate segment, rebuild
-  const segment = path.replace(/^\//, "");
-  const translated = localizedPath(segment, language);
-  return `/${language}/${translated}`;
+function FooterLink({
+  link,
+  language,
+  className,
+}: {
+  link: LinkType;
+  language: string;
+  className?: string;
+}) {
+  const href = resolveLink(link, language);
+  const isExternal = link.type === "external";
+  return (
+    <Link
+      href={href}
+      className={className}
+      {...(isExternal && {
+        target: "_blank",
+        rel: "noopener noreferrer",
+      })}
+    >
+      {link.label}
+    </Link>
+  );
 }
 
 export default async function Footer({ language }: FooterProps) {
@@ -44,6 +58,7 @@ export default async function Footer({ language }: FooterProps) {
 
   const {
     showLogo = true,
+    brandText,
     location,
     email,
     socialLinks,
@@ -53,17 +68,23 @@ export default async function Footer({ language }: FooterProps) {
   } = footer;
 
   return (
-    <footer className="w-full border-t border-border py-8 md:py-10 lg:py-12">
+    <footer className="w-full py-8 md:py-10 lg:py-12">
       <div className="max-w-screen-xl mx-auto px-4">
         {/* ── Top section: asymmetric on md+, centered stack on mobile ── */}
         <div className="flex flex-col items-center text-center md:flex-row md:items-start md:justify-between md:text-left">
           {/* Left column: brand identity */}
           <div className="flex flex-col items-center gap-1 md:items-start md:gap-1.5">
-            {showLogo && (
+            {showLogo ? (
               <div aria-hidden="true">
                 <LogoIcon className="h-8 w-auto md:hidden" />
                 <LogoWordmark className="h-8 w-auto hidden md:block" />
               </div>
+            ) : (
+              brandText && (
+                <p className="font-heading text-xl font-light text-foreground">
+                  {brandText}
+                </p>
+              )
             )}
             {location && (
               <p className="text-sm text-muted-foreground/70">{location}</p>
@@ -85,14 +106,13 @@ export default async function Footer({ language }: FooterProps) {
             {navLinks && navLinks.length > 0 && (
               <nav aria-label="Footer navigation">
                 <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 md:justify-end lg:gap-x-7">
-                  {navLinks.map((link) => (
-                    <li key={link.path}>
-                      <Link
-                        href={resolveFooterPath(link.path, language)}
+                  {navLinks.map((link, i) => (
+                    <li key={link.label ?? i}>
+                      <FooterLink
+                        link={link}
+                        language={language}
                         className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 min-h-[44px] inline-flex items-center md:min-h-0"
-                      >
-                        {link.label}
-                      </Link>
+                      />
                     </li>
                   ))}
                 </ul>
@@ -139,14 +159,13 @@ export default async function Footer({ language }: FooterProps) {
           </div>
           {legalLinks && legalLinks.length > 0 && (
             <div className="flex gap-4">
-              {legalLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  href={resolveFooterPath(link.path, language)}
+              {legalLinks.map((link, i) => (
+                <FooterLink
+                  key={link.label ?? i}
+                  link={link}
+                  language={language}
                   className="text-xs text-muted-foreground/70 hover:text-muted-foreground transition-colors duration-200 min-h-[44px] inline-flex items-center md:min-h-0"
-                >
-                  {link.label}
-                </Link>
+                />
               ))}
             </div>
           )}
