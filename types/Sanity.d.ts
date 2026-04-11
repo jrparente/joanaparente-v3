@@ -446,12 +446,22 @@ export type Homepage = {
 export type FooterType = {
   _id: string;
   _type: "footer";
-  message: string;
-  email: string;
-  socialLinks: {
+  showLogo?: boolean;
+  location?: string;
+  email?: string;
+  socialLinks?: {
     platform: string;
     url: string;
   }[];
+  navLinks?: {
+    label: string;
+    path: string;
+  }[];
+  legalLinks?: {
+    label: string;
+    path: string;
+  }[];
+  copyrightText?: string;
 };
 
 export type MetadataType = {

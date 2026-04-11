@@ -324,9 +324,13 @@ export async function getNavigation(language: string) {
 export async function getFooter() {
   const query = groq`
     *[_type == "footer"][0] {
-      message,
+      showLogo,
+      location,
       email,
-      socialLinks
+      socialLinks,
+      navLinks,
+      legalLinks,
+      copyrightText
     }
   `;
   return fetchSanity<FooterType>({ query });
