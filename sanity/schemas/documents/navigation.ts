@@ -18,6 +18,18 @@ export default defineType({
       of: [{ type: "link" }],
     }),
     defineField({
+      name: "ctaLabel",
+      title: "CTA Button Label",
+      type: "string",
+      description: "Label for the header CTA button (e.g. 'Let's talk' / 'Falar comigo')",
+    }),
+    defineField({
+      name: "ctaLink",
+      title: "CTA Button Link",
+      type: "link",
+      description: "Page or URL the CTA button links to",
+    }),
+    defineField({
       name: "language",
       title: "Language",
       type: "string",

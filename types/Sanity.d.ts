@@ -474,6 +474,8 @@ export type NavigationType = {
   _id: string;
   _type: "navigation";
   items: LinkType[];
+  ctaLabel?: string;
+  ctaLink?: LinkType;
 };
 
 export type PageType = {

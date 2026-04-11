@@ -312,7 +312,9 @@ export async function getNavigation(language: string) {
   const query = groq`
     *[_type == "navigation" && language == $language][0] {
       title,
-      items[] ${linkProjection}
+      items[] ${linkProjection},
+      ctaLabel,
+      ctaLink ${linkProjection}
     }
   `;
 
