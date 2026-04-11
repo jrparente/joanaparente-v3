@@ -84,10 +84,19 @@ export default defineType({
         'Text after "© 2026". e.g. "Joana Parente". Year is added automatically.',
       initialValue: "Joana Parente",
     }),
+    defineField({
+      name: "language",
+      title: "Language",
+      type: "string",
+      readOnly: true,
+    }),
   ],
   preview: {
-    prepare: () => ({
-      title: "Footer",
+    select: {
+      language: "language",
+    },
+    prepare: ({ language }) => ({
+      title: `Footer${language ? ` (${language.toUpperCase()})` : ""}`,
       media: EarthGlobeIcon,
     }),
   },

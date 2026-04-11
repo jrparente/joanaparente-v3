@@ -43,7 +43,7 @@ function FooterLink({
 }
 
 export default async function Footer({ language }: FooterProps) {
-  const footer = await getFooter();
+  const footer = await getFooter(language);
   const currentYear = new Date().getFullYear();
 
   if (!footer) {

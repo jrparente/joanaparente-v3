@@ -22,7 +22,7 @@ const ContactSection = async ({ block, language }: Props) => {
     backLabel,
   } = block;
 
-  const footer = await getFooter();
+  const footer = await getFooter(language ?? "en");
   const email = footer?.email || "hello@joanaparente.com";
   const linkedinUrl = footer?.socialLinks?.find(
     (l) => l.platform === "LinkedIn"

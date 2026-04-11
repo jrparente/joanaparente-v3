@@ -321,9 +321,9 @@ export async function getNavigation(language: string) {
   return fetchSanity<NavigationType>({ query, params: { language } });
 }
 
-export async function getFooter() {
+export async function getFooter(language: string) {
   const query = groq`
-    *[_type == "footer"][0] {
+    *[_type == "footer" && language == $language][0] {
       showLogo,
       brandText,
       location,
@@ -334,7 +334,7 @@ export async function getFooter() {
       copyrightText
     }
   `;
-  return fetchSanity<FooterType>({ query });
+  return fetchSanity<FooterType>({ query, params: { language } });
 }
 
 export async function getHomepage({ language }: Params) {
