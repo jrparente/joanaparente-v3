@@ -113,7 +113,7 @@ export const Header = ({ navigation, language }: Props) => {
 
         {/* Mobile: hamburger only */}
         <div className="md:hidden">
-          <MobileMenu items={navigation?.items || []} language={language} />
+          <MobileMenu navigation={navigation} language={language} />
         </div>
       </div>
     </header>
