@@ -1,8 +1,10 @@
 "use client";
 
+import { useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { languages } from "@/i18n.config";
 import { cn } from "@/lib/utils";
+import { getTranslatedPath } from "@/app/actions/getTranslatedPath";
 
 type Props = {
   language: string;
@@ -11,14 +13,14 @@ type Props = {
 export const LangToggle = ({ language }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const switchLocale = (newLocale: string) => {
     if (newLocale === language) return;
-    const localePrefix = `/${language}`;
-    const pathnameWithoutLocale = pathname.startsWith(localePrefix)
-      ? pathname.slice(localePrefix.length)
-      : "";
-    router.push(`/${newLocale}${pathnameWithoutLocale}`);
+    startTransition(async () => {
+      const path = await getTranslatedPath(pathname, language, newLocale);
+      router.push(path);
+    });
   };
 
   return (
@@ -37,13 +39,16 @@ export const LangToggle = ({ language }: Props) => {
             onClick={() => switchLocale(lang.id)}
             aria-label={`Switch to ${lang.title}`}
             aria-pressed={language === lang.id}
+            disabled={isPending}
             className={cn(
-              "border-none bg-transparent p-0 cursor-pointer",
+              "lang-btn border-none bg-transparent p-0 cursor-pointer",
               "font-sans text-[0.7rem] font-semibold tracking-[0.05em] uppercase",
               "transition-colors duration-200",
-              "min-h-[44px] min-w-[44px] flex items-center justify-center",
+              // 44×44px touch target on mobile; auto-size on desktop
+              "min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center",
+              isPending && "opacity-50 cursor-wait",
               language === lang.id
-                ? "text-primary pb-[2px] border-b-[1.5px] border-primary"
+                ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
