@@ -6,6 +6,7 @@ import {
   InstagramIcon,
 } from "lucide-react";
 import { getFooter } from "@/lib/sanity/queries";
+import { ThemeToggle } from "./ThemeToggle";
 
 const iconMap: Record<string, React.ReactNode> = {
   GitHub: <GithubIcon className="h-5 w-5" />,
@@ -30,9 +31,12 @@ export default async function Footer() {
   return (
     <footer className="w-full border-t border-border bg-background py-8">
       <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-        <p>
-          &copy; {new Date().getFullYear()} {message}
-        </p>
+        <div className="flex items-center gap-4">
+          <p>
+            &copy; {new Date().getFullYear()} {message}
+          </p>
+          <ThemeToggle />
+        </div>
         <div className="flex items-center gap-4">
           <Link
             href={`mailto:${email}`}
