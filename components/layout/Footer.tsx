@@ -73,7 +73,7 @@ export default async function Footer({ language }: FooterProps) {
               <Link
                 href={`mailto:${email}`}
                 aria-label={`Send email to ${email}`}
-                className="hidden md:inline-block text-sm text-muted-foreground border-b border-border hover:text-foreground hover:border-muted-foreground transition-colors duration-200"
+                className="hidden md:inline-flex md:items-center text-sm text-muted-foreground border-b border-border hover:text-foreground hover:border-muted-foreground transition-colors duration-200"
               >
                 {email}
               </Link>
@@ -84,7 +84,7 @@ export default async function Footer({ language }: FooterProps) {
           <div className="flex flex-col items-center gap-4 mt-5 md:items-end md:gap-3 md:mt-0">
             {navLinks && navLinks.length > 0 && (
               <nav aria-label="Footer navigation">
-                <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 md:justify-end md:gap-x-5 lg:gap-x-7">
+                <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 md:justify-end lg:gap-x-7">
                   {navLinks.map((link) => (
                     <li key={link.path}>
                       <Link
@@ -99,7 +99,7 @@ export default async function Footer({ language }: FooterProps) {
               </nav>
             )}
             {socialLinks && socialLinks.length > 0 && (
-              <div className="flex gap-4 md:gap-4 lg:gap-5">
+              <div className="flex gap-4 lg:gap-5">
                 {socialLinks.map((link) => (
                   <Link
                     key={link.platform}
