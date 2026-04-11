@@ -2,6 +2,7 @@
 
 import { groq } from "next-sanity";
 import { client } from "@/lib/sanity/client";
+import { pathTranslations } from "@/i18n.config";
 
 /**
  * Resolves the correct translated path for a given pathname + target language.
@@ -68,12 +69,20 @@ export async function getTranslatedPath(
   // Fall back to the current slug if Sanity has no translation (e.g. /projects listing)
   const translatedSlug = result?.translatedSlug ?? currentSlug;
 
-  // Normalise path-prefix aliases to their canonical filesystem form.
-  // Derived from the middleware.ts rewrite: /pt/projetos/* → /pt/projects/*
-  const prefixAliases: Record<string, string> = { projetos: "projects" };
-  const prefixKey = segments[0];
+  // Normalise path-prefix aliases to their canonical (filesystem) form.
+  // Derives from pathTranslations in i18n.config so new localized segments
+  // are automatically covered without changing this file.
+  // e.g. "projetos" → "projects", "contacto" → "contact"
+  const aliasToCanonical = Object.values(pathTranslations).reduce<
+    Record<string, string>
+  >((acc, map) => {
+    Object.entries(map).forEach(([canonical, alias]) => {
+      if (alias !== canonical) acc[alias] = canonical;
+    });
+    return acc;
+  }, {});
   const canonicalPrefix = pathPrefix
-    ? `/${prefixAliases[prefixKey] ?? prefixKey}`
+    ? `/${aliasToCanonical[segments[0]] ?? segments[0]}`
     : "";
 
   return `/${targetLanguage}${canonicalPrefix}/${translatedSlug}`;
