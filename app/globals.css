@@ -464,3 +464,59 @@
     animation: none !important;
   }
 }
+
+/* ─────────────────────────────────────────────
+   NAV LINK — animated underline (center-expand)
+   ───────────────────────────────────────────── */
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  right: 50%;
+  height: 1.5px;
+  background: var(--primary);
+  border-radius: 1px;
+  transition: left 0.25s ease, right 0.25s ease;
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  left: 0;
+  right: 0;
+}
+
+/* Active state: no animation — marks location, not a gesture */
+.nav-link[aria-current="page"]::after {
+  transition: none;
+}
+
+/* ─────────────────────────────────────────────
+   LANG TOGGLE BUTTON — active indicator
+   ───────────────────────────────────────────── */
+
+.lang-btn {
+  position: relative;
+}
+
+.lang-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: var(--primary);
+  border-radius: 1px;
+  opacity: 0;
+}
+
+/* aria-pressed="true" is already set by LangToggle when lang matches */
+.lang-btn[aria-pressed="true"]::after {
+  opacity: 1;
+}
