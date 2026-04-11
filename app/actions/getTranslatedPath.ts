@@ -67,5 +67,14 @@ export async function getTranslatedPath(
 
   // Fall back to the current slug if Sanity has no translation (e.g. /projects listing)
   const translatedSlug = result?.translatedSlug ?? currentSlug;
-  return `/${targetLanguage}${pathPrefix}/${translatedSlug}`;
+
+  // Normalise path-prefix aliases to their canonical filesystem form.
+  // Derived from the middleware.ts rewrite: /pt/projetos/* → /pt/projects/*
+  const prefixAliases: Record<string, string> = { projetos: "projects" };
+  const prefixKey = segments[0];
+  const canonicalPrefix = pathPrefix
+    ? `/${prefixAliases[prefixKey] ?? prefixKey}`
+    : "";
+
+  return `/${targetLanguage}${canonicalPrefix}/${translatedSlug}`;
 }
