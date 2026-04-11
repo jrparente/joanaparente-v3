@@ -448,3 +448,19 @@
     flex-basis: auto;
   }
 }
+
+/* ─────────────────────────────────────────────
+   HEADER
+   ───────────────────────────────────────────── */
+
+:root {
+  --header-height: 64px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  header,
+  [data-slot="sheet-content"] {
+    transition: none !important;
+    animation: none !important;
+  }
+}
