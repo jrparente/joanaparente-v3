@@ -242,7 +242,7 @@ export default async function RootLayout({
           <div className="flex min-h-[100dvh] flex-col">
             <Header navigation={navigation} language={language} />
             <div id="main-content" className="flex-1">{children}</div>
-            <Footer />
+            <Footer language={language} />
           </div>
         </ThemeProvider>
         <Analytics />

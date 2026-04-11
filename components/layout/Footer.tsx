@@ -14,7 +14,11 @@ const iconMap: Record<string, React.ReactNode> = {
   Instagram: <InstagramIcon className="h-5 w-5" />,
 };
 
-export default async function Footer() {
+type FooterProps = {
+  language: string;
+};
+
+export default async function Footer({ language }: FooterProps) {
   const footer = await getFooter();
 
   if (!footer) {
@@ -27,24 +31,27 @@ export default async function Footer() {
     );
   }
 
-  const { message, email, socialLinks } = footer;
+  const { email, socialLinks } = footer;
+  const copyrightText = footer.copyrightText ?? "Joana Parente";
   return (
     <footer className="w-full border-t border-border bg-background py-8">
       <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-4">
           <p>
-            &copy; {new Date().getFullYear()} {message}
+            &copy; {new Date().getFullYear()} {copyrightText}
           </p>
           <ThemeToggle />
         </div>
         <div className="flex items-center gap-4">
-          <Link
-            href={`mailto:${email}`}
-            className="hover:text-primary transition"
-          >
-            <MailIcon className="h-5 w-5" />
-            <span className="sr-only">Email</span>
-          </Link>
+          {email && (
+            <Link
+              href={`mailto:${email}`}
+              className="hover:text-primary transition"
+            >
+              <MailIcon className="h-5 w-5" />
+              <span className="sr-only">Email</span>
+            </Link>
+          )}
           {socialLinks?.map((link) => (
             <Link
               key={link.platform}
