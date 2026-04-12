@@ -4,7 +4,8 @@ import "../../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getNavigation, getSiteSettings } from "@/lib/sanity/queries";
+import { getNavigation, getSiteSettings, getCookieBanner } from "@/lib/sanity/queries";
+import CookieBanner from "@/components/consent/CookieBanner";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
@@ -217,6 +218,7 @@ export default async function RootLayout({
   const { language } = await params;
 
   const navigation = await getNavigation(language);
+  const cookieBanner = await getCookieBanner(language);
   const gaId = process.env.NEXT_PUBLIC_GA4_ID;
 
   return (
@@ -244,6 +246,16 @@ export default async function RootLayout({
             <div id="main-content" className="flex-1">{children}</div>
             <Footer language={language} />
           </div>
+          {cookieBanner && (
+            <CookieBanner
+              title={cookieBanner.title}
+              description={cookieBanner.description}
+              acceptLabel={cookieBanner.acceptLabel}
+              rejectLabel={cookieBanner.rejectLabel}
+              privacyPolicyLink={cookieBanner.privacyPolicyLink}
+              language={language}
+            />
+          )}
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
