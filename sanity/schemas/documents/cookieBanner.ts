@@ -1,10 +1,10 @@
 import { defineField, defineType } from "sanity";
-import { CookieIcon } from "@sanity/icons";
+import { ControlsIcon } from "@sanity/icons";
 
 export default defineType({
   name: "cookieBanner",
   title: "Cookie Banner",
-  icon: CookieIcon,
+  icon: ControlsIcon,
   type: "document",
   fields: [
     defineField({
@@ -57,7 +57,7 @@ export default defineType({
     },
     prepare: ({ language }) => ({
       title: `Cookie Banner${language ? ` (${language.toUpperCase()})` : ""}`,
-      media: CookieIcon,
+      media: ControlsIcon,
     }),
   },
 });

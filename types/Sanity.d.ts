@@ -464,6 +464,16 @@ export type FooterType = {
   copyrightText?: string;
 };
 
+export type CookieBannerType = {
+  _id: string;
+  _type: "cookieBanner";
+  title: string;
+  description: string;
+  acceptLabel: string;
+  rejectLabel: string;
+  privacyPolicyLink?: LinkType;
+};
+
 export type MetadataType = {
   title: string;
   metaDescription: string;

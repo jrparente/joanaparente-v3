@@ -2,6 +2,7 @@ import { groq } from "next-sanity";
 import { fetchSanity } from "./fetch";
 import { client } from "./client";
 import {
+  CookieBannerType,
   FooterType,
   Homepage,
   NavigationType,
@@ -335,6 +336,19 @@ export async function getFooter(language: string) {
     }
   `;
   return fetchSanity<FooterType>({ query, params: { language } });
+}
+
+export async function getCookieBanner(language: string) {
+  const query = groq`
+    *[_type == "cookieBanner" && language == $language][0] {
+      title,
+      description,
+      acceptLabel,
+      rejectLabel,
+      privacyPolicyLink ${linkProjection}
+    }
+  `;
+  return fetchSanity<CookieBannerType>({ query, params: { language } });
 }
 
 export async function getHomepage({ language }: Params) {
