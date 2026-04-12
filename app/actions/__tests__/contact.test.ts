@@ -22,6 +22,7 @@ const validFields = {
   budgetRange: "5000-10000",
   message:
     "I need a new portfolio website with modern design and great performance.",
+  consent: "on",
 };
 
 const prevState = { success: false };
@@ -83,6 +84,13 @@ describe("submitContactForm", () => {
       );
       expect(result.success).toBe(false);
       expect(result.error).toMatch(/at least 50 characters/);
+    });
+
+    it("rejects missing consent", async () => {
+      const { consent, ...rest } = validFields;
+      const result = await submitContactForm(prevState, makeFormData(rest));
+      expect(result.success).toBe(false);
+      expect(result.error).toMatch(/privacy policy/i);
     });
   });
 

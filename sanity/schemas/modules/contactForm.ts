@@ -117,6 +117,36 @@ export const contactForm = defineType({
       initialValue: "Preferred language",
     }),
     defineField({
+      name: "selectPlaceholder",
+      title: "Select placeholder",
+      type: "string",
+      description: 'Placeholder text for dropdown fields. e.g. "Select one"',
+      initialValue: "Select one",
+    }),
+    defineField({
+      name: "submittingLabel",
+      title: "Submitting label",
+      type: "string",
+      description: 'Text shown while the form is sending. e.g. "Sending…"',
+      initialValue: "Sending…",
+    }),
+    defineField({
+      name: "consentText",
+      title: "Consent checkbox text",
+      type: "string",
+      description:
+        'Text before the privacy policy link. e.g. "I consent to the processing of my data per the"',
+      initialValue:
+        "I consent to the processing of my personal data in accordance with the",
+    }),
+    defineField({
+      name: "privacyPolicyLink",
+      title: "Privacy Policy link",
+      type: "link",
+      description:
+        "Link to the Privacy Policy page. The label is appended after the consent text.",
+    }),
+    defineField({
       name: "validationMessages",
       title: "Validation Messages",
       type: "object",
@@ -147,6 +177,13 @@ export const contactForm = defineType({
           type: "string",
           initialValue:
             "Something went wrong. Please try again or email hello@joanaparente.com directly.",
+        }),
+        defineField({
+          name: "consentRequired",
+          title: "Consent required error",
+          type: "string",
+          initialValue:
+            "Please accept the privacy policy to submit the form.",
         }),
       ],
     }),

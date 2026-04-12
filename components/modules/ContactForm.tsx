@@ -14,6 +14,7 @@ import {
 } from "@/app/actions/contact";
 import { trackContactFormSubmit } from "@/lib/analytics";
 import { RichText } from "@/components/portabletext/RichText";
+import { resolveLink } from "@/lib/utils";
 import type { ContactFormBlock } from "@/types/Sanity";
 
 type Props = {
@@ -34,20 +35,7 @@ export default function ContactForm({ block, language }: Props) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Wrap server action to handle client-side validation first
-  const wrappedAction = async (
-    prev: ContactFormState,
-    formData: FormData
-  ): Promise<ContactFormState> => {
-    const clientErrors = validateAll(formData);
-    if (Object.keys(clientErrors).length > 0) {
-      setErrors(clientErrors);
-      return { success: false, error: "validation" };
-    }
-    return submitContactForm(prev, formData);
-  };
-
-  const [state, formAction, isPending] = useActionState(wrappedAction, {
+  const [state, formAction, isPending] = useActionState(submitContactForm, {
     success: false,
   });
 
@@ -106,6 +94,13 @@ export default function ContactForm({ block, language }: Props) {
               "Please provide more detail (at least 50 characters)."
             );
           break;
+        case "consent":
+          if (value !== "on")
+            return (
+              msg?.consentRequired ||
+              "Please accept the privacy policy to submit the form."
+            );
+          break;
       }
       return undefined;
     },
@@ -120,8 +115,31 @@ export default function ContactForm({ block, language }: Props) {
       const err = validateField(field, val);
       if (err) errs[field] = err;
     }
+    // Checkbox: value is "on" when checked, null when unchecked
+    const consentVal = formData.get("consent") as string | null;
+    const consentErr = validateField("consent", consentVal || "");
+    if (consentErr) errs.consent = consentErr;
     return errs;
   }
+
+  // Client-side validation in onSubmit — prevents form reset on error
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      const formData = new FormData(e.currentTarget);
+      const clientErrors = validateAll(formData);
+      if (Object.keys(clientErrors).length > 0) {
+        e.preventDefault();
+        setErrors(clientErrors);
+        // Focus first errored field
+        const firstErrorField = Object.keys(clientErrors)[0];
+        const el = e.currentTarget.elements.namedItem(firstErrorField);
+        if (el instanceof HTMLElement) el.focus();
+        return;
+      }
+      setErrors({});
+    },
+    [validateField]
+  );
 
   const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -216,6 +234,7 @@ export default function ContactForm({ block, language }: Props) {
         <form
           ref={formRef}
           action={formAction}
+          onSubmit={handleSubmit}
           noValidate
           className="flex flex-col gap-6"
         >
@@ -223,7 +242,7 @@ export default function ContactForm({ block, language }: Props) {
           {serverError && (
             <div
               role="alert"
-              className="rounded-[var(--radius-md)] border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
+              className="rounded-[var(--radius-md)] border border-destructive/40 bg-destructive/8 px-4 py-3 text-sm text-destructive"
             >
               {serverError}
             </div>
@@ -298,6 +317,7 @@ export default function ContactForm({ block, language }: Props) {
                 id={fieldId("projectType")}
                 name="projectType"
                 options={block.projectTypeOptions}
+                placeholder={block.selectPlaceholder || (language === "pt" ? "Seleciona uma opção" : "Select one")}
                 required
                 hasError={!!errors.projectType}
                 errorId={errors.projectType ? errorId("projectType") : undefined}
@@ -316,6 +336,7 @@ export default function ContactForm({ block, language }: Props) {
                 id={fieldId("budgetRange")}
                 name="budgetRange"
                 options={block.budgetRangeOptions}
+                placeholder={block.selectPlaceholder || (language === "pt" ? "Seleciona uma opção" : "Select one")}
                 required
                 hasError={!!errors.budgetRange}
                 errorId={
@@ -334,6 +355,7 @@ export default function ContactForm({ block, language }: Props) {
                 id={fieldId("timeline")}
                 name="timeline"
                 options={block.timelineOptions}
+                placeholder={block.selectPlaceholder || (language === "pt" ? "Seleciona uma opção" : "Select one")}
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
@@ -374,7 +396,7 @@ export default function ContactForm({ block, language }: Props) {
               </span>
             </legend>
             <div className="flex gap-6 pt-1 max-[640px]:flex-col max-[640px]:gap-3">
-              <label className="flex cursor-pointer items-center gap-2">
+              <label className="flex cursor-pointer items-center gap-2 min-h-[44px]">
                 <input
                   type="radio"
                   name="languagePreference"
@@ -386,7 +408,7 @@ export default function ContactForm({ block, language }: Props) {
                   English
                 </span>
               </label>
-              <label className="flex cursor-pointer items-center gap-2">
+              <label className="flex cursor-pointer items-center gap-2 min-h-[44px]">
                 <input
                   type="radio"
                   name="languagePreference"
@@ -401,6 +423,69 @@ export default function ContactForm({ block, language }: Props) {
             </div>
           </fieldset>
 
+          {/* Row 6: GDPR consent checkbox */}
+          <div className="flex flex-col gap-2">
+            <label className="flex cursor-pointer items-start gap-3 min-h-[44px]">
+              <input
+                type="checkbox"
+                name="consent"
+                required
+                aria-invalid={!!errors.consent}
+                aria-describedby={
+                  errors.consent ? errorId("consent") : undefined
+                }
+                onChange={(e) => {
+                  if (errors.consent && e.target.checked) {
+                    setErrors((prev) => {
+                      const next = { ...prev };
+                      delete next.consent;
+                      return next;
+                    });
+                  }
+                }}
+                className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer appearance-none rounded-[var(--radius-sm)] border-2 border-[var(--color-border)] bg-[var(--color-surface-elevated)] bg-center bg-no-repeat transition-colors checked:border-[var(--color-brand)] checked:bg-[var(--color-brand)] checked:bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22white%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2.5-2.5a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] focus:outline-none focus:ring-3 focus:ring-[var(--color-brand-light)] focus:border-[var(--color-brand)]"
+              />
+              <span className="text-sm leading-snug text-[var(--color-text-muted)] select-none">
+                {block.consentText ||
+                  "I consent to the processing of my personal data in accordance with the"}{" "}
+                {block.privacyPolicyLink ? (
+                  <a
+                    href={resolveLink(block.privacyPolicyLink, language)}
+                    target={
+                      block.privacyPolicyLink.type === "external"
+                        ? "_blank"
+                        : undefined
+                    }
+                    rel={
+                      block.privacyPolicyLink.type === "external"
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    className="font-medium text-[var(--color-brand)] underline underline-offset-2 hover:text-[var(--color-brand-dark)] transition-colors"
+                  >
+                    {block.privacyPolicyLink.label || "Privacy Policy"}
+                  </a>
+                ) : (
+                  <span className="font-medium">
+                    {language === "pt"
+                      ? "Política de Privacidade"
+                      : "Privacy Policy"}
+                  </span>
+                )}
+                .
+              </span>
+            </label>
+            {errors.consent && (
+              <p
+                id={errorId("consent")}
+                className="text-sm text-destructive pl-8"
+                role="alert"
+              >
+                {errors.consent}
+              </p>
+            )}
+          </div>
+
           {/* Submit button */}
           <button
             type="submit"
@@ -410,7 +495,7 @@ export default function ContactForm({ block, language }: Props) {
             {isPending ? (
               <>
                 <Spinner />
-                <span>Sending…</span>
+                <span>{block.submittingLabel || (language === "pt" ? "A enviar…" : "Sending…")}</span>
               </>
             ) : (
               <>
@@ -446,7 +531,7 @@ function inputClasses(hasError: boolean): string {
     "outline-none transition-[border-color,box-shadow] duration-200",
     "focus:border-[var(--color-brand)] focus:ring-3 focus:ring-[var(--color-brand-light)]",
     hasError
-      ? "border-red-500 dark:border-red-400"
+      ? "border-destructive"
       : "border-[var(--color-border)]",
   ].join(" ");
 }
@@ -474,7 +559,7 @@ function FieldGroup({
       </label>
       {children}
       {error && errorId && (
-        <p id={errorId} className="text-sm text-red-600 dark:text-red-400" role="alert">
+        <p id={errorId} className="text-sm text-destructive" role="alert">
           {error}
         </p>
       )}
@@ -486,6 +571,7 @@ function SelectField({
   id,
   name,
   options,
+  placeholder = "Select one",
   required,
   hasError,
   errorId,
@@ -495,6 +581,7 @@ function SelectField({
   id: string;
   name: string;
   options?: string[];
+  placeholder?: string;
   required?: boolean;
   hasError?: boolean;
   errorId?: string;
@@ -515,7 +602,7 @@ function SelectField({
         className={`${inputClasses(!!hasError)} cursor-pointer appearance-none pr-10`}
       >
         <option value="" disabled>
-          Select one
+          {placeholder}
         </option>
         {options?.map((opt) => (
           <option key={opt} value={opt}>

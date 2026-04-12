@@ -272,11 +272,16 @@ export type ContactFormBlock = {
   messageFieldLabel?: string;
   messageFieldPlaceholder?: string;
   languagePreferenceLabel?: string;
+  selectPlaceholder?: string;
+  submittingLabel?: string;
+  consentText?: string;
+  privacyPolicyLink?: LinkType;
   validationMessages?: {
     required?: string;
     minLength?: string;
     invalidEmail?: string;
     submitError?: string;
+    consentRequired?: string;
   };
 };
 

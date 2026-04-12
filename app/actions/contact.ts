@@ -20,10 +20,18 @@ export async function submitContactForm(
   const timeline = formData.get("timeline") as string | null;
   const message = formData.get("message") as string;
   const languagePreference = formData.get("languagePreference") as string | null;
+  const consent = formData.get("consent") as string | null;
 
   // Validation
   if (!name || !email || !projectType || !budgetRange || !message) {
     return { success: false, error: "Please fill in all required fields." };
+  }
+
+  if (consent !== "on") {
+    return {
+      success: false,
+      error: "Please accept the privacy policy to submit the form.",
+    };
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
