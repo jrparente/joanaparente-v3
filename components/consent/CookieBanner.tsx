@@ -75,7 +75,7 @@ export default function CookieBanner({
               title,
               description: descriptionWithLink,
               acceptAllBtn: acceptLabel,
-              rejectAllBtn: rejectLabel,
+              acceptNecessaryBtn: rejectLabel,
             },
             preferencesModal: {
               title: language === "pt" ? "Preferências de cookies" : "Cookie preferences",
