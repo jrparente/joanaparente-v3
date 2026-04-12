@@ -7,7 +7,7 @@ import Footer from "@/components/layout/Footer";
 import { getNavigation, getSiteSettings } from "@/lib/sanity/queries";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 
 const headingFont = Fraunces({
   subsets: ["latin"],
@@ -247,7 +247,34 @@ export default async function RootLayout({
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
-        {gaId && <GoogleAnalytics gaId={gaId} />}
+        {gaId && (
+          <>
+            <Script
+              id="gtag-consent-init"
+              strategy="beforeInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied',
+                    'wait_for_update': 500
+                  });
+                  gtag('js', new Date());
+                  gtag('config', '${gaId}');
+                `,
+              }}
+            />
+            <Script
+              id="gtag-js"
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+            />
+          </>
+        )}
       </body>
     </html>
   );
