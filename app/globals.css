@@ -520,3 +520,71 @@
 .lang-btn[aria-pressed="true"]::after {
   opacity: 1;
 }
+
+/* --- Cookie Consent Banner ------------------------------------------------ */
+
+#cc-main {
+  --cc-font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+  --cc-modal-border-radius: var(--radius-lg);
+  --cc-btn-border-radius: var(--radius-md);
+  --cc-z-index: 40;
+
+  --cc-bg: var(--color-surface);
+  --cc-primary-color: var(--color-text);
+  --cc-secondary-color: var(--color-text-muted);
+
+  --cc-btn-primary-bg: var(--color-brand);
+  --cc-btn-primary-color: #fff;
+  --cc-btn-primary-border-color: var(--color-brand);
+  --cc-btn-primary-hover-bg: var(--color-brand-dark);
+  --cc-btn-primary-hover-color: #fff;
+  --cc-btn-primary-hover-border-color: var(--color-brand-dark);
+
+  --cc-btn-secondary-bg: var(--color-surface-elevated);
+  --cc-btn-secondary-color: var(--color-text);
+  --cc-btn-secondary-border-color: var(--color-border);
+  --cc-btn-secondary-hover-bg: var(--color-surface-sunken);
+  --cc-btn-secondary-hover-color: var(--color-text);
+  --cc-btn-secondary-hover-border-color: var(--color-border);
+
+  --cc-toggle-on-bg: var(--color-brand);
+  --cc-toggle-off-bg: var(--color-border);
+  --cc-toggle-readonly-bg: var(--color-accent);
+
+  --cc-separator-border-color: var(--color-border);
+  --cc-cookie-category-block-bg: var(--color-surface-elevated);
+  --cc-link-color: var(--color-brand);
+  --cc-overlay-bg: rgba(30, 23, 19, 0.35);
+}
+
+.dark #cc-main {
+  --cc-bg: var(--color-surface);
+  --cc-primary-color: var(--color-text);
+  --cc-secondary-color: var(--color-text-muted);
+
+  --cc-btn-primary-bg: var(--color-brand);
+  --cc-btn-primary-border-color: var(--color-brand);
+  --cc-btn-primary-hover-bg: var(--color-brand-light);
+  --cc-btn-primary-hover-border-color: var(--color-brand-light);
+  --cc-btn-primary-hover-color: var(--color-text);
+
+  --cc-btn-secondary-bg: var(--color-surface-elevated);
+  --cc-btn-secondary-border-color: var(--color-border);
+  --cc-btn-secondary-hover-bg: var(--color-surface-sunken);
+  --cc-btn-secondary-hover-border-color: var(--color-border);
+
+  --cc-toggle-on-bg: var(--color-brand);
+  --cc-toggle-off-bg: var(--color-border);
+  --cc-separator-border-color: var(--color-border);
+  --cc-cookie-category-block-bg: var(--color-surface-elevated);
+  --cc-link-color: var(--color-brand-light);
+  --cc-overlay-bg: rgba(0, 0, 0, 0.5);
+}
+
+#cc-main .cm__title {
+  font-family: var(--font-heading), "Fraunces", serif;
+}
+
+#cc-main .cm {
+  box-shadow: var(--shadow-lg);
+}
