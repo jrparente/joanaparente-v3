@@ -47,6 +47,8 @@ Sanity (cookieBanner doc, per language)
 |------|--------|
 | `app/[language]/(routes)/layout.tsx` | Replace `<GoogleAnalytics>` with manual `next/script` tags; add `<CookieBanner>` with CMS data; add cookieBanner query |
 | `sanity/schemas/index.ts` | Register `cookieBanner` schema |
+| `sanity/sanity.config.ts` | Add `"cookieBanner"` to `documentInternationalization` `schemaTypes` array (line 26) |
+| `sanity/structure/index.ts` | Add `cookieBanner` singleton entry to desk structure (alongside Footer, Navigation, Settings) |
 | `lib/sanity/queries.ts` | Add `getCookieBanner()` query function |
 | `types/Sanity.d.ts` | Add `CookieBanner` type |
 | `components/layout/Footer.tsx` | Client-side click handler for `#cookie-settings` links |
@@ -148,11 +150,13 @@ Override vanilla-cookieconsent CSS custom properties in `app/globals.css` to mat
 
 ## Footer Integration
 
-The footer `legalLinks` array already renders CMS-managed links. The user adds a "Cookie Settings" link in Sanity Studio with `href: #cookie-settings`.
+The footer `legalLinks` array already renders CMS-managed links. The user adds a "Cookie Settings" entry in Sanity Studio as an **internal** link (type: `internal`) pointing to the homepage, with `params: "#cookie-settings"`. The `resolveLink()` utility produces `/{locale}#cookie-settings` — the fragment is what matters, not the path.
 
-In `Footer.tsx`, add a client-side click handler: if a `legalLink` href equals `#cookie-settings`, call `event.preventDefault()` and `CookieConsent.show(true)` to reopen the banner.
+**Note:** The `link` schema's `external` field validates against `http/https/mailto/tel` schemes, so a fragment-only URL like `#cookie-settings` may fail validation there. Using the `internal` type with `params` avoids this issue entirely since `params` is an unvalidated string field.
 
-Implementation approach: a small `CookieSettingsLink` client component wrapper that only wraps links with the `#cookie-settings` href, keeping the rest of the footer as a server component.
+In `Footer.tsx`, add a client-side click handler: if a resolved link href contains `#cookie-settings`, call `event.preventDefault()` and `CookieConsent.show(true)` to reopen the banner.
+
+Implementation approach: a small `CookieSettingsLink` client component wrapper that only wraps links containing `#cookie-settings` in the href, keeping the rest of the footer as a server component.
 
 ## Sanity Seed Data
 
