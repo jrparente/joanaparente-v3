@@ -6,6 +6,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { LogoIcon } from "./LogoIcon";
 import { LogoWordmark } from "./LogoWordmark";
 import type { LinkType } from "@/types/Sanity";
+import CookieSettingsLink from "@/components/consent/CookieSettingsLink";
 
 const iconMap: Record<string, React.ReactNode> = {
   GitHub: <GithubIcon className="h-4 w-4" />,
@@ -159,14 +160,27 @@ export default async function Footer({ language }: FooterProps) {
           </div>
           {legalLinks && legalLinks.length > 0 && (
             <div className="flex gap-4">
-              {legalLinks.map((link, i) => (
-                <FooterLink
-                  key={link.label ?? i}
-                  link={link}
-                  language={language}
-                  className="text-xs text-muted-foreground/70 hover:text-muted-foreground transition-colors duration-200 min-h-[44px] inline-flex items-center md:min-h-0"
-                />
-              ))}
+              {legalLinks.map((link, i) => {
+                const href = resolveLink(link, language);
+                if (href.includes("#cookie-settings")) {
+                  return (
+                    <CookieSettingsLink
+                      key={link.label ?? i}
+                      className="text-xs text-muted-foreground/70 hover:text-muted-foreground transition-colors duration-200 min-h-[44px] inline-flex items-center md:min-h-0 cursor-pointer"
+                    >
+                      {link.label}
+                    </CookieSettingsLink>
+                  );
+                }
+                return (
+                  <FooterLink
+                    key={link.label ?? i}
+                    link={link}
+                    language={language}
+                    className="text-xs text-muted-foreground/70 hover:text-muted-foreground transition-colors duration-200 min-h-[44px] inline-flex items-center md:min-h-0"
+                  />
+                );
+              })}
             </div>
           )}
         </div>
