@@ -10,6 +10,7 @@ import { blogPostList } from "./modules/blogPostList";
 import { richText } from "./modules/richText";
 import { imageGallery } from "./modules/imageGallery";
 import footer from "./documents/footer";
+import cookieBanner from "./documents/cookieBanner";
 import { cta } from "./modules/cta";
 import { hero } from "./modules/hero";
 import { contentBlocks } from "./modules/contentBlocks";
@@ -47,6 +48,7 @@ const schema: { types: SchemaTypeDefinition[] } = {
     site,
     navigation,
     footer,
+    cookieBanner,
     project,
     bioPage,
 

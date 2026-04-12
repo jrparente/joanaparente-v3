@@ -8,6 +8,7 @@ import {
   DocumentsIcon,
   ComposeIcon,
   PackageIcon,
+  CookieIcon,
 } from "@sanity/icons";
 import { FileText, FolderCode, Layers, PenBox, StickyNote } from "lucide-react";
 
@@ -196,6 +197,13 @@ export const structure = (S: any) =>
         .title("Footer")
         .icon(MenuIcon)
         .child(S.document().schemaType("footer").documentId("footer")),
+
+      S.listItem()
+        .title("Cookie Banner")
+        .icon(CookieIcon)
+        .child(
+          S.document().schemaType("cookieBanner").documentId("cookieBanner")
+        ),
 
       S.listItem()
         .title("Settings")
