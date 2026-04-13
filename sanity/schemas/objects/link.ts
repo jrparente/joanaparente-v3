@@ -28,7 +28,18 @@ export default defineType({
     defineField({
       name: "internal",
       type: "reference",
-      to: [{ type: "page" }],
+      to: [{ type: "page" }, { type: "homepage" }],
+      options: {
+        filter: ({ document }) => {
+          if (!document.language) {
+            return { filter: "", params: {} };
+          }
+          return {
+            filter: "language == $lang",
+            params: { lang: document.language },
+          };
+        },
+      },
       hidden: ({ parent }) => parent?.type !== "internal",
     }),
     defineField({
