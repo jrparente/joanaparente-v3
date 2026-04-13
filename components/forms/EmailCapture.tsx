@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { trackEmailCaptured } from "@/lib/analytics";
+import { TrackLeadMagnetView } from "@/components/analytics/TrackLeadMagnetView";
 
 const schema = z.object({
   email: z.string().email(),
@@ -117,6 +118,7 @@ export function EmailCapture({
     <div
       className={`${isCard ? "rounded-lg border border-border bg-card p-6" : ""} ${className || ""}`}
     >
+      <TrackLeadMagnetView magnetId={magnetId} pageLanguage={lang} />
       {copy.heading && (
         <h3 className="text-lg font-semibold tracking-tight">
           {copy.heading}
