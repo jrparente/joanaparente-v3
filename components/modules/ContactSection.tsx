@@ -3,6 +3,7 @@ import { Mail, MapPin, LinkedinIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getFooter } from "@/lib/sanity/queries";
 import { TrackEmailClick } from "@/components/analytics/TrackEmailClick";
+import { TrackExternalLink } from "@/components/analytics/TrackExternalLink";
 import { ContactSectionBlock } from "@/types/Sanity";
 
 type Props = {
@@ -69,12 +70,14 @@ const ContactSection = async ({ block, language }: Props) => {
           </TrackEmailClick>
 
           {linkedinUrl && linkedinLabel && (
-            <Button asChild variant="outline" size="lg">
-              <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
-                <LinkedinIcon className="mr-2 h-5 w-5" />
-                {linkedinLabel}
-              </a>
-            </Button>
+            <TrackExternalLink destinationUrl={linkedinUrl} linkType="linkedin">
+              <Button asChild variant="outline" size="lg">
+                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
+                  <LinkedinIcon className="mr-2 h-5 w-5" />
+                  {linkedinLabel}
+                </a>
+              </Button>
+            </TrackExternalLink>
           )}
         </div>
 
