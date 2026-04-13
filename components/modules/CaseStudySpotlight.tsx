@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TrackCaseStudyClick } from "@/components/analytics/TrackCaseStudyClick";
 import type { CaseStudySpotlightBlock } from "@/types/Sanity";
 
 type Props = {
@@ -59,13 +60,15 @@ const CaseStudySpotlight = ({ block, language = "en" }: Props) => {
               </div>
             )}
 
-          <Link
-            href={projectUrl}
-            className="mt-4 inline-flex items-center gap-1 font-sans text-sm font-semibold text-[var(--color-brand)] hover:underline"
-          >
-            {ctaLabel || "Read the case study"}
-            <span aria-hidden="true">&rarr;</span>
-          </Link>
+          <TrackCaseStudyClick projectSlug={project.slug}>
+            <Link
+              href={projectUrl}
+              className="mt-4 inline-flex items-center gap-1 font-sans text-sm font-semibold text-[var(--color-brand)] hover:underline"
+            >
+              {ctaLabel || "Read the case study"}
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </TrackCaseStudyClick>
         </div>
       </div>
     </section>
