@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { getProject, getProjectSlugs } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
 import { TrackProjectView } from "@/components/analytics/TrackProjectView";
+import { TrackExternalLink } from "@/components/analytics/TrackExternalLink";
 import { localizedPath } from "@/lib/utils";
 import ContentBlocks from "@/components/ContentBlocks";
 
@@ -263,16 +264,18 @@ export default async function ProjectDetailPage({
 
           {/* Visit site button */}
           {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Visit ${domain} (opens in new tab)`}
-              className="mt-8 inline-flex items-center gap-2 rounded-[var(--radius-md)] border-[1.5px] border-[var(--color-brand)] px-5 py-2.5 font-sans text-[length:var(--text-sm)] font-semibold text-[var(--color-brand)] transition-all duration-200 hover:bg-[var(--color-brand)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--color-brand)] focus-visible:outline-offset-2"
-            >
-              Visit {domain}
-              <ExternalLinkIcon className="h-3.5 w-3.5 transition-transform duration-200" />
-            </a>
+            <TrackExternalLink destinationUrl={project.liveUrl} linkType="project_visit_site">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${domain} (opens in new tab)`}
+                className="mt-8 inline-flex items-center gap-2 rounded-[var(--radius-md)] border-[1.5px] border-[var(--color-brand)] px-5 py-2.5 font-sans text-[length:var(--text-sm)] font-semibold text-[var(--color-brand)] transition-all duration-200 hover:bg-[var(--color-brand)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--color-brand)] focus-visible:outline-offset-2"
+              >
+                Visit {domain}
+                <ExternalLinkIcon className="h-3.5 w-3.5 transition-transform duration-200" />
+              </a>
+            </TrackExternalLink>
           )}
         </div>
       </section>
