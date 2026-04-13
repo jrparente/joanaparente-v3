@@ -3,6 +3,7 @@
 import { useState, useId } from "react";
 import { FaqAccordionBlock, PortableTextBlock } from "@/types/Sanity";
 import { PortableText } from "@portabletext/react";
+import { trackFaqExpand } from "@/lib/analytics";
 
 type Props = {
   block: FaqAccordionBlock;
@@ -16,7 +17,12 @@ const FaqAccordion = ({ block }: Props) => {
   if (!items?.length) return null;
 
   const toggle = (index: number) => {
-    setOpenIndex((prev) => (prev === index ? null : index));
+    setOpenIndex((prev) => {
+      if (prev !== index && items[index]) {
+        trackFaqExpand(items[index].question, window.location.pathname);
+      }
+      return prev === index ? null : index;
+    });
   };
 
   // Generate FAQ JSON-LD structured data
