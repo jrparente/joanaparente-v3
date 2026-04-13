@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { resolveLink } from "@/lib/utils";
+import { TrackServiceTierClick } from "@/components/analytics/TrackServiceTierClick";
 import { ServiceTiersBlock } from "@/types/Sanity";
 
 type Props = {
@@ -141,16 +142,18 @@ const ServiceTiers = ({ block, language }: Props) => {
                 )}
 
                 {/* CTA button */}
-                <Link
-                  href={href}
-                  className={`mt-auto block w-full rounded-[var(--radius-md)] py-3.5 text-center text-base font-semibold transition-all hover:-translate-y-px ${
-                    tier.highlighted
-                      ? "bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand-dark)] dark:text-[var(--color-surface)]"
-                      : "border-2 border-[var(--color-brand)] text-[var(--color-brand)] hover:bg-[var(--color-brand-light)]"
-                  }`}
-                >
-                  {tier.ctaLabel}
-                </Link>
+                <TrackServiceTierClick tierName={tier.name} pagePath={href}>
+                  <Link
+                    href={href}
+                    className={`mt-auto block w-full rounded-[var(--radius-md)] py-3.5 text-center text-base font-semibold transition-all hover:-translate-y-px ${
+                      tier.highlighted
+                        ? "bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand-dark)] dark:text-[var(--color-surface)]"
+                        : "border-2 border-[var(--color-brand)] text-[var(--color-brand)] hover:bg-[var(--color-brand-light)]"
+                    }`}
+                  >
+                    {tier.ctaLabel}
+                  </Link>
+                </TrackServiceTierClick>
               </div>
             );
           })}
