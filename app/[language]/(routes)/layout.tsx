@@ -276,7 +276,7 @@ export default async function RootLayout({
                     'wait_for_update': 500
                   });
                   gtag('js', new Date());
-                  gtag('config', '${gaId}');
+                  gtag('config', '${gaId}'${process.env.NODE_ENV === "development" ? ", { 'debug_mode': true }" : ""});
                 `,
               }}
             />
