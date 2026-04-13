@@ -292,6 +292,7 @@ export async function getSiteSettings(language: string) {
       title,
       domain,
       logo,
+      ogTagline,
       metadata {
         title,
         metaDescription,
