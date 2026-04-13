@@ -488,6 +488,7 @@ export type SiteSettingsType = {
   domain: string;
   logo: SanityImage;
   metadata: MetadataType;
+  ogTagline?: string;
 };
 
 export type NavigationType = {

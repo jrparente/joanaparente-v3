@@ -57,6 +57,14 @@ export default defineType({
       options: { hotspot: false },
       group: "seo",
     }),
+    defineField({
+      name: "ogTagline",
+      title: "OG Card Tagline",
+      type: "string",
+      group: "seo",
+      description: "Short phrase on the social sharing card (e.g. 'Strategist who codes.')",
+      validation: (Rule) => Rule.max(60),
+    }),
 
     // Social Links
     defineField({
