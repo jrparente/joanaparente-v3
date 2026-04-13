@@ -180,7 +180,7 @@ export const contentBlocksProjection = `
         timeline,
         badgeLabel,
         proofLabel,
-        proofLink,
+        proofLink ${linkProjection},
         ctaLabel,
         ctaLink ${linkProjection}
       }
