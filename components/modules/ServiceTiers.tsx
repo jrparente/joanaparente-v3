@@ -128,15 +128,15 @@ const ServiceTiers = ({ block, language }: Props) => {
                 )}
 
                 {/* Proof link */}
-                {tier.proofLink?.label && tier.proofLink?.href && (
+                {tier.proofLink?.label && (
                   <p className="mb-5 text-xs text-[var(--color-text-subtle)]">
                     {tier.proofLabel || "See it in action:"}{" "}
-                    <a
-                      href={tier.proofLink.href}
+                    <Link
+                      href={resolveLink(tier.proofLink, language)}
                       className="font-medium text-[var(--color-brand)] transition-colors hover:text-[var(--color-brand-dark)]"
                     >
                       {tier.proofLink.label}
-                    </a>
+                    </Link>
                   </p>
                 )}
 
