@@ -90,25 +90,8 @@ export const serviceTiers = defineType({
             defineField({
               name: "proofLink",
               title: "Proof Link",
-              type: "object",
+              type: "link",
               description: "Case study link shown below features",
-              fields: [
-                defineField({
-                  name: "label",
-                  title: "Label",
-                  type: "string",
-                }),
-                defineField({
-                  name: "href",
-                  title: "URL",
-                  type: "url",
-                  validation: (rule) =>
-                    rule.uri({
-                      allowRelative: true,
-                      scheme: ["http", "https"],
-                    }),
-                }),
-              ],
             }),
             defineField({
               name: "ctaLabel",
