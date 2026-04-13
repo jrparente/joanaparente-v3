@@ -170,7 +170,7 @@ export type ServiceTiersBlock = {
     timeline?: string;
     badgeLabel?: string;
     proofLabel?: string;
-    proofLink?: { label: string; href: string };
+    proofLink?: LinkType;
     ctaLabel: string;
     ctaLink: LinkType;
   }[];
