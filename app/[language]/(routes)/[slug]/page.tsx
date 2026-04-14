@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { getPageBySlug, getPageSlugs } from "@/lib/sanity/queries";
 import ContentBlocks from "@/components/ContentBlocks";
@@ -13,11 +13,14 @@ export async function generateStaticParams() {
     .map(({ slug, language }) => ({ slug, language }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ language: string; slug: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: Promise<{ language: string; slug: string }>;
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const { language, slug } = await params;
   const page = await getPageBySlug({ slug, language });
 
@@ -30,6 +33,8 @@ export async function generateMetadata({
   const ptSlug = getTranslatedSlug(page._translations, "pt") ?? slug;
   const enSlug = getTranslatedSlug(page._translations, "en") ?? slug;
 
+  const parentImages = (await parent).openGraph?.images || [];
+
   return {
     title,
     description,
@@ -40,6 +45,11 @@ export async function generateMetadata({
         en: `${BASE_URL}/en/${enSlug}`,
         "x-default": `${BASE_URL}/pt/${ptSlug}`,
       },
+    },
+    openGraph: {
+      title,
+      description,
+      images: parentImages,
     },
   };
 }
