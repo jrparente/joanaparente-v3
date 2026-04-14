@@ -1,13 +1,17 @@
+import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { getCardPage } from "@/lib/sanity/queries";
 import CardClient from "./CardClient";
 
-export const metadata = {
-  title: "Joana Parente",
-  description: "Strategist who codes.",
-  robots: { index: false, follow: false },
-  alternates: { canonical: "https://www.joanaparente.com/card" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getCardPage("en");
+  return {
+    title: data?.name ?? "Joana Parente",
+    description: data?.tagline ?? "Strategist who codes.",
+    robots: { index: false, follow: false },
+    alternates: { canonical: "https://www.joanaparente.com/card" },
+  };
+}
 
 export default async function CardPage() {
   const headersList = await headers();
