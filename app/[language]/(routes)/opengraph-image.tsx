@@ -100,7 +100,7 @@ export default async function Image({
             marginBottom: 48,
           }}
         >
-          <span>{taglineStart}</span>
+          <span style={{ whiteSpace: "pre" }}>{taglineStart}</span>
           <span style={{ color: "#C4603A" }}>{taglineAccent}</span>
         </div>
 
