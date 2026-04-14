@@ -16,6 +16,7 @@ import { hero } from "./modules/hero";
 import { contentBlocks } from "./modules/contentBlocks";
 import { intro } from "./modules/intro";
 import project from "./documents/project";
+import cardPage from "./documents/cardPage";
 import logoList from "./modules/logoList";
 import logo from "./documents/logo";
 import bioPage from "./modules/bioPage";
@@ -50,6 +51,7 @@ const schema: { types: SchemaTypeDefinition[] } = {
     footer,
     cookieBanner,
     project,
+    cardPage,
     bioPage,
 
     // Modules
