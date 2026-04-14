@@ -22,11 +22,17 @@ export default async function Image({
 
   // Use client.fetch directly — getSiteSettings/fetchSanity calls draftMode() which
   // throws in file-based metadata routes (opengraph-image.tsx)
-  const result = await client.fetch<{ ogTagline?: string } | null>(
-    groq`*[_type == "site" && language == $language][0] { ogTagline }`,
+  const result = await client.fetch<{
+    title?: string;
+    domain?: string;
+    ogTagline?: string;
+  } | null>(
+    groq`*[_type == "site" && language == $language][0] { title, domain, ogTagline }`,
     { language }
   );
   const tagline = result?.ogTagline || "Strategist who codes.";
+  const siteTitle = result?.title || "Joana Parente";
+  const siteDomain = result?.domain || "joanaparente.com";
 
   // Split at last space so final word renders in terracotta accent colour
   const lastSpace = tagline.lastIndexOf(" ");
@@ -82,7 +88,7 @@ export default async function Image({
               textTransform: "uppercase",
             }}
           >
-            Joana Parente
+            {siteTitle}
           </span>
         </div>
 
@@ -127,7 +133,7 @@ export default async function Image({
               color: "#9E8068",
             }}
           >
-            joanaparente.com
+            {siteDomain}
           </span>
         </div>
       </div>
