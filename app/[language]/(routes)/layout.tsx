@@ -81,6 +81,7 @@ export async function generateMetadata({
   };
 
   const fallback: Metadata = {
+    metadataBase: new URL(BASE_URL),
     title: "Joana Parente | Web Developer",
     description:
       "Portfolio website of Joana Parente, freelance full-stack web developer specialized in scalable, elegant websites using React and Next.js.",
@@ -112,6 +113,7 @@ export async function generateMetadata({
     "Freelance web developer and digital strategist specializing in modern, high-performance websites.";
 
   return {
+    metadataBase: new URL(BASE_URL),
     title: resolvedTitle,
     description: resolvedDescription,
     keywords: keywords?.length ? keywords.join(", ") : undefined,
