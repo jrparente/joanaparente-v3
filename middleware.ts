@@ -10,7 +10,6 @@ function getLocale(request: NextRequest) {
   const acceptedLanguage = request.headers.get("accept-language") ?? "pt";
   const headers = { "accept-language": acceptedLanguage };
   const languages = new Negotiator({ headers }).languages();
-
   return match(languages, locales, defaultLocale);
 }
 
@@ -22,7 +21,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // ✅ BAIL EARLY: If it's a static asset (e.g. ends in .svg, .png, etc.), skip
+  // ✅ BAIL EARLY: Static assets
   if (
     /\.(svg|png|jpg|jpeg|gif|ico|webp|css|js|map|json|txt|xml|woff2?|ttf)$/.test(
       pathname
@@ -38,29 +37,30 @@ export function middleware(request: NextRequest) {
 
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
-
-    // This was the case where if the locale was de default, then we could show the page without the locale
-    // if (locale === defaultLocale) {
-    //   return NextResponse.rewrite(
-    //     new URL(`/${locale}${pathname}`, request.url)
-    //   );
-    // }
-
-    // Always redirect to the URL with the locale included
+    // Redirect — no page is rendered here, header not needed
     return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
   }
 
-  // Rewrite /pt/projetos(/*) → /pt/projects(/*) so the projects/ directory resolves
+  // Rewrite /pt/projetos(/*) → /pt/projects(/*) — locale is always "pt" here
   const projectsRewrite = pathname.match(/^\/(pt)\/projetos(\/.*)?$/);
   if (projectsRewrite) {
     const rest = projectsRewrite[2] || "";
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-language", "pt");
     return NextResponse.rewrite(
-      new URL(`/pt/projects${rest}`, request.url)
+      new URL(`/pt/projects${rest}`, request.url),
+      { request: { headers: requestHeaders } }
     );
   }
 
-  // If the locale is already in the pathname, proceed as normal
-  return NextResponse.next();
+  // Locale is present in pathname — extract it and pass through
+  const locale =
+    locales.find(
+      (l) => pathname.startsWith(`/${l}/`) || pathname === `/${l}`
+    ) ?? defaultLocale;
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-language", locale);
+  return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
 export const config = {
