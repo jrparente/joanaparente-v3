@@ -17,8 +17,8 @@ function getLocale(request: NextRequest) {
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // ✅ BAIL EARLY: Allow non-localized page /bio
-  if (pathname === "/bio") {
+  // ✅ BAIL EARLY: Allow non-localized pages /bio and /card
+  if (pathname === "/bio" || pathname === "/card") {
     return NextResponse.next();
   }
 
@@ -65,6 +65,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next|.*\\..*|admin|sitemap.xml|webhook|sentry-example-page|bio).*)",
+    "/((?!api|_next|.*\\..*|admin|sitemap.xml|webhook|sentry-example-page|bio|card).*)",
   ],
 };

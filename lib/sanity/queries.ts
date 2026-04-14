@@ -2,6 +2,7 @@ import { groq } from "next-sanity";
 import { fetchSanity } from "./fetch";
 import { client } from "./client";
 import {
+  CardPageType,
   CookieBannerType,
   FooterType,
   Homepage,
@@ -729,4 +730,20 @@ export async function getProjectSlugs() {
   `;
 
   return client.fetch<{ slug: string; language: string }[]>(query);
+}
+
+export async function getCardPage(language: string) {
+  const query = groq`
+    *[_type == "cardPage" && language == $language][0] {
+      name,
+      tagline,
+      oneliner,
+      saveContactLabel,
+      visitWebsiteLabel,
+      links[] ${linkProjection},
+      jobTitle,
+      location
+    }
+  `;
+  return fetchSanity<CardPageType>({ query, params: { language }, tags: ["cardPage"] });
 }

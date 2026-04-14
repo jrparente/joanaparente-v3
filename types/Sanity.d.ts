@@ -521,3 +521,15 @@ export type BioPageProps = {
   backgroundColor?: string; // Hex color, e.g., '#fefaf7'
   textColor?: string; // Hex color, e.g., '#1a1a1a'
 };
+
+export type CardPageType = {
+  name: string;
+  tagline: string;
+  oneliner?: string;
+  saveContactLabel?: string;
+  visitWebsiteLabel?: string;
+  links?: LinkType[];
+  jobTitle?: string;
+  location?: string;
+  language?: string;
+};

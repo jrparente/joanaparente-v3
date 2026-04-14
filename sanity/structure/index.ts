@@ -9,6 +9,7 @@ import {
   ComposeIcon,
   PackageIcon,
   ControlsIcon,
+  UserIcon,
 } from "@sanity/icons";
 import { FileText, FolderCode, Layers, PenBox, StickyNote } from "lucide-react";
 
@@ -181,6 +182,37 @@ export const structure = (S: any) =>
 
                         return languageValue === language.id;
                       })
+                  )
+              ),
+            ])
+        ),
+
+      S.listItem()
+        .title("Card Page (/card)")
+        .icon(UserIcon)
+        .child(
+          S.list()
+            .title("Card Page Versions")
+            .items([
+              ...i18n.languages.map((language: any) =>
+                S.listItem()
+                  .title(`Card Page (${language.id.toLocaleUpperCase()})`)
+                  .schemaType("cardPage")
+                  .icon(UserIcon)
+                  .child(
+                    S.documentList()
+                      .apiVersion("v2023-12-18")
+                      .id(`cardPage-${language.id}`)
+                      .title(`${language.title} Card Page`)
+                      .schemaType("cardPage")
+                      .filter('_type == "cardPage" && language == $language')
+                      .params({ type: "cardPage", language: language.id })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("cardPage", {
+                          _type: "cardPage",
+                          language: language.id,
+                        }),
+                      ])
                   )
               ),
             ])
