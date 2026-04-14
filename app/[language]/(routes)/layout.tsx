@@ -103,8 +103,6 @@ export async function generateMetadata({
     title,
     metaDescription,
     keywords,
-    defaultOgImage,
-    defaultTwitterImage,
     noIndex,
   } = siteSettings.metadata;
 
@@ -112,8 +110,6 @@ export async function generateMetadata({
   const resolvedDescription =
     metaDescription ||
     "Freelance web developer and digital strategist specializing in modern, high-performance websites.";
-  const ogImageUrl = defaultOgImage?.asset?.url;
-  const twitterImageUrl = defaultTwitterImage?.asset?.url || ogImageUrl;
 
   return {
     title: resolvedTitle,
@@ -136,13 +132,11 @@ export async function generateMetadata({
       locale: language === "pt" ? "pt_PT" : "en_US",
       alternateLocale: language === "pt" ? "en_US" : "pt_PT",
       type: "website",
-      images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: resolvedTitle,
       description: resolvedDescription,
-      images: twitterImageUrl ? [twitterImageUrl] : undefined,
     },
     robots: noIndex ? "noindex" : undefined,
   };
