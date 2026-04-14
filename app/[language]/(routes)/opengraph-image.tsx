@@ -61,21 +61,21 @@ export default async function Image({
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 16,
-            marginBottom: 40,
+            gap: 20,
+            marginBottom: 48,
           }}
         >
           <div
             style={{
-              width: 56,
-              height: 2,
+              width: 64,
+              height: 3,
               backgroundColor: "#C4603A",
             }}
           />
           <span
             style={{
               fontFamily: "PlusJakartaSans",
-              fontSize: 20,
+              fontSize: 32,
               fontWeight: 500,
               color: "#C4603A",
               letterSpacing: "0.08em",
@@ -97,37 +97,37 @@ export default async function Image({
             fontStyle: "italic",
             lineHeight: 1.05,
             color: "#2C2419",
-            marginBottom: 48,
+            marginBottom: 56,
           }}
         >
           <span style={{ whiteSpace: "pre" }}>{taglineStart}</span>
           <span style={{ color: "#C4603A" }}>{taglineAccent}</span>
         </div>
 
-        {/* Bottom row — icon + location + domain */}
+        {/* Bottom row — icon + domain (large enough to read at share size) */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 16,
+            gap: 20,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={iconBase64}
-            width={36}
-            height={36}
+            width={48}
+            height={48}
             alt=""
-            style={{ opacity: 0.6 }}
+            style={{ opacity: 0.5 }}
           />
           <span
             style={{
               fontFamily: "PlusJakartaSans",
-              fontSize: 18,
+              fontSize: 32,
               color: "#9E8068",
             }}
           >
-            Web Dev · Algarve · joanaparente.com
+            joanaparente.com
           </span>
         </div>
       </div>
