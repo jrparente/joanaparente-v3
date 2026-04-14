@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -65,11 +65,14 @@ export async function generateStaticParams() {
 
 const BASE_URL = "https://www.joanaparente.com";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ language: string; slug: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: Promise<{ language: string; slug: string }>;
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const { language, slug } = await params;
   const project = await getProject({ slug, language });
 
@@ -89,6 +92,8 @@ export async function generateMetadata({
     ? urlFor(ogImageSource).width(1200).height(630).url()
     : undefined;
 
+  const parentImages = (await parent).openGraph?.images || [];
+
   return {
     title: resolvedTitle,
     description: resolvedDescription,
@@ -104,7 +109,7 @@ export async function generateMetadata({
       title: project.title,
       description: project.tagline,
       url: `${BASE_URL}/${language}/${localizedPath("projects", language)}/${slug}`,
-      images: imageUrl ? [{ url: imageUrl }] : undefined,
+      images: imageUrl ? [{ url: imageUrl }] : parentImages,
     },
     twitter: {
       card: "summary_large_image",
