@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { getPageBySlug } from "@/lib/sanity/queries";
 import ContentBlocks from "@/components/ContentBlocks";
@@ -6,18 +6,24 @@ import { localizedPath } from "@/lib/utils";
 
 const BASE_URL = "https://www.joanaparente.com";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ language: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: Promise<{ language: string }>;
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const { language } = await params;
   const slug = localizedPath("projects", language);
   const page = await getPageBySlug({ slug, language });
 
+  const parentImages = (await parent).openGraph?.images || [];
+
   if (!page) {
     return {
       title: language === "pt" ? "Projetos | Joana Parente" : "Projects | Joana Parente",
+      openGraph: { images: parentImages },
     };
   }
 
@@ -34,6 +40,11 @@ export async function generateMetadata({
         en: `${BASE_URL}/en/${localizedPath("projects", "en")}`,
         "x-default": `${BASE_URL}/pt/${localizedPath("projects", "pt")}`,
       },
+    },
+    openGraph: {
+      title,
+      description,
+      images: parentImages,
     },
   };
 }
