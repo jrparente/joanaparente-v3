@@ -58,3 +58,6 @@ research/
 sanity/dist/
 
 backlog.md
+
+# Git worktrees
+.worktrees/
