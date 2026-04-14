@@ -31,11 +31,11 @@ export default async function NotFound() {
   return (
     <main className="flex min-h-[60vh] items-center px-4 py-24 md:px-8">
       <div className="mx-auto w-full max-w-[1200px]">
-        <div className="relative inline-block">
+        <div className="relative">
           {/* Ghost 404 — decorative, sits behind headline */}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute -left-1 -top-3 z-0 select-none font-heading text-[9rem] font-extrabold leading-none tracking-tighter text-[var(--color-brand-light)] opacity-55 md:text-[11rem]"
+            className="pointer-events-none absolute -left-1 -top-3 z-0 select-none font-heading text-[9rem] font-extrabold leading-none tracking-tighter text-[var(--color-brand-light)] opacity-[0.55] md:text-[11rem]"
           >
             404
           </span>
