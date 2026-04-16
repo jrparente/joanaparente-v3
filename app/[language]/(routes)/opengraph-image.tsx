@@ -41,8 +41,8 @@ export default async function Image({
 
   // Load fonts and icon from disk (Satori cannot use next/font/google)
   const [frauncesFont, jakartaFont, iconData] = await Promise.all([
-    readFile(join(process.cwd(), "assets/fonts/Fraunces-Italic.ttf")),
-    readFile(join(process.cwd(), "assets/fonts/PlusJakartaSans-Medium.ttf")),
+    readFile(join(process.cwd(), "public/fonts/Fraunces-Italic.ttf")),
+    readFile(join(process.cwd(), "public/fonts/PlusJakartaSans-Medium.ttf")),
     readFile(join(process.cwd(), "public/logo/logo-icon-dark.png")),
   ]);
 
