@@ -22,9 +22,8 @@ export type RichText = {
 };
 
 export type InternalLink = {
-  _type: "reference";
-  _ref: string;
-  _typeOf?: string;
+  _type: "project" | "page" | "homepage";
+  _id: string;
   title?: string;
   slug?: string;
 };

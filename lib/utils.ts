@@ -26,7 +26,12 @@ export function resolveLink(link: LinkType, locale?: string): string {
 
   const rawSlug = link.internal?.slug || "";
   const slug = stegaClean(rawSlug).trim().toLowerCase();
+  const docType = link.internal?._type;
+  const pathPrefix =
+    docType === "project"
+      ? `/${localizedPath("projects", locale ?? "en")}`
+      : "";
   const base = slug === "index" ? "" : `/${slug}`;
   const params = link.params ? stegaClean(link.params) : "";
-  return locale ? `/${locale}${base}${params}` : `${base}${params}` || "/";
+  return locale ? `/${locale}${pathPrefix}${base}${params}` : `${pathPrefix}${base}${params}` || "/";
 }
