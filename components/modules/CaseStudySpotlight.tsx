@@ -77,7 +77,7 @@ function SpotlightCard({
   );
 }
 
-const CaseStudySpotlight = ({ block, language = "en" }: Props) => {
+const CaseStudySpotlight = ({ block, language = "pt" }: Props) => {
   const { heading, highlightMetrics, projects } = block;
 
   if (!projects?.length) return null;
@@ -86,10 +86,11 @@ const CaseStudySpotlight = ({ block, language = "en" }: Props) => {
 
   return (
     <section
+      aria-label={heading ?? undefined}
       className="relative z-[1] w-full bg-[var(--color-surface-elevated)] border-t border-[var(--color-border)]"
     >
-      <div className="mx-auto max-w-[720px] px-8 py-12">
-        <div className={`grid grid-cols-1 gap-4 ${isSingle ? "" : "md:grid-cols-2"}`}>
+      <div className={`mx-auto px-8 py-12 ${isSingle ? "max-w-[720px]" : "max-w-[960px]"}`}>
+        <div className={`grid grid-cols-1 gap-6 ${isSingle ? "" : "md:grid-cols-2"}`}>
           {projects.map((item) => (
             <SpotlightCard
               key={item._key}
