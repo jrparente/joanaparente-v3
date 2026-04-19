@@ -7,21 +7,7 @@ import Link from "next/link";
 import { resolveLink } from "@/lib/utils";
 import { RichText } from "../portabletext/RichText";
 import { trackContactCtaClick } from "@/lib/analytics";
-import { ReactNode } from "react";
-
-function renderAccentHeading(text: string): ReactNode[] {
-  const parts = text.split(/(\[\[.*?\]\])/g);
-  return parts.map((part, i) => {
-    if (part.startsWith("[[") && part.endsWith("]]")) {
-      return (
-        <em key={i} className="italic text-[var(--color-brand)]">
-          {part.slice(2, -2)}
-        </em>
-      );
-    }
-    return part;
-  });
-}
+import { renderAccentHeading } from "../portabletext/renderAccentHeading";
 
 type Props = {
   block: HeroBlock;

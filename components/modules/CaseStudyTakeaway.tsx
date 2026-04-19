@@ -15,7 +15,7 @@ export default function CaseStudyTakeaway({ block }: { block: CaseStudyTakeawayB
             )}
           </div>
         )}
-        <div className="my-12 border-l-4 border-[var(--color-brand)] py-6 pl-7 max-sm:border-l-2 max-sm:pl-5">
+        <div className="my-12 border-l-4 border-[var(--color-accent)] py-6 pl-7 max-sm:border-l-2 max-sm:pl-5">
           <PortableText
             value={[block.content[0]]}
             components={{

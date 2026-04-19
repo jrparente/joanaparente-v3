@@ -1,5 +1,4 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -9,23 +8,9 @@ import { TrackProjectView } from "@/components/analytics/TrackProjectView";
 import { TrackExternalLink } from "@/components/analytics/TrackExternalLink";
 import { localizedPath } from "@/lib/utils";
 import ContentBlocks from "@/components/ContentBlocks";
+import { renderAccentHeading } from "@/components/portabletext/renderAccentHeading";
 
 // ─── Helpers ────────────────────────────────────────────────────────
-
-/** Parse [[text]] into <em> accent spans */
-function renderAccentHeading(text: string): ReactNode[] {
-  const parts = text.split(/(\[\[.*?\]\])/g);
-  return parts.map((part, i) => {
-    if (part.startsWith("[[") && part.endsWith("]]")) {
-      return (
-        <em key={i} className="italic text-[var(--color-brand)]">
-          {part.slice(2, -2)}
-        </em>
-      );
-    }
-    return part;
-  });
-}
 
 /** Extract hostname from URL for display */
 function extractDomain(url: string): string {

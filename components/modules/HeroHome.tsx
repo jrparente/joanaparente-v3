@@ -1,26 +1,12 @@
 import Link from "next/link";
 import { resolveLink } from "@/lib/utils";
 import { HeroHomeBlock } from "@/types/Sanity";
-import { ReactNode } from "react";
+import { renderAccentHeading } from "../portabletext/renderAccentHeading";
 
 type Props = {
   block: HeroHomeBlock;
   language?: string;
 };
-
-function renderAccentHeading(text: string): ReactNode[] {
-  const parts = text.split(/(\[\[.*?\]\])/g);
-  return parts.map((part, i) => {
-    if (part.startsWith("[[") && part.endsWith("]]")) {
-      return (
-        <em key={i} className="italic text-[var(--color-brand)]">
-          {part.slice(2, -2)}
-        </em>
-      );
-    }
-    return part;
-  });
-}
 
 const HeroHome = ({ block, language }: Props) => {
   const { heading, subheading, ctaPrimary, ctaSecondary, eyebrow, proofStrip } =

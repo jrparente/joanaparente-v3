@@ -72,8 +72,8 @@ const ServiceTierPreview = ({ block, language }: Props) => {
                         <span
                           className={`mt-1.5 h-2 w-2 flex-shrink-0 rounded-full ${
                             tier.highlighted
-                              ? "bg-[var(--color-brand)]"
-                              : "border-2 border-[var(--color-brand)] bg-[var(--color-brand-light)]"
+                              ? "bg-[var(--color-accent)]"
+                              : "border-2 border-[var(--color-accent)] bg-[var(--color-accent-light)]"
                           }`}
                           aria-hidden="true"
                         />

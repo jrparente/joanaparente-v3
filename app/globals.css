@@ -225,9 +225,9 @@
   h5 { font-size: var(--text-lg); font-weight: 500; }
   h6 { font-size: var(--text-base); font-weight: 500; }
 
-  /* Focus ring — brand consistent */
+  /* Focus ring — accent for distinct keyboard affordance */
   :focus-visible {
-    outline: 2px solid var(--color-brand);
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
     border-radius: var(--radius-sm);
   }

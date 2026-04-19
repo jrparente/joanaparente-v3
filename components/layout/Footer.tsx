@@ -128,7 +128,7 @@ export default async function Footer({ language }: FooterProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${link.platform} (opens in new tab)`}
-                    className="text-xs text-muted-foreground/70 hover:text-muted-foreground transition-colors duration-200 inline-flex items-center gap-1 min-h-[44px] md:min-h-0"
+                    className="text-xs text-muted-foreground/70 hover:text-[var(--color-accent)] transition-colors duration-200 inline-flex items-center gap-1 min-h-[44px] md:min-h-0"
                   >
                     {iconMap[link.platform] ?? null}
                     <span>{link.platform}</span>

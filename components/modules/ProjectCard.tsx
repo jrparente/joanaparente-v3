@@ -68,8 +68,10 @@ const ProjectCard = ({ project, language, position, readMoreLabel }: Props) => {
         {/* Content */}
         <div className="flex flex-col flex-1 p-6">
           {typeDisplay && (
-            <p className="mb-1 text-xs text-[var(--color-text-subtle)]">
-              {typeDisplay}
+            <p className="mb-2">
+              <span className="inline-block rounded-full bg-[var(--color-accent-light)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-accent-dark)]">
+                {typeDisplay}
+              </span>
             </p>
           )}
 

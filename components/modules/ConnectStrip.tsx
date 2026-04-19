@@ -24,7 +24,7 @@ const ConnectStrip = ({ block }: Props) => {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group text-base font-semibold text-[var(--color-brand)] transition-colors hover:text-[var(--color-brand-dark)]"
+                className="group text-base font-semibold text-[var(--color-brand)] transition-colors hover:text-[var(--color-accent)]"
               >
                 {link.label}{" "}
                 <span
