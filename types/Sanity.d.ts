@@ -443,7 +443,24 @@ export type ContentBlock =
   | CaseStudyTransformationBlock
   | CaseStudyScreenshotBlock
   | TechStackBlockType
-  | RelatedProjectsBlockType;
+  | RelatedProjectsBlockType
+  | BioPageBlock;
+
+export type BioPageBlock = {
+  _type: "bioPage";
+  visible?: boolean;
+  profileImage?: SanityImage;
+  name: string;
+  bio?: string;
+  links?: {
+    label: string;
+    url: string;
+    icon?: string;
+  }[];
+  backgroundColor?: string;
+  textColor?: string;
+  noIndex?: boolean;
+};
 
 export type Homepage = {
   _id: string;
