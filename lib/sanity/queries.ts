@@ -240,22 +240,19 @@ export const contentBlocksProjection = `
       _type,
       _key,
       heading,
-      project-> {
-        title,
-        "slug": slug.current,
-        transformationStatement,
-        businessMetrics[] {
-          label,
-          value,
-          context
-        },
-        image {
-          asset->{ _id, url, metadata { lqip } },
-          alt
-        }
-      },
       highlightMetrics,
-      ctaLabel
+      projects[] {
+        _key,
+        project-> {
+          title,
+          "slug": slug.current,
+          transformationStatement,
+          businessMetrics[] { value, label, context }
+        },
+        transformationStatementOverride,
+        businessMetricsOverride[] { value, label, context },
+        ctaLabel
+      }
     },
     _type == "contactForm" => {
       ...,
