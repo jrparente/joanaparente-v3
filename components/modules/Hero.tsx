@@ -99,9 +99,10 @@ const Hero = ({ block, language }: Props) => {
           {image?.asset && (
             <div className="relative aspect-square w-full max-w-[380px] overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-sunken)] justify-self-center order-first md:order-last">
               <Image
-                src={urlFor(image).width(2000).height(2000).url()}
+                src={urlFor(image).width(760).height(760).url()}
                 alt={image.alt ?? "Joana Parente"}
                 fill
+                sizes="(max-width: 768px) calc(100vw - 64px), 380px"
                 className="rounded-lg object-cover object-center"
                 priority
               />

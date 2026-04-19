@@ -33,7 +33,7 @@ const HeroHome = ({ block, language }: Props) => {
           {/* Heading */}
           {heading && (
             <h1
-              className="font-heading text-5xl font-semibold tracking-tight animate-fade-up text-balance"
+              className="font-heading text-5xl font-semibold tracking-tight animate-slide-up text-balance"
               style={{ animationDelay: "0.2s" }}
             >
               {renderAccentHeading(heading)}

@@ -18,7 +18,7 @@ const headingFont = Fraunces({
 });
 
 const bodyFont = Plus_Jakarta_Sans({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
