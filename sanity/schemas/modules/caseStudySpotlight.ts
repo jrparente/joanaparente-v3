@@ -37,6 +37,7 @@ export const caseStudySpotlight = defineType({
       of: [
         {
           type: "object",
+          name: "caseStudySpotlightItem",
           fields: [
             defineField({
               name: "project",
@@ -60,6 +61,7 @@ export const caseStudySpotlight = defineType({
               of: [
                 {
                   type: "object",
+                  name: "metricOverride",
                   fields: metricOverrideFields,
                   preview: { select: { title: "value", subtitle: "label" } },
                 },
