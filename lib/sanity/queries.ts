@@ -1,4 +1,4 @@
-import { groq } from "next-sanity";
+import { groq, type QueryParams } from "next-sanity";
 import { fetchSanity } from "./fetch";
 import { client } from "./client";
 import {
@@ -383,7 +383,7 @@ export async function getPageBySlug({
   }
 
   let query: string;
-  let params: Record<string, any>;
+  let params: QueryParams;
 
   if (language) {
     query = groq`

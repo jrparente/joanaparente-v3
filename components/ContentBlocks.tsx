@@ -1,4 +1,5 @@
 import { defaultLanguage } from "@/i18n.config";
+import type { ContentBlock } from "@/types/Sanity";
 import Hero from "./modules/Hero";
 import Intro from "./modules/Intro";
 import BioPage from "./modules/BioPage";
@@ -23,7 +24,7 @@ import TechStackBlock from "./modules/TechStackBlock";
 import RelatedProjectsBlock from "./modules/RelatedProjectsBlock";
 
 type Props = {
-  contentBlock: any[];
+  contentBlock: ContentBlock[];
   language?: string | null;
 };
 

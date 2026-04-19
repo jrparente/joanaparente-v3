@@ -44,7 +44,7 @@ export async function fetchSanity<QueryResponse>({
           perspective: "published",
           useCdn: true,
           next: {
-            revalidate: 60, // every hour
+            revalidate: 60, // every minute
             tags,
           },
         }
