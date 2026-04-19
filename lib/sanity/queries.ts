@@ -442,6 +442,7 @@ export async function getPagesWithTranslations() {
     *[_type == "page" && defined(slug.current) && defined(language)] {
       "slug": slug.current,
       language,
+      _updatedAt,
       "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
         "slug": slug.current,
         language
@@ -452,6 +453,7 @@ export async function getPagesWithTranslations() {
     Array<{
       slug: string;
       language: string;
+      _updatedAt: string;
       _translations: Array<{ slug: string; language: string }>;
     }>
   >(query);
@@ -722,11 +724,12 @@ export async function getProjectSlugs() {
   const query = groq`
     *[_type == "project" && defined(slug.current)] {
       "slug": slug.current,
-      language
+      language,
+      _updatedAt
     }
   `;
 
-  return client.fetch<{ slug: string; language: string }[]>(query);
+  return client.fetch<{ slug: string; language: string; _updatedAt: string }[]>(query);
 }
 
 export async function getCardPage(language: string) {

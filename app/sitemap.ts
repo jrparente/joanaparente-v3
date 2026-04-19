@@ -15,10 +15,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getPagesWithTranslations(),
   ]);
 
+  const now = new Date();
+
   const staticPages: MetadataRoute.Sitemap = [
     // Homepage (both languages)
     {
       url: `${BASE_URL}/pt`,
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
       alternates: {
@@ -30,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${BASE_URL}/en`,
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
       alternates: {
@@ -42,6 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Project listing (filesystem route — uses localizedPath)
     {
       url: `${BASE_URL}/pt/${localizedPath("projects", "pt")}`,
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
       alternates: {
@@ -53,6 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${BASE_URL}/en/${localizedPath("projects", "en")}`,
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
       alternates: {
@@ -65,6 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Bio (no i18n)
     {
       url: `${BASE_URL}/bio`,
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.5,
     },
@@ -72,13 +79,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic CMS pages (contact, about, services, etc.) with translation-aware alternates
   const cmsPageEntries: MetadataRoute.Sitemap = cmsPages.map(
-    ({ slug, language, _translations }) => {
+    ({ slug, language, _updatedAt, _translations }) => {
       const ptSlug = getTranslatedSlug(_translations, "pt") ?? slug;
       const enSlug = getTranslatedSlug(_translations, "en") ?? slug;
       const hasTranslation = _translations?.length > 1;
 
       return {
         url: `${BASE_URL}/${language}/${slug}`,
+        lastModified: _updatedAt ? new Date(_updatedAt) : now,
         changeFrequency: "monthly" as const,
         priority: 0.7,
         ...(hasTranslation && {
@@ -103,12 +111,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   const projectPages: MetadataRoute.Sitemap = projectSlugs.map(
-    ({ slug, language }) => {
+    ({ slug, language, _updatedAt }) => {
       const languages = slugsByName.get(slug) || [];
       const hasAlternate = languages.length > 1;
 
       return {
         url: `${BASE_URL}/${language}/${localizedPath("projects", language)}/${slug}`,
+        lastModified: _updatedAt ? new Date(_updatedAt) : now,
         changeFrequency: "monthly" as const,
         priority: 0.9,
         ...(hasAlternate && {
