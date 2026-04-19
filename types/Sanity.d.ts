@@ -228,27 +228,34 @@ export type MetricBarBlock = {
   }[];
 };
 
-export type CaseStudySpotlightBlock = {
-  _type: "caseStudySpotlight";
-  _key?: string;
-  visible?: boolean;
-  heading?: string;
+export type CaseStudySpotlightItem = {
+  _key: string;
   project: {
     title: string;
     slug: string;
     transformationStatement?: string;
     businessMetrics?: {
-      label: string;
       value: string;
+      label: string;
       context?: string;
     }[];
-    image?: {
-      asset: { _id: string; url: string; metadata?: { lqip?: string } };
-      alt?: string;
-    };
   };
-  highlightMetrics?: boolean;
+  transformationStatementOverride?: string;
+  businessMetricsOverride?: {
+    value: string;
+    label: string;
+    context?: string;
+  }[];
   ctaLabel?: string;
+};
+
+export type CaseStudySpotlightBlock = {
+  _type: "caseStudySpotlight";
+  _key?: string;
+  visible?: boolean;
+  heading?: string;
+  highlightMetrics?: boolean;
+  projects?: CaseStudySpotlightItem[];
 };
 
 export type ContactFormBlock = {
