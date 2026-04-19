@@ -5,6 +5,8 @@ import {
 } from "@/lib/sanity/queries";
 import { localizedPath, getTranslatedSlug } from "@/lib/utils";
 
+export const revalidate = 3600;
+
 const BASE_URL = "https://www.joanaparente.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
